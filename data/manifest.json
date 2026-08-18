@@ -1,0 +1,373 @@
+{
+  "updated": "2026-08-18",
+  "quizzes": [
+    {
+      "date": "2026-08-18",
+      "file": "quiz-2026-08-18.json"
+    },
+    {
+      "date": "2026-08-17",
+      "file": "quiz-2026-08-17.json"
+    },
+    {
+      "date": "2026-08-16",
+      "file": "quiz-2026-08-16.json"
+    },
+    {
+      "date": "2026-08-15",
+      "file": "quiz-2026-08-15.json"
+    },
+    {
+      "date": "2026-08-14",
+      "file": "quiz-2026-08-14.json"
+    },
+    {
+      "date": "2026-08-13",
+      "file": "quiz-2026-08-13.json"
+    }
+  ],
+  "newsDom": [
+    {
+      "date": "2026-08-18",
+      "file": "news-dom-2026-08-18.md"
+    },
+    {
+      "date": "2026-08-17",
+      "file": "news-dom-2026-08-17.md"
+    },
+    {
+      "date": "2026-08-16",
+      "file": "news-dom-2026-08-16.md"
+    },
+    {
+      "date": "2026-08-15",
+      "file": "news-dom-2026-08-15.md"
+    },
+    {
+      "date": "2026-08-14",
+      "file": "news-dom-2026-08-14.md"
+    }
+  ],
+  "newsFor": [
+    {
+      "date": "2026-08-18",
+      "file": "news-for-2026-08-18.md"
+    },
+    {
+      "date": "2026-08-17",
+      "file": "news-for-2026-08-17.md"
+    },
+    {
+      "date": "2026-08-16",
+      "file": "news-for-2026-08-16.md"
+    }
+  ],
+  "reports": [
+    {
+      "id": "r001",
+      "title": "中国沥青行业研发产出与三大技术突破",
+      "category": "技术突破",
+      "date": "2026-08-17",
+      "file": "report-001.md",
+      "summary": "前瞻产业研究院分析：2025年学术文献回升至5188篇，高黏高弹改性沥青国产化、钢桥面浇筑式沥青全球领先、USP低温改性沥青施工温度降低40℃"
+    },
+    {
+      "id": "r002",
+      "title": "全球沥青市场预测：2026年673.2亿美元",
+      "category": "全球市场",
+      "date": "2026-08-17",
+      "file": "report-002.md",
+      "summary": "Coherent Market Insights报告：全球沥青市场2026年673.2亿美元，CAGR 1.6%，亚太37.3%份额主导，6大机构预测对比"
+    },
+    {
+      "id": "r003",
+      "title": "沥青期货美伊支撑：4325元/吨",
+      "category": "期货行情",
+      "date": "2026-08-16",
+      "file": "report-003.md",
+      "summary": "沥青主力合约4325元/吨(-0.18%)，美伊冲突反复推高原油成本，低库存+西北需求支撑，后市4320-4350区间震荡"
+    },
+    {
+      "id": "r004",
+      "title": "东方碳素高软化点改性沥青技术突破",
+      "category": "技术突破",
+      "date": "2026-08-16",
+      "file": "report-004.md",
+      "summary": "平顶山东方碳素(832175)实现高软化点改性粘结剂沥青技术突破，3D打印石墨粉体单价4万元/吨，附加值提升近3倍"
+    },
+    {
+      "id": "r005",
+      "title": "全球公路沥青产业深度分析：892亿美元",
+      "category": "全球市场",
+      "date": "2026-08-14",
+      "file": "report-005.md",
+      "summary": "全球环保研究网：2026年全球公路沥青市场892亿美元(+4.7%)，温拌沥青欧盟渗透率31%、中国14%，养护市场占比将提升至38%"
+    },
+    {
+      "id": "r006",
+      "title": "全球沥青市场规模：684亿美元",
+      "category": "全球市场",
+      "date": "2026-08-14",
+      "file": "report-006.md",
+      "summary": "Grand View Research报告：2025年全球沥青市场684亿美元，CAGR 4.0%，亚太38.81%份额，中石化占全球14%份额"
+    },
+    {
+      "id": "r007",
+      "title": "伊朗真空渣油出口价格更新",
+      "category": "地缘政治",
+      "date": "2026-08-14",
+      "file": "report-007.md",
+      "summary": "NIOC更新真空渣油FOB价格361.20美元/吨，霍尔木兹海峡持续关闭，中国进口伊朗原油占比仅6%但间接影响地炼成本"
+    },
+    {
+      "id": "r008",
+      "title": "美国沥青价格分化：区域差异20个百分点",
+      "category": "地缘政治",
+      "date": "2026-08-15",
+      "file": "report-008.md",
+      "summary": "ForConstructionPros：美国9州DOT数据显示三梯队价格分化，新泽西涨幅42.1% vs 堪萨斯22.8%，大西洋沿岸受进口依赖冲击最大"
+    },
+    {
+      "id": "r009",
+      "title": "沥青产业链情报：成本支撑强劲",
+      "category": "产业链分析",
+      "date": "2026-08-13",
+      "file": "report-009.md",
+      "summary": "同花顺8月13日情报：产业链指数89.25，WTI 83.27美元/桶，炼厂开工率20.4%近年最低，公路投资负增长-9.41%"
+    },
+    {
+      "id": "r010",
+      "title": "伊朗禁令引发沥青暴涨2.76%",
+      "category": "期货行情",
+      "date": "2026-08-14",
+      "file": "report-010.md",
+      "summary": "8月7日伊朗封死霍尔木兹海峡，沥青主力4176元/吨(+2.76%)，社会库存同比-50.7%，供需双弱但低库存提供弹性"
+    },
+    {
+      "id": "r011",
+      "title": "全球沥青规格对比研究：澳新实践与PMB趋势",
+      "category": "出口国研究",
+      "date": "2026-08-17",
+      "file": "report-011.md",
+      "summary": "《Decoding Bitumen Specifications》系统对比全球沥青分级体系，澳新碎石封层规范差异，PMB应用比例提升，Qatar全面转向PG76-10"
+    },
+    {
+      "id": "r012",
+      "title": "越南《标准和技术法规法》2025生效：TCVN体系重构",
+      "category": "出口国研究",
+      "date": "2026-08-17",
+      "file": "report-012.md",
+      "summary": "越南国会通过新法，TCVN体系明确为QCVN/QCDP/TCVN/TCCS四级架构，影响进口沥青合规准入路径"
+    },
+    {
+      "id": "r013",
+      "title": "越南北南高速铁路670亿美元：基建拉动沥青需求",
+      "category": "出口国研究",
+      "date": "2026-08-17",
+      "file": "report-013.md",
+      "summary": "北南高铁670亿美元+高速公路二期12个子项目获批，越南基建大周期持续拉动沥青进口需求"
+    },
+    {
+      "id": "r014",
+      "title": "越南QCVN 115修订草案：材料规范潜在调整",
+      "category": "出口国研究",
+      "date": "2026-08-17",
+      "file": "report-014.md",
+      "summary": "越南交通部提交QCVN 115:2025修订草案，更新车道宽度/净空高度等技术要求，与沥青路面设计和材料选用直接相关"
+    }
+  ],
+  "docs": [
+    {
+      "cat": "国家概况",
+      "title": "越南_沥青进口标准与概况",
+      "file": "docs/doc-gj-01-vietnam.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "越南 · 第一梯队 · 最大海外市场"
+    },
+    {
+      "cat": "国家概况",
+      "title": "新西兰_沥青进口标准与概况",
+      "file": "docs/doc-gj-02-newzealand.md",
+      "size": 7,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "新西兰 · 第一梯队 · 市占率40-50%"
+    },
+    {
+      "cat": "国家概况",
+      "title": "泰国_沥青进口标准与概况",
+      "file": "docs/doc-gj-03-thailand.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "泰国 · 第一梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "印度尼西亚_沥青进口标准与概况",
+      "file": "docs/doc-gj-04-indonesia.md",
+      "size": 6,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "印尼 · 第一梯队 · 天然岩沥青主产国"
+    },
+    {
+      "cat": "国家概况",
+      "title": "菲律宾_沥青进口标准与概况",
+      "file": "docs/doc-gj-05-philippines.md",
+      "size": 4,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "菲律宾 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "马来西亚_沥青进口标准与概况",
+      "file": "docs/doc-gj-06-malaysia.md",
+      "size": 4,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "马来西亚 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "澳大利亚_沥青进口标准与概况",
+      "file": "docs/doc-gj-07-australia.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "澳大利亚 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "印度_沥青进口标准与概况",
+      "file": "docs/doc-gj-08-india.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "印度 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "韩国_沥青进口标准与概况",
+      "file": "docs/doc-gj-09-korea.md",
+      "size": 4,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "韩国 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "尼日利亚_沥青进口标准与概况",
+      "file": "docs/doc-gj-10-nigeria.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "尼日利亚 · 第三梯队 · 非洲目标市场"
+    },
+    {
+      "cat": "国家概况",
+      "title": "老挝_沥青进口标准与概况",
+      "file": "docs/doc-gj-11-laos.md",
+      "size": 4,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "老挝 · 第二梯队"
+    },
+    {
+      "cat": "国家概况",
+      "title": "免费沥青标准文件链接汇总",
+      "file": "docs/doc-gj-list-free.md",
+      "size": 6,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "各国免费标准下载链接（Excel）"
+    },
+    {
+      "cat": "国家概况",
+      "title": "收费沥青标准文件采购清单",
+      "file": "docs/doc-gj-list-fee.md",
+      "size": 3,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "需采购的收费标准清单（Excel）"
+    },
+    {
+      "cat": "国家概况",
+      "title": "沥青出口国家标准采购清单",
+      "file": "docs/doc-gj-list-buy.md",
+      "size": 5,
+      "source": "IMA 国家概况与体系标准",
+      "summary": "标准采购计划（Excel）"
+    },
+    {
+      "cat": "专业文献",
+      "title": "原油评价学习指南（沥青方向）",
+      "file": "docs/doc-ll-crude-guide.md",
+      "size": 16,
+      "source": "IMA 沥青知识库",
+      "summary": "新人上手原油评价的完整路线图与标准清单"
+    },
+    {
+      "cat": "专业文献",
+      "title": "Shell Bitumen 手册 第五版（英文）",
+      "file": "docs/doc-ll-shell-5th.md",
+      "size": 998,
+      "source": "IMA 沥青知识库",
+      "summary": "The Shell Bitumen Handbook 5th Edition 全文"
+    },
+    {
+      "cat": "专业文献",
+      "title": "壳牌沥青手册 第六版（中英）",
+      "file": "docs/doc-ll-shell-6th.md",
+      "size": 2003,
+      "source": "IMA 沥青知识库",
+      "summary": "Shell Bitumen Handbook 6th Edition 全文"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-10",
+      "file": "docs/doc-px-2026-08-10.md",
+      "size": 5,
+      "source": "IMA 培训知识库",
+      "summary": "入职第一天 · 团队破冰/公司介绍/福利制度"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-11",
+      "file": "docs/doc-px-2026-08-11.md",
+      "size": 11,
+      "source": "IMA 培训知识库",
+      "summary": "财务报销差旅 / 特殊作业安全"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-12",
+      "file": "docs/doc-px-2026-08-12.md",
+      "size": 6,
+      "source": "IMA 培训知识库",
+      "summary": "精益管理 / AI数字化转型 / 安全环保"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-13",
+      "file": "docs/doc-px-2026-08-13.md",
+      "size": 3,
+      "source": "IMA 培训知识库",
+      "summary": "安全生产与职业健康"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-14",
+      "file": "docs/doc-px-2026-08-14.md",
+      "size": 4,
+      "source": "IMA 培训知识库",
+      "summary": "炼化行业现状与政策"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-17",
+      "file": "docs/doc-px-2026-08-17.md",
+      "size": 10,
+      "source": "IMA 培训知识库",
+      "summary": "消防安全实操 / 应急救护"
+    },
+    {
+      "cat": "培训资料",
+      "title": "培训日报 2026-08-17（晚间版）",
+      "file": "docs/doc-px-2026-08-17b.md",
+      "size": 2,
+      "source": "IMA 培训知识库",
+      "summary": "同日整理版"
+    }
+  ]
+}
