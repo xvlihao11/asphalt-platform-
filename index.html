@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沥青研发智能体工作平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f0f2f5;color:#2c3e50;min-height:100vh}
+.container{max-width:1000px;margin:0 auto;padding:16px}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1a5276 0%,#2c3e50 100%);color:#fff;padding:20px;border-radius:12px;margin-bottom:14px;box-shadow:0 4px 12px rgba(26,82,118,.15)}
+.header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.header-title{font-size:20px;font-weight:700;letter-spacing:1px}
+.header-sub{font-size:12px;opacity:.85;margin-top:3px}
+.header-date{font-size:12px;opacity:.9;text-align:right}
+
+/* Nav */
+.nav{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.nav-item{flex:1;min-width:70px;text-align:center;padding:10px 8px;background:#fff;border:1px solid #e8ecf1;border-radius:10px;font-size:13px;font-weight:600;color:#5d6d7e;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-item:hover{border-color:#1a5276}
+.nav-item.active{background:#1a5276;color:#fff;border-color:#1a5276}
+.nav-item .ico{font-size:17px;display:block;margin-bottom:2px}
+
+/* Section */
+.section{margin-bottom:18px}
+.section-title{font-size:15px;font-weight:600;color:#1a5276;margin:14px 0 10px;display:flex;align-items:center;gap:6px;padding-bottom:6px;border-bottom:2px solid #e8ecf1}
+.count{background:#1a5276;color:#fff;font-size:11px;padding:2px 8px;border-radius:10px}
+
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;cursor:pointer;border:1px solid #e8ecf1;text-decoration:none;color:inherit;display:block}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.card-icon{font-size:26px;margin-bottom:6px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.card-desc{font-size:12px;color:#7f8c8d;line-height:1.5}
+.card-meta{font-size:11px;color:#95a5a6;margin-top:8px;padding-top:8px;border-top:1px solid #f0f2f5}
+.chip{display:inline-block;background:#e8f8f0;color:#27ae60;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+
+/* Date selector */
+.date-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.date-chip{padding:8px 14px;background:#fff;border:1px solid #e8ecf1;border-radius:20px;font-size:13px;font-weight:600;color:#5d6d7e;cursor:pointer;transition:all .2s}
+.date-chip:hover{border-color:#1a5276}
+.date-chip.active{background:#1a5276;color:#fff;border-color:#1a5276}
+.date-chip.today::after{content:"今天";font-size:10px;margin-left:4px;opacity:.8}
+
+/* Quiz */
+.quiz-box{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.quiz-progress{display:flex;justify-content:space-between;font-size:12px;color:#95a5a6;margin-bottom:6px}
+.progress-track{height:6px;background:#e8ecf1;border-radius:3px;overflow:hidden;margin-bottom:16px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a5276,#2ecc71);transition:width .3s;border-radius:3px}
+.q-text{font-size:16px;font-weight:600;line-height:1.6;margin-bottom:16px}
+.opt{display:block;width:100%;text-align:left;padding:13px 16px;margin-bottom:10px;background:#f8f9fb;border:2px solid #e8ecf1;border-radius:10px;font-size:14px;cursor:pointer;transition:all .15s;line-height:1.5;color:#2c3e50}
+.opt:hover{border-color:#1a5276}
+.opt .lab{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background:#1a5276;color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-right:10px}
+.opt.correct{background:#e8f8f0;border-color:#27ae60}
+.opt.correct .lab{background:#27ae60}
+.opt.wrong{background:#fdecea;border-color:#e74c3c}
+.opt.wrong .lab{background:#e74c3c}
+.opt:disabled{cursor:default}
+.exp-box{background:#eaf2f8;border-left:4px solid #1a5276;border-radius:8px;padding:14px;font-size:13px;line-height:1.7;margin-top:6px}
+.exp-box .verdict{font-size:14px;font-weight:700;margin-bottom:6px}
+.verdict.ok{color:#27ae60}.verdict.no{color:#e74c3c}
+.btn{padding:11px 24px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:14px}
+.btn-primary{background:#1a5276;color:#fff}
+.btn-ghost{background:#fff;color:#1a5276;border:2px solid #1a5276}
+.btn:hover{opacity:.85}
+.next-row{text-align:right}
+.score-hero{text-align:center;padding:20px 0}
+.score-num{font-size:52px;font-weight:800;color:#1a5276}
+.score-sub{font-size:14px;color:#7f8c8d;margin-top:6px}
+.score-msg{font-size:15px;font-weight:600;margin-top:10px}
+.review-item{background:#f8f9fb;border-radius:10px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.6}
+.review-item .rq{font-weight:600;margin-bottom:6px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;margin-right:6px}
+.tag-ok{background:#e8f8f0;color:#27ae60}.tag-no{background:#fdecea;color:#e74c3c}
+.review-item .ans-line{color:#5d6d7e;margin:3px 0}
+
+/* News */
+.news-box{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.md h1{font-size:20px;color:#1a5276;margin-bottom:12px;line-height:1.4}
+.md h2{font-size:17px;color:#1a5276;margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid #eaf2f8}
+.md h3{font-size:15px;color:#2c3e50;margin:18px 0 8px}
+.md h4{font-size:14px;margin:14px 0 6px}
+.md p{font-size:14px;line-height:1.9;margin:8px 0;color:#34495e}
+.md ul{margin:8px 0 8px 22px}
+.md li{font-size:14px;line-height:1.8;color:#34495e}
+.md hr{border:none;border-top:1px solid #e8ecf1;margin:16px 0}
+.md a{color:#1a5276;text-decoration:none;border-bottom:1px dashed #1a5276;word-break:break-all}
+.table-wrap{overflow-x:auto;margin:12px 0;border-radius:8px;border:1px solid #e8ecf1}
+.md table{border-collapse:collapse;width:100%;font-size:13px}
+.md td{padding:9px 12px;border-bottom:1px solid #f0f2f5;line-height:1.5;color:#34495e}
+.md tr:last-child td{border-bottom:none}
+.md tr:first-child td{background:#eaf2f8;font-weight:600;color:#1a5276}
+.loading{text-align:center;padding:40px;color:#95a5a6;font-size:14px}
+
+/* Reports */
+.report-card{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;transition:all .2s}
+.report-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#1a5276}
+.report-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.report-card-title{font-size:15px;font-weight:600;color:#2c3e50;line-height:1.5}
+.report-card-cat{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600;white-space:nowrap}
+.cat-tech{background:#e8f8f0;color:#27ae60}
+.cat-market{background:#eaf2f8;color:#1a5276}
+.cat-futures{background:#fef9e7;color:#f39c12}
+.cat-chain{background:#f5eef8;color:#8e44ad}
+.cat-geo{background:#fdedec;color:#e74c3c}
+.cat-export{background:#e0f2f1;color:#00695c}
+.report-card-date{font-size:12px;color:#95a5a6}
+.report-card-summary{font-size:13px;color:#5d6d7e;line-height:1.7;margin-top:6px}
+.report-back{display:inline-block;margin-bottom:14px;font-size:14px;font-weight:600;color:#1a5276;cursor:pointer}
+.report-back:hover{text-decoration:underline}
+.report-meta-bar{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+
+/* Automation list */
+.auto-list{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;border:1px solid #e8ecf1}
+.auto-item{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid #f0f2f5}
+.auto-item:last-child{border-bottom:none}
+.auto-time{font-size:12px;font-weight:700;color:#1a5276;min-width:64px;text-align:center;background:#eaf2f8;padding:4px 8px;border-radius:6px;margin-right:12px}
+.auto-name{font-size:13px;font-weight:500}
+.auto-desc{font-size:11px;color:#95a5a6;margin-top:2px}
+.auto-status{margin-left:auto}
+
+/* KB & tools */
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.kb-card{background:#fff;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e8ecf1;cursor:pointer;position:relative;overflow:hidden}
+.kb-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1a5276,#2ecc71)}
+.kb-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.kb-stats{font-size:11px;color:#95a5a6}
+.search-box{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e8ecf1}
+.search-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.search-input{flex:1;min-width:160px;padding:10px 14px;border:2px solid #e8ecf1;border-radius:8px;font-size:14px;outline:none}
+.search-input:focus{border-color:#1a5276}
+.btn-s{padding:10px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:#fff}
+.btn-s.p{background:#1a5276}.btn-s.g{background:#27ae60}
+.search-hint{font-size:12px;color:#95a5a6;line-height:1.7}
+.search-results{margin-top:14px}
+.result-item{background:#fff;border:1px solid #e8ecf1;border-radius:8px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.result-item:hover{border-color:#1a5276;box-shadow:0 2px 8px rgba(26,82,118,.1)}
+.result-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.result-type{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap}
+.result-type.report{background:#e8f0fe;color:#1a5276}
+.result-type.news-d{background:#e8f8f0;color:#27ae60}
+.result-type.news-f{background:#fef9e7;color:#b7950b}
+.result-type.quiz{background:#f5eef8;color:#7d3c98}
+.result-type.doc-gj{background:#fdedec;color:#a04000}
+.result-type.doc-ll{background:#ebf5fb;color:#21618c}
+.result-type.doc-px{background:#fef5e7;color:#9c640c}
+.result-title{font-size:14px;font-weight:600;color:#2c3e50;flex:1}
+.result-date{font-size:11px;color:#95a5a6}
+.result-snippet{font-size:13px;color:#555;line-height:1.6}
+.result-snippet mark{background:#fff3cd;color:#856404;padding:0 2px;border-radius:2px}
+.search-loading{text-align:center;padding:30px;color:#95a5a6;font-size:14px}
+.search-empty{text-align:center;padding:30px;color:#95a5a6;font-size:13px}
+.action-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.action-btn{background:#fff;border:2px solid #e8ecf1;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
+.action-btn:hover{border-color:#1a5276;background:#eaf2f8}
+.action-icon{font-size:22px;margin-bottom:4px}
+.action-text{font-size:13px;font-weight:600}
+.action-hint{font-size:11px;color:#95a5a6;margin-top:3px}
+
+/* Status badge & toast */
+.status-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500;background:#e8f8f0;color:#27ae60}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#2c3e50;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;opacity:0;transition:all .3s;z-index:1000}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.footer{text-align:center;padding:18px;color:#95a5a6;font-size:12px;border-top:1px solid #e8ecf1;margin-top:18px}
+
+/* 新闻交互按钮 */
+.interest-btn{display:inline-block;margin:8px 0 4px;padding:5px 14px;border:1.5px solid #1a5276;border-radius:18px;background:#fff;color:#1a5276;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.interest-btn:active{opacity:.7;transform:scale(.97)}
+.interest-btn.sending{color:#f0a020;border-color:#f0a020;background:#fff8ee}
+.interest-btn.uploading{color:#22c55e;border-color:#22c55e;background:#f0fdf4}
+.interest-btn.done{color:#1faf6b;border-color:#1faf6b;background:#eefaf4}
+.interest-btn.fail{color:#e5533d;border-color:#e5533d;background:#fdeef0}
+.interest-btn.duplicate{color:#7d3c98;border-color:#7d3c98;background:#f5eef8}
+.feedback-box{margin-top:20px;background:#f8fbff;border:1px solid #d6e4f0;border-radius:10px;padding:16px}
+.feedback-box h2{font-size:15px;font-weight:800;color:#1a5276;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.feedback-box h2::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,#1a5276,#d6e4f0);border-radius:2px;margin-left:4px}
+.feedback-box textarea{width:100%;border:1.5px solid #d6e4f0;border-radius:8px;padding:10px;font-size:14px;resize:vertical;min-height:60px;box-sizing:border-box;font-family:inherit}
+.feedback-box textarea:focus{border-color:#1a5276;outline:none}
+.feedback-box .fb-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.feedback-box .fb-btn{padding:7px 20px;border:none;border-radius:8px;background:#1a5276;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+.feedback-box .fb-btn:active{opacity:.8;transform:scale(.97)}
+.feedback-box .fb-btn:disabled{opacity:.5}
+.feedback-box .fb-hint{font-size:12px;color:#95a5a6}
+
+@media(max-width:600px){
+  .container{padding:10px}
+  .quiz-box,.news-box{padding:14px}
+  .card-grid{grid-template-columns:1fr 1fr}
+  .kb-grid{grid-template-columns:1fr 1fr}
+  .q-text{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="header-title">沥青研发智能体工作平台</div>
+      <div class="header-sub">许力豪 · 京博（海南）新材料 · 沥青研发岗</div>
+    </div>
+    <div class="header-date">
+      <div id="currentDate"></div>
+      <div id="currentTime" style="font-size:17px;font-weight:700"></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav" id="nav">
+  <a class="nav-item" href="#/home" data-page="home"><span class="ico">🏠</span>首页</a>
+  <a class="nav-item" href="#/quiz" data-page="quiz"><span class="ico">📝</span>每日答题</a>
+  <a class="nav-item" href="#/news/dom" data-page="news"><span class="ico">📰</span>国内新闻</a>
+  <a class="nav-item" href="#/news/for" data-page="news"><span class="ico">🌏</span>出口国新闻</a>
+  <a class="nav-item" href="#/reports" data-page="reports"><span class="ico">📊</span>研究报告</a>
+  <a class="nav-item" href="#/library" data-page="library"><span class="ico">📚</span>资料库</a>
+  <a class="nav-item" href="#/tools" data-page="tools"><span class="ico">🧰</span>知识库·工具</a>
+</div>
+
+<div id="view"><div class="loading">加载中…</div></div>
+
+<div class="footer">沥青研发智能体工作平台 · 京博（海南）新材料 · Powered by WorkBuddy</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= 基础工具 ================= */
+var MANIFEST=null;
+var todayStr=(function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
+
+function updateTime(){
+  var now=new Date(),days=['日','一','二','三','四','五','六'];
+  var p=function(n){return String(n).padStart(2,'0');};
+  document.getElementById('currentDate').textContent=now.getFullYear()+'年'+p(now.getMonth()+1)+'月'+p(now.getDate())+'日 星期'+days[now.getDay()];
+  document.getElementById('currentTime').textContent=p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds());
+}
+updateTime();setInterval(updateTime,1000);
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2500);
+}
+function copyPrompt(text){
+  var done=function(){showToast('提示词已复制，粘贴到 WorkBuddy 对话框即可执行');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(function(){fallbackCopy(text,done);});
+  }else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');done();}catch(e){showToast('复制失败：'+text.substring(0,30));}
+  document.body.removeChild(ta);
+}
+function get(url,cb){ /* XHR 兼容钉钉 WebView */
+  try{
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET',url+(url.indexOf('?')<0?'?':'&')+'t='+Date.now(),true);
+    xhr.onload=function(){if(xhr.status>=200&&xhr.status<300)cb(null,xhr.responseText);else cb('HTTP '+xhr.status);};
+    xhr.onerror=function(){cb('网络错误');};
+    xhr.send();
+  }catch(e){cb(e.message||'请求异常');}
+}
+function loadManifest(cb){
+  if(MANIFEST){cb(null,MANIFEST);return;}
+  get('data/manifest.json',function(err,txt){
+    if(err){cb(err);return;}
+    try{MANIFEST=JSON.parse(txt);cb(null,MANIFEST);}
+    catch(e){cb('manifest 解析失败');}
+  });
+}
+
+/* ================= Markdown 渲染 ================= */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function inline(s){
+  s=esc(s);
+  s=s.replace(/【原文链接[:：]\s*(https?:\/\/[^\s】]+)\s*】?/g,'<a href="$1" target="_blank">🔗 原文链接</a>');
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  return s;
+}
+function mdToHtml(md){
+  var lines=md.split(/\r?\n/),html=[],i=0,inList=false;
+  function closeList(){if(inList){html.push('</ul>');inList=false;}}
+  while(i<lines.length){
+    var line=lines[i];
+    if(/^\s*\|/.test(line)){ /* 表格块 */
+      closeList();var rows=[];
+      while(i<lines.length&&/^\s*\|/.test(lines[i])){rows.push(lines[i]);i++;}
+      var trs=[];
+      for(var r=0;r<rows.length;r++){
+        var cells=rows[r].trim().replace(/^\|/,'').replace(/\|$/,'').split('|');
+        for(var c=0;c<cells.length;c++)cells[c]=cells[c].trim();
+        var skip=true;
+        for(var k=0;k<cells.length;k++)if(cells[k]&&!/^[-:\s]*$/.test(cells[k])){skip=false;break;}
+        if(skip||!cells.join(''))continue;
+        var tds='';for(var k2=0;k2<cells.length;k2++)tds+='<td>'+inline(cells[k2])+'</td>';
+        trs.push('<tr>'+tds+'</tr>');
+      }
+      if(trs.length)html.push('<div class="table-wrap"><table>'+trs.join('')+'</table></div>');
+      continue;
+    }
+    if(/^\s*(-{3,}|_{3,}|\*{3,})\s*$/.test(line)){closeList();html.push('<hr>');i++;continue;}
+    var h=line.match(/^(#{1,4})\s+(.*)$/);
+    if(h){closeList();var lv=Math.min(h[1].length+1,5);html.push('<h'+lv+'>'+inline(h[2])+'</h'+lv+'>');i++;continue;}
+    var li=line.match(/^\s*[-*]\s+(.*)$/);
+    if(li){if(!inList){html.push('<ul>');inList=true;}html.push('<li>'+inline(li[1])+'</li>');i++;continue;}
+    if(/^\s*$/.test(line)){closeList();i++;continue;}
+    closeList();html.push('<p>'+inline(line)+'</p>');i++;
+  }
+  closeList();return html.join('\n');
+}
+
+/* ================= 路由 ================= */
+function route(){
+  var h=location.hash||'#/home';
+  var page=h.replace(/^#\//,'');
+  var navItems=document.querySelectorAll('.nav-item');
+  for(var n=0;n<navItems.length;n++)navItems[n].classList.remove('active');
+  document.getElementById('view').innerHTML='<div class="loading">加载中…</div>';
+  if(page.indexOf('quiz')===0){setNav('quiz');renderQuiz();}
+  else if(page.indexOf('news/dom')===0){setNav('news');renderNews('dom');}
+  else if(page.indexOf('news/for')===0){setNav('news');renderNews('for');}
+  else if(page.indexOf('reports')===0){setNav('reports');renderReports();}
+  else if(page.indexOf('library')===0){setNav('library');renderLibrary();}
+  else if(page.indexOf('tools')===0){setNav('tools');renderTools();}
+  else{setNav('home');renderHome();}
+  window.scrollTo(0,0);
+}
+function setNav(key){
+  var el=document.querySelector('.nav-item[data-page="'+key+'"]');
+  if(el)el.classList.add('active');
+}
+window.addEventListener('hashchange',route);
+
+/* ================= 首页 ================= */
+function renderHome(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    var qd=m.quizzes&&m.quizzes.length?m.quizzes[0].date:'—';
+    var dd=m.newsDom&&m.newsDom.length?m.newsDom[0].date:'—';
+    var fd=m.newsFor&&m.newsFor.length?m.newsFor[0].date:'—';
+    var rd=m.reports&&m.reports.length?m.reports.length:0;
+    v.innerHTML=
+    '<div class="section">'+
+      '<div class="section-title">📋 内容模块（点击进入，支持历史回看）</div>'+
+      '<div class="card-grid">'+
+        '<a class="card" href="#/quiz"><div class="card-icon">📝</div><div class="card-title">每日答题</div>'+
+        '<div class="card-desc">沥青知识选择题，在线作答、即时判分、查看解析</div>'+
+        '<div class="card-meta"><span class="chip">'+qd+'</span> · 共 '+(m.quizzes?m.quizzes.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/news/dom"><div class="card-icon">📰</div><div class="card-title">国内沥青新闻日报</div>'+
+        '<div class="card-desc">国内行业动态、价格行情、政策法规，逐日归档</div>'+
+        '<div class="card-meta"><span class="chip">'+dd+'</span> · 共 '+(m.newsDom?m.newsDom.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/news/for"><div class="card-icon">🌏</div><div class="card-title">出口国产业动态日报</div>'+
+        '<div class="card-desc">越南、新西兰、泰国、印尼等 11 国出口目标市场动态</div>'+
+        '<div class="card-meta"><span class="chip">'+fd+'</span> · 共 '+(m.newsFor?m.newsFor.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/reports"><div class="card-icon">📊</div><div class="card-title">沥青研究报告</div>'+
+        '<div class="card-desc">全球市场预测、技术突破、出口国深度研究、产业链分析</div>'+
+        '<div class="card-meta"><span class="chip">'+rd+' 篇</span> · 来自 IMA 研究报告库</div></a>'+
+        '<a class="card" href="#/library"><div class="card-icon">📚</div><div class="card-title">IMA 资料库</div>'+
+        '<div class="card-desc">国家概况与体系标准、壳牌沥青手册、原油评价指南、培训日报全文</div>'+
+        '<div class="card-meta"><span class="chip">'+(m.docs?m.docs.length:0)+' 份</span> · 每日自动同步</div></a>'+
+        '<a class="card" href="#/tools"><div class="card-icon">🧰</div><div class="card-title">知识库 · 工具</div>'+
+        '<div class="card-desc">8 个 IMA 知识库入口、文献检索、网络搜索、快速操作</div>'+
+        '<div class="card-meta">IMA 检索 + 网络搜索</div></a>'+
+      '</div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">⚙️ 自动化任务 <span class="count">6</span></div>'+
+      '<div class="auto-list">'+
+        autoItem('07:00','每日沥青知识选择题','出题并同步到本平台答题模块')+
+        autoItem('07:30','国内沥青新闻日报','排版生成并同步到本平台新闻模块')+
+        autoItem('08:00','出口国产业动态日报','11 国动态收集并同步到本平台')+
+        autoItem('每小时','沥青新闻精选上传','检查新闻库新内容自动归档')+
+        autoItem('20:00','培训日报生成推送','生成培训日报并发送钉钉')+
+        autoItem('21:00','培训课前预告','次日课程预告及预读重点')+
+      '</div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">ℹ️ 使用说明</div>'+
+      '<div class="search-box"><div class="search-hint">'+
+      '✅ <b>每日答题</b>：选择日期（今日或历史任意一天），逐题作答即时判分，附答案解析与错题回顾<br>'+
+      '✅ <b>新闻日报</b>：国内 / 出口国两个频道，选择日期查看当天完整日报，原文链接可直接跳转<br>'+
+      '✅ <b>研究报告</b>：来自 IMA 沥青研究报告库及出口国深度研究，涵盖全球市场、技术突破、期货行情、产业链分析、地缘政治、出口国研究六大类<br>'+
+      '✅ <b>数据同步</b>：每天 07:00 / 07:30 / 08:00 自动化任务运行后，本平台自动更新当日内容<br>'+
+      '✅ <b>我感兴趣 / 我关心</b>：每条新闻下方可点击「我感兴趣」自动上传 IMA 精选库，底部「我关心」可提交想看的内容'+
+      '</div></div>'+
+    '</div>';
+  });
+}
+function autoItem(time,name,desc){
+  return '<div class="auto-item"><div class="auto-time">'+time+'</div><div><div class="auto-name">'+name+'</div><div class="auto-desc">'+desc+'</div></div><div class="auto-status"><span class="status-badge">ACTIVE</span></div></div>';
+}
+
+/* ================= 答题模块 ================= */
+function renderQuiz(initDate){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.quizzes||!m.quizzes.length){v.innerHTML='<div class="loading">暂无题目数据</div>';return;}
+    var chips='';
+    for(var i=0;i<m.quizzes.length;i++){
+      var q=m.quizzes[i];
+      var isToday=(q.date===todayStr);
+      chips+='<div class="date-chip'+(isToday?' today':'')+'" data-date="'+q.date+'" onclick="quizPick(\''+q.date+'\')">'+(isToday?'今日':q.date)+'</div>';
+    }
+    v.innerHTML='<div class="section-title">📝 选择日期开始答题</div><div class="date-bar">'+chips+'</div><div id="quizArea"></div>';
+    var first=initDate||m.quizzes[0].date;
+    quizPick(first);
+  });
+}
+function quizPick(date){
+  var chips=document.querySelectorAll('.date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].getAttribute('data-date')===date);
+  var area=document.getElementById('quizArea');
+  area.innerHTML='<div class="loading">加载题目中…</div>';
+  loadManifest(function(err,m){
+    if(err){area.innerHTML='<div class="loading">'+esc(err)+'</div>';return;}
+    var entry=null;
+    for(var i=0;i<m.quizzes.length;i++)if(m.quizzes[i].date===date){entry=m.quizzes[i];break;}
+    if(!entry){area.innerHTML='<div class="loading">未找到该日期的题目</div>';return;}
+    get('data/'+entry.file,function(e2,txt){
+      if(e2){area.innerHTML='<div class="loading">题目加载失败：'+esc(e2)+'</div>';return;}
+      var qs;
+      try{qs=JSON.parse(txt);}catch(ex){area.innerHTML='<div class="loading">题目解析失败</div>';return;}
+      startQuiz(date,qs);
+    });
+  });
+}
+var QZ={date:null,qs:[],idx:0,answers:[]};
+function startQuiz(date,qs){
+  QZ={date:date,qs:qs,idx:0,answers:[]};
+  renderQuestion();
+}
+function renderQuestion(){
+  var area=document.getElementById('quizArea');
+  var q=QZ.qs[QZ.idx],total=QZ.qs.length,LAB=['A','B','C','D'];
+  var pct=Math.round(QZ.idx/total*100);
+  var html='<div class="quiz-box">'+
+    '<div class="quiz-progress"><span>'+QZ.date+(QZ.date===todayStr?'（今天）':'')+'</span><span>第 '+(QZ.idx+1)+' / '+total+' 题</span></div>'+
+    '<div class="progress-track"><div class="progress-fill" style="width:'+pct+'%"></div></div>'+
+    '<div class="q-text">'+esc(q.q)+'</div>';
+  for(var i=0;i<q.opts.length;i++){
+    html+='<button class="opt" id="opt'+i+'" onclick="quizAnswer('+i+')"><span class="lab">'+LAB[i]+'</span>'+esc(q.opts[i])+'</button>';
+  }
+  html+='<div id="expArea"></div><div class="next-row"><button class="btn btn-primary" id="nextBtn" style="display:none" onclick="quizNext()">'+(QZ.idx===total-1?'查看成绩 →':'下一题 →')+'</button></div></div>';
+  area.innerHTML=html;
+  window.scrollTo(0,0);
+}
+function quizAnswer(sel){
+  var q=QZ.qs[QZ.idx],LAB=['A','B','C','D'];
+  for(var i=0;i<q.opts.length;i++){
+    var btn=document.getElementById('opt'+i);
+    if(btn)btn.disabled=true;
+  }
+  var ok=(sel===q.ans);
+  QZ.answers.push(ok);
+  var selBtn=document.getElementById('opt'+sel);
+  var okBtn=document.getElementById('opt'+q.ans);
+  if(selBtn)selBtn.classList.add(ok?'correct':'wrong');
+  if(okBtn&&!ok)okBtn.classList.add('correct');
+  var exp=document.getElementById('expArea');
+  exp.innerHTML='<div class="exp-box"><div class="verdict '+(ok?'ok':'no')+'">'+(ok?'✅ 回答正确':'❌ 回答错误，正确答案是 '+LAB[q.ans])+'</div>'+esc(q.exp||'')+'</div>';
+  var nb=document.getElementById('nextBtn');
+  if(nb)nb.style.display='inline-block';
+}
+function quizNext(){
+  QZ.idx++;
+  if(QZ.idx<QZ.qs.length){renderQuestion();return;}
+  renderScore();
+}
+function renderScore(){
+  var area=document.getElementById('quizArea');
+  var total=QZ.qs.length,right=0,LAB=['A','B','C','D'];
+  for(var i=0;i<QZ.answers.length;i++)if(QZ.answers[i])right++;
+  var pct=Math.round(right/total*100);
+  var msg=pct===100?'满分！知识掌握非常扎实 💪':pct>=80?'优秀！继续保持 🔥':pct>=60?'良好，错题记得回顾 📖':'错题较多，建议复习后重做 ♻️';
+  var html='<div class="quiz-box"><div class="score-hero">'+
+    '<div class="score-num">'+right+' / '+total+'</div>'+
+    '<div class="score-sub">'+QZ.date+' · 正确率 '+pct+'%</div>'+
+    '<div class="score-msg">'+msg+'</div>'+
+    '<button class="btn btn-ghost" onclick="quizPick(\''+QZ.date+'\')">🔄 重新作答</button>'+
+    '</div><div class="section-title" style="margin-top:8px">错题/答题回顾</div>';
+  for(var i=0;i<QZ.qs.length;i++){
+    var q=QZ.qs[i],ok=QZ.answers[i];
+    html+='<div class="review-item"><span class="tag '+(ok?'tag-ok':'tag-no')+'">'+(ok?'✓ 正确':'✗ 错误')+'</span>'+(i+1)+'. <span class="rq">'+esc(q.q)+'</span>'+
+      '<div class="ans-line">正确答案：<b>'+LAB[q.ans]+'. '+esc(q.opts[q.ans])+'</b></div>'+
+      '<div class="ans-line" style="color:#95a5a6;font-size:12px">'+esc((q.exp||'').substring(0,120))+((q.exp||'').length>120?'…':'')+'</div></div>';
+  }
+  html+='</div>';
+  area.innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+/* ================= 新闻模块 ================= */
+function renderNews(channel){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    var list=(channel==='dom')?(m.newsDom||[]):(m.newsFor||[]);
+    if(!list.length){v.innerHTML='<div class="loading">暂无新闻数据</div>';return;}
+    var title=channel==='dom'?'📰 国内沥青新闻日报':'🌏 出口国产业动态日报';
+    var chips='';
+    for(var i=0;i<list.length;i++){
+      var it=list[i],isToday=(it.date===todayStr);
+      chips+='<div class="date-chip'+(isToday?' today':'')+'" data-date="'+it.date+'" onclick="newsPick(\''+channel+'\',\''+it.date+'\')">'+(isToday?'今日':it.date)+'</div>';
+    }
+    v.innerHTML='<div class="section-title">'+title+' · 选择日期</div><div class="date-bar">'+chips+'</div><div id="newsArea"><div class="loading">加载中…</div></div>';
+    newsPick(channel,list[0].date);
+  });
+}
+function newsPick(channel,date){
+  var chips=document.querySelectorAll('.date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].getAttribute('data-date')===date);
+  var area=document.getElementById('newsArea');
+  area.innerHTML='<div class="loading">加载日报中…</div>';
+  loadManifest(function(err,m){
+    if(err){area.innerHTML='<div class="loading">'+esc(err)+'</div>';return;}
+    var list=(channel==='dom')?m.newsDom:m.newsFor,entry=null;
+    for(var i=0;i<list.length;i++)if(list[i].date===date){entry=list[i];break;}
+    if(!entry){area.innerHTML='<div class="loading">未找到该日期的日报</div>';return;}
+    get('data/'+entry.file,function(e2,txt){
+      if(e2){area.innerHTML='<div class="loading">日报加载失败：'+esc(e2)+'</div>';return;}
+      area.innerHTML='<div class="news-box md" id="newsContent">'+mdToHtml(txt)+'</div>';
+      enhanceNews('newsContent',channel,date);
+      window.scrollTo(0,0);
+    });
+  });
+}
+
+/* ================= 新闻交互（我感兴趣 / 我关心） ================= */
+function enhanceNews(containerId,channel,date){
+  var container=document.getElementById(containerId);
+  if(!container)return;
+  var cfg=channel==='dom'?{
+    interest:'xlh-asphalt-interest-2026',feedback:'xlh-asphalt-feedback-2026',status:'xlh-asphalt-upload-status'
+  }:{
+    interest:'xlh-foreign-interest-2026',feedback:'xlh-foreign-feedback-2026',status:'xlh-foreign-upload-status'
+  };
+  /* 工具：从 DOM 元素中提取链接 URL */
+  function extractUrl(el){
+    var links=el.querySelectorAll('a');
+    for(var l=0;l<links.length;l++){
+      var href=links[l].getAttribute('href');
+      if(href&&href.indexOf('http')===0)return href;
+    }
+    return '';
+  }
+  var items=[];
+  if(channel==='dom'){
+    /* mdToHtml 把 ### 渲染成 <h4>（不是 <h3>），所以查 h3,h4 */
+    var headings=container.querySelectorAll('h3,h4');
+    for(var i=0;i<headings.length;i++){
+      var t=headings[i].textContent.trim();
+      if(/^\d+\./.test(t)){
+        var content='',url='',lastEl=headings[i];
+        var next=headings[i].nextElementSibling;
+        while(next&&next.tagName!=='H3'&&next.tagName!=='H4'&&next.tagName!=='H2'&&next.tagName!=='HR'){
+          content+=next.textContent.trim()+'\n';
+          var u=extractUrl(next);
+          if(u)url=u;
+          lastEl=next;next=next.nextElementSibling;
+        }
+        if(url&&content.indexOf(url)<0)content+='【原文链接: '+url+'】';
+        items.push({startEl:headings[i],lastEl:lastEl,title:t,content:content,url:url});
+      }
+    }
+  }else{
+    /* 出口国日报：格式不固定（粗体段落标题 或 国家小标题+普通段落+摘要列表），
+       统一用「原文链接」锚点作为每条新闻的分隔标记，向前聚合标题与摘要 */
+    var blocks=container.querySelectorAll('h2,h3,h4,p,li,hr');
+    var cur=null;
+    for(var b=0;b<blocks.length;b++){
+      var el=blocks[b],tag=el.tagName;
+      /* 国家标题/分隔线：结束当前条目（无链接的丢弃） */
+      if(tag==='H2'||tag==='H3'||tag==='H4'||tag==='HR'){
+        if(cur&&cur.url)items.push(cur);
+        cur=null;
+        continue;
+      }
+      var txt=el.textContent.trim();
+      /* 检测「原文链接」锚点（链接为主体的块） */
+      var aEl=el.querySelector('a[href^="http"]');
+      var isLink=false;
+      if(aEl){
+        var clone=el.cloneNode(true);
+        var ca=clone.querySelector('a[href^="http"]');if(ca)ca.remove();
+        if(clone.textContent.trim().length<10)isLink=true;
+      }
+      if(isLink){
+        if(!cur)cur={title:'',content:'',lastEl:el,url:''};
+        cur.url=aEl.getAttribute('href');
+        if(cur.content.indexOf(cur.url)<0)cur.content+='【原文链接: '+cur.url+'】';
+        cur.lastEl=el;
+        items.push(cur);
+        cur=null;
+        continue;
+      }
+      if(!txt)continue; /* 空列表项跳过 */
+      if(!cur)cur={title:'',content:'',lastEl:el,url:''};
+      if(!cur.title&&txt.length>4)cur.title=txt; /* 首个实质性文本作为标题 */
+      cur.content+=txt+'\n';
+      cur.lastEl=el;
+    }
+    if(cur&&cur.url)items.push(cur);
+  }
+  for(var k=0;k<items.length;k++){
+    (function(item,idx){
+      var id=date+'-'+String(idx+1).padStart(2,'0');
+      var btn=document.createElement('button');
+      btn.className='interest-btn';
+      btn.innerHTML='我感兴趣 💗';
+      btn.addEventListener('click',function(){
+        newsSendInterest(cfg,id,item.title,item.content,'',item.url,btn);
+      });
+      var wrap=document.createElement('div');
+      wrap.style.textAlign='right';
+      wrap.appendChild(btn);
+      var after=item.lastEl;
+      if(after.tagName==='LI'&&after.parentNode&&after.parentNode.tagName==='UL')after=after.parentNode;
+      after.parentNode.insertBefore(wrap,after.nextSibling);
+    })(items[k],k);
+  }
+  var fb=document.createElement('div');
+  fb.className='feedback-box';
+  fb.innerHTML='<h2>💬 我关心</h2>'+
+    '<textarea id="fbText" rows="3" placeholder="您希望看到哪方面的新闻或专题？请描述您的需求..."></textarea>'+
+    '<div class="fb-row"><button class="fb-btn" id="fbSubmit">提交</button><span class="fb-hint" id="fbHint"></span></div>';
+  container.appendChild(fb);
+  document.getElementById('fbSubmit').addEventListener('click',function(){
+    newsSendFeedback(cfg);
+  });
+}
+function newsSendInterest(cfg,id,title,content,source,url,btn){
+  var data={id:id,title:title,content:content,source:source,url:url};
+  var body=JSON.stringify(data);
+  btn.className='interest-btn sending';
+  btn.innerHTML='发送中... ⏳';
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://ntfy.sh/'+cfg.interest,true);
+  xhr.setRequestHeader('Content-Type','text/plain');
+  try{xhr.setRequestHeader('Title','interest');}catch(e){}
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      if(xhr.status>=200&&xhr.status<300){
+        btn.className='interest-btn uploading';
+        btn.innerHTML='正在上传精选库... 🔄';
+        newsPollStatus(cfg,id,btn);
+      }else{
+        btn.className='interest-btn fail';
+        btn.innerHTML='发送失败 ↻';
+      }
+    }
+  };
+  xhr.onerror=function(){
+    btn.className='interest-btn fail';
+    btn.innerHTML='发送失败 ↻';
+  };
+  xhr.send(body);
+}
+function newsPollStatus(cfg,newsId,btn){
+  var start=Date.now();var maxWait=120000;
+  function check(){
+    if(Date.now()-start>maxWait){
+      btn.className='interest-btn uploading';
+      btn.innerHTML='上传中... 🔄';
+      return;
+    }
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','https://ntfy.sh/'+cfg.status+'/json?poll=1&since=60s',true);
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState===4&&xhr.status>=200&&xhr.status<300){
+        var lines=xhr.responseText.trim().split('\n');
+        var found=false;
+        for(var i=0;i<lines.length;i++){
+          if(!lines[i].trim())continue;
+          try{
+            var msg=JSON.parse(lines[i]);
+            if(msg.event!=='message')continue;
+            var info=JSON.parse(msg.message);
+            if(info.newsId===newsId){
+              found=true;
+              if(info.status==='success'){btn.className='interest-btn done';btn.innerHTML='已上传精选库 ✓';}
+              else if(info.status==='duplicate'){btn.className='interest-btn duplicate';btn.innerHTML='已收录 ✓';}
+              else if(info.status==='failed'){btn.className='interest-btn fail';btn.innerHTML='上传失败 ↻';}
+              else if(info.status==='uploading'){btn.className='interest-btn uploading';btn.innerHTML='正在上传精选库... 🔄';}
+              break;
+            }
+          }catch(e){}
+        }
+        if(!found)setTimeout(check,5000);
+      }
+    };
+    xhr.onerror=function(){setTimeout(check,5000);};
+    xhr.send();
+  }
+  setTimeout(check,3000);
+}
+function newsSendFeedback(cfg){
+  var ta=document.getElementById('fbText');
+  var hint=document.getElementById('fbHint');
+  var btn=document.getElementById('fbSubmit');
+  var text=ta.value.trim();
+  if(!text){hint.textContent='请输入您想看到的内容';hint.style.color='#e5533d';return;}
+  var data={type:'feedback',content:text};
+  var body=JSON.stringify(data);
+  btn.disabled=true;btn.textContent='提交中...';
+  hint.textContent='';hint.style.color='#95a5a6';
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://ntfy.sh/'+cfg.feedback,true);
+  xhr.setRequestHeader('Content-Type','text/plain');
+  try{xhr.setRequestHeader('Title','feedback');}catch(e){}
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      btn.disabled=false;btn.textContent='提交';
+      if(xhr.status>=200&&xhr.status<300){
+        ta.value='';
+        hint.textContent='已收到，感谢您的反馈！';
+        hint.style.color='#1faf6b';
+      }else{
+        hint.textContent='提交失败，请重试';hint.style.color='#e5533d';
+      }
+    }
+  };
+  xhr.onerror=function(){
+    btn.disabled=false;btn.textContent='提交';
+    hint.textContent='网络错误，请重试';hint.style.color='#e5533d';
+  };
+  xhr.send(body);
+}
+
+/* ================= 研究报告模块 ================= */
+var CAT_MAP={'技术突破':'cat-tech','全球市场':'cat-market','期货行情':'cat-futures','产业链分析':'cat-chain','地缘政治':'cat-geo','出口国研究':'cat-export'};
+function renderReports(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.reports||!m.reports.length){v.innerHTML='<div class="loading">暂无研究报告</div>';return;}
+    var cats={},html='';
+    for(var i=0;i<m.reports.length;i++){
+      var r=m.reports[i];
+      if(!cats[r.category])cats[r.category]=0;
+      cats[r.category]++;
+    }
+    var catChips='<div class="date-bar"><div class="date-chip active" onclick="reportFilter(\'\')">全部 ('+m.reports.length+')</div>';
+    for(var c in cats){
+      catChips+='<div class="date-chip" onclick="reportFilter(\''+c+'\')">'+c+' ('+cats[c]+')</div>';
+    }
+    catChips+='</div>';
+    html='<div class="section-title">📊 沥青研究报告</div>'+catChips+'<div id="reportList">';
+    for(var i=0;i<m.reports.length;i++){
+      var r=m.reports[i];
+      var cls=CAT_MAP[r.category]||'cat-tech';
+      html+='<div class="report-card" data-cat="'+r.category+'" onclick="reportOpen(\''+r.file+'\')">'+
+        '<div class="report-card-head"><div class="report-card-title">'+esc(r.title)+'</div>'+
+        '<span class="report-card-cat '+cls+'">'+r.category+'</span></div>'+
+        '<div class="report-card-date">'+r.date+'</div>'+
+        '<div class="report-card-summary">'+esc(r.summary)+'</div></div>';
+    }
+    html+='</div>';
+    v.innerHTML=html;
+  });
+}
+function reportFilter(cat){
+  var chips=document.querySelectorAll('.date-bar .date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].textContent.indexOf(cat)>=0);
+  var cards=document.querySelectorAll('#reportList .report-card');
+  for(var i=0;i<cards.length;i++)cards[i].style.display=(!cat||cards[i].getAttribute('data-cat')===cat)?'block':'none';
+}
+function reportOpen(file){
+  var v=document.getElementById('view');
+  v.innerHTML='<div class="loading">加载报告中…</div>';
+  get('data/'+file,function(err,txt){
+    if(err){v.innerHTML='<div class="loading">报告加载失败：'+esc(err)+'</div>';return;}
+    v.innerHTML='<div class="report-back" onclick="renderReports()">← 返回报告列表</div><div class="news-box md">'+mdToHtml(txt)+'</div>';
+    window.scrollTo(0,0);
+  });
+}
+
+/* ================= 资料库模块 ================= */
+var LIB_CAT_MAP={'国家概况':'cat-export','专业文献':'cat-tech','培训资料':'cat-chain'};
+function renderLibrary(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.docs||!m.docs.length){v.innerHTML='<div class="loading">暂无资料</div>';return;}
+    var cats={},html='';
+    for(var i=0;i<m.docs.length;i++){
+      var d=m.docs[i];
+      if(!cats[d.cat])cats[d.cat]=0;
+      cats[d.cat]++;
+    }
+    var catChips='<div class="date-bar"><div class="date-chip active" onclick="libraryFilter(\'\')">全部 ('+m.docs.length+')</div>';
+    for(var c in cats){
+      catChips+='<div class="date-chip" onclick="libraryFilter(\''+c+'\')">'+c+' ('+cats[c]+')</div>';
+    }
+    catChips+='</div>';
+    html='<div class="section-title">📚 IMA 资料库 <span class="count">每日自动同步</span></div>'+
+      '<div class="search-hint" style="margin-bottom:10px">来源：IMA「国家概况与体系标准」「沥青知识库」「培训知识库」，每天 08:30 自动同步更新</div>'+
+      catChips+'<div id="libList">';
+    for(var i=0;i<m.docs.length;i++){
+      var d=m.docs[i];
+      var cls=LIB_CAT_MAP[d.cat]||'cat-tech';
+      var sizeTxt=d.size?(d.size>=1024?(d.size/1024).toFixed(1)+' MB':d.size+' KB'):'';
+      html+='<div class="report-card" data-cat="'+d.cat+'" onclick="libraryOpen(\''+d.file+'\')">'+
+        '<div class="report-card-head"><div class="report-card-title">'+esc(d.title)+'</div>'+
+        '<span class="report-card-cat '+cls+'">'+d.cat+'</span></div>'+
+        '<div class="report-card-date">'+esc(d.source||'')+(sizeTxt?' · '+sizeTxt:'')+'</div>'+
+        (d.summary?'<div class="report-card-summary">'+esc(d.summary)+'</div>':'')+'</div>';
+    }
+    html+='</div>';
+    v.innerHTML=html;
+  });
+}
+function libraryFilter(cat){
+  var chips=document.querySelectorAll('.date-bar .date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',(!cat&&i===0)||chips[i].textContent.indexOf(cat)===0);
+  var cards=document.querySelectorAll('#libList .report-card');
+  for(var i=0;i<cards.length;i++)cards[i].style.display=(!cat||cards[i].getAttribute('data-cat')===cat)?'block':'none';
+}
+function libraryOpen(file){
+  var v=document.getElementById('view');
+  v.innerHTML='<div class="loading">加载资料中…（大文件如壳牌手册约需数秒）</div>';
+  get('data/'+file,function(err,txt){
+    if(err){v.innerHTML='<div class="loading">资料加载失败：'+esc(err)+'</div>';return;}
+    v.innerHTML='<div class="report-back" onclick="renderLibrary()">← 返回资料列表</div><div class="news-box md">'+mdToHtml(txt)+'</div>';
+    window.scrollTo(0,0);
+  });
+}
+
+/* ================= 工具页 ================= */
+var KBS=[
+  {n:'沥青新闻库',s:'5 篇 · 国内日报归档'},{n:'精选新闻库',s:'13 篇 · 我感兴趣合集'},
+  {n:'沥青知识库',s:'4 篇 · 出题来源'},{n:'沥青研究报告',s:'22 篇 · 研究报告'},
+  {n:'培训知识库',s:'5 篇 · 培训资料'},{n:'日报素材库',s:'19 篇 · 日报素材'},
+  {n:'京博海南沥青出口国家',s:'29 篇 · 出口国情报'},{n:'希望看到的新闻库',s:'11 篇 · 我关心反馈'}
+];
+function renderTools(){
+  var v=document.getElementById('view');
+  var kb='';
+  for(var i=0;i<KBS.length;i++){
+    kb+='<div class="kb-card" onclick="copyPrompt(\'请在'+KBS[i].n+'中搜索相关内容并汇总\')"><div class="kb-name">'+KBS[i].n+'</div><div class="kb-stats">'+KBS[i].s+'</div></div>';
+  }
+  v.innerHTML=
+  '<div class="section"><div class="section-title">🔍 快速搜索</div><div class="search-box">'+
+    '<div class="search-row"><input type="text" class="search-input" id="searchInput" placeholder="输入关键词，如：SBS改性沥青 老化" onkeydown="if(event.key===\'Enter\')searchPlatform()">'+
+    '<button class="btn-s p" onclick="searchPlatform()">🔍 搜索平台内容</button>'+
+    '<button class="btn-s g" onclick="copyImaPrompt()">📋 复制IMA检索词</button>'+
+    '<button class="btn-s" style="background:#7f8c8d" onclick="handleWebSearch()">🌐 网络搜索</button></div>'+
+    '<div class="search-hint">💡 <b>搜索平台内容</b>：在已收录的14篇研究报告 + 24份资料库文档（国家概况/壳牌手册/培训资料） + 6期新闻日报 + 5期测验题中全文检索，即时出结果<br>💡 <b>复制IMA检索词</b>：复制提示词到 WorkBuddy 对话框，AI 在 IMA 知识库中实时检索<br>💡 <b>网络搜索</b>：直接打开浏览器搜索行业标准、学术资料</div>'+
+    '<div class="search-results" id="searchResults"></div>'+
+  '</div></div>'+
+  '<div class="section"><div class="section-title">📚 IMA 知识库 <span class="count">8</span></div><div class="kb-grid">'+kb+'</div></div>'+
+  '<div class="section"><div class="section-title">⚡ 快速操作</div><div class="action-grid">'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日国内沥青新闻日报，从沥青新闻库获取最新新闻，生成HTML日报并部署推送，同时同步到工作平台\')"><div class="action-icon">📰</div><div class="action-text">生成国内日报</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日沥青出口国产业动态日报，从京博海南沥青出口国家知识库获取最新新闻，生成HTML日报并部署推送，同时同步到工作平台\')"><div class="action-icon">🌏</div><div class="action-text">生成出口国日报</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日沥青知识选择题，从沥青知识库出题并同步到工作平台答题模块\')"><div class="action-icon">📝</div><div class="action-text">生成测验</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请搜索最近一周的沥青行业新闻，重点关注价格走势、政策变化、技术进展\')"><div class="action-icon">🔬</div><div class="action-text">行业动态研究</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请在沥青研究报告知识库中搜索最新的沥青改性技术研究报告\')"><div class="action-icon">📊</div><div class="action-text">文献检索</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请查看所有自动化任务的运行状态，检查是否有任务失败或异常\')"><div class="action-icon">✅</div><div class="action-text">任务状态检查</div><div class="action-hint">点击复制提示词</div></div>'+
+  '</div></div>';
+}
+/* === 平台全文搜索 === */
+var _searchCache={}; /* 缓存已加载文件内容 */
+function searchPlatform(){
+  var q=document.getElementById('searchInput').value.trim();
+  var rc=document.getElementById('searchResults');
+  if(!q){showToast('请输入搜索关键词');return;}
+  rc.innerHTML='<div class="search-loading">⏳ 正在加载平台内容并检索...</div>';
+  /* 1. 加载 manifest */
+  get('data/manifest.json',function(err,txt){
+    if(err){rc.innerHTML='<div class="search-empty">加载失败：'+err+'</div>';return;}
+    var m=JSON.parse(txt);
+    var files=[];
+    /* 收集所有可搜索文件 */
+    (m.reports||[]).forEach(function(r){files.push({file:'data/'+r.file,title:r.title,type:'report',typeLabel:'研究报告',date:r.date||'',category:r.category||''});});
+    (m.newsDom||[]).forEach(function(n){files.push({file:'data/'+n.file,title:'国内沥青日报 '+n.date,type:'news-d',typeLabel:'国内新闻',date:n.date});});
+    (m.newsFor||[]).forEach(function(n){files.push({file:'data/'+n.file,title:'出口国产业日报 '+n.date,type:'news-f',typeLabel:'出口国新闻',date:n.date});});
+    (m.quizzes||[]).forEach(function(qz){files.push({file:'data/'+qz.file,title:'沥青知识测验 '+qz.date,type:'quiz',typeLabel:'测验题',date:qz.date});});
+    (m.docs||[]).forEach(function(d){
+      var dt=d.cat==='国家概况'?'doc-gj':(d.cat==='专业文献'?'doc-ll':'doc-px');
+      files.push({file:'data/'+d.file,title:d.title,type:dt,typeLabel:d.cat,date:''});
+    });
+    /* 2. 逐文件加载并搜索 */
+    var results=[];
+    var done=0,total=files.length;
+    files.forEach(function(f){
+      var cacheKey=f.file;
+      if(_searchCache[cacheKey]){
+        searchInFile(f,_searchCache[cacheKey],q,results);
+        done++;checkDone();
+      }else{
+        get(f.file,function(e,t){
+          if(!e){
+            _searchCache[cacheKey]=t;
+            searchInFile(f,t,q,results);
+          }
+          done++;checkDone();
+        });
+      }
+    });
+    function checkDone(){
+      if(done<total)return;
+      renderSearchResults(results,q,rc);
+    }
+  });
+}
+function searchInFile(f,content,q,results){
+  var qlower=q.toLowerCase();
+  var clower=content.toLowerCase();
+  var idx=clower.indexOf(qlower);
+  if(idx<0)return;
+  /* 提取 snippet */
+  var start=Math.max(0,idx-60);
+  var end=Math.min(content.length,idx+q.length+120);
+  var snippet=content.substring(start,end).replace(/\n/g,' ').replace(/[#*|>]/g,'').trim();
+  if(start>0)snippet='...'+snippet;
+  if(end<content.length)snippet=snippet+'...';
+  results.push({file:f.file,title:f.title,type:f.type,typeLabel:f.typeLabel,date:f.date,snippet:snippet});
+}
+function renderSearchResults(results,q,rc){
+  if(!results.length){
+    rc.innerHTML='<div class="search-empty">未在平台内容中找到「'+q+'」相关结果<br>💡 可尝试点击「复制IMA检索词」在 WorkBuddy 中搜索 IMA 知识库全文</div>';
+    return;
+  }
+  /* 按类型排序：报告 > 新闻 > 测验 */
+  var order={'report':0,'doc-ll':1,'doc-gj':2,'doc-px':3,'news-d':4,'news-f':5,'quiz':6};
+  results.sort(function(a,b){return (order[a.type]||9)-(order[b.type]||9);});
+  var h='<div style="font-size:13px;color:#95a5a6;margin-bottom:10px">找到 <b>'+results.length+'</b> 条结果</div>';
+  results.forEach(function(r){
+    var snip=r.snippet;
+    /* 高亮关键词 */
+    var qlower=q.toLowerCase();
+    var idx=snip.toLowerCase().indexOf(qlower);
+    if(idx>=0){
+      snip=snip.substring(0,idx)+'<mark>'+snip.substring(idx,idx+q.length)+'</mark>'+snip.substring(idx+q.length);
+    }
+    h+='<div class="result-item" onclick="openSearchResult(\''+r.file+'\',\''+r.type+'\')">'+
+      '<div class="result-head">'+
+        '<span class="result-type '+r.type+'">'+r.typeLabel+'</span>'+
+        '<span class="result-title">'+r.title+'</span>'+
+        (r.date?'<span class="result-date">'+r.date+'</span>':'')+
+      '</div>'+
+      '<div class="result-snippet">'+snip+'</div>'+
+    '</div>';
+  });
+  rc.innerHTML=h;
+}
+function openSearchResult(file,type){
+  if(type==='report'){location.hash='#/reports';}
+  else if(type==='news-d'){location.hash='#/news/dom';}
+  else if(type==='news-f'){location.hash='#/news/for';}
+  else if(type==='quiz'){location.hash='#/quiz';}
+  else if(type==='doc-gj'||type==='doc-ll'||type==='doc-px'){location.hash='#/library';}
+}
+function copyImaPrompt(){
+  var q=document.getElementById('searchInput').value.trim();
+  if(!q){showToast('请输入搜索关键词');return;}
+  copyPrompt('请在 IMA 知识库中搜索：'+q+'。请同时搜索沥青新闻库、精选新闻库、沥青知识库、沥青研究报告、京博海南沥青出口国家等相关知识库，汇总检索结果。');
+}
+function handleWebSearch(){
+  var q=document.getElementById('searchInput').value.trim();
+  if(!q){showToast('请输入搜索关键词');return;}
+  window.open('https://www.bing.com/search?q='+encodeURIComponent(q+' 沥青'));
+}
+
+route();
+</script>
+</body>
+</html>
