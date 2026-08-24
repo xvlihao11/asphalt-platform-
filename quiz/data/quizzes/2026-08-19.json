@@ -1,0 +1,229 @@
+{
+  "date": "2026-08-19",
+  "title": "沥青每日答题 2026-08-19",
+  "topic": "沥青基础性能与检测（示例题库）",
+  "questions": [
+    {
+      "id": 1,
+      "q": "道路石油沥青的牌号（如70号沥青）是依据哪项指标划分的？",
+      "options": [
+        "软化点",
+        "25℃针入度",
+        "15℃延度",
+        "闪点"
+      ],
+      "answer": 1,
+      "explanation": "我国道路石油沥青按25℃、100g、5s条件下的针入度划分牌号，针入度每10个单位（0.1mm）为一个牌号。70号沥青即针入度范围为60~80（0.1mm）。牌号越小，沥青越硬，高温稳定性越好，但低温性能相对下降。",
+      "references": [
+        {
+          "title": "百度百科：针入度",
+          "url": "https://baike.baidu.com/item/针入度"
+        },
+        {
+          "title": "B站视频搜索：沥青针入度试验",
+          "url": "https://search.bilibili.com/all?keyword=沥青针入度试验"
+        }
+      ],
+      "level": 1
+    },
+    {
+      "id": 2,
+      "q": "沥青的\"三大指标\"不包括以下哪一项？",
+      "options": [
+        "针入度",
+        "软化点",
+        "延度",
+        "脆点"
+      ],
+      "answer": 3,
+      "explanation": "沥青经典三大指标为：针入度（表征软硬程度/稠度）、软化点（表征高温性能）、延度（表征塑性变形能力）。脆点是通过 Fraass 脆点试验测定的低温指标，属于扩展指标，不在传统三大指标之列。",
+      "references": [
+        {
+          "title": "百度百科：沥青",
+          "url": "https://baike.baidu.com/item/沥青"
+        },
+        {
+          "title": "B站视频搜索：沥青三大指标",
+          "url": "https://search.bilibili.com/all?keyword=沥青三大指标"
+        }
+      ],
+      "level": 1
+    },
+    {
+      "id": 3,
+      "q": "软化点试验采用环球法测定，它主要反映沥青的哪方面性能？",
+      "options": [
+        "低温抗裂性能",
+        "高温稳定性能",
+        "疲劳性能",
+        "粘附性能"
+      ],
+      "answer": 1,
+      "explanation": "环球法（Ring and Ball）测定的软化点是沥青由固态转为流动状态的特征温度，反映沥青的高温稳定性。软化点越高，沥青夏季高温下越不易软化变形。沥青的软化点与针入度结合可计算针入度指数PI来评价感温性。",
+      "references": [
+        {
+          "title": "百度百科：软化点",
+          "url": "https://baike.baidu.com/item/软化点"
+        },
+        {
+          "title": "B站视频搜索：沥青软化点试验 环球法",
+          "url": "https://search.bilibili.com/all?keyword=沥青软化点试验"
+        }
+      ],
+      "level": 2
+    },
+    {
+      "id": 4,
+      "q": "延度试验中，沥青试件被拉断时的伸长长度越大，说明沥青的哪种性能越好？",
+      "options": [
+        "高温稳定性",
+        "塑性变形能力",
+        "耐老化性能",
+        "水稳定性"
+      ],
+      "answer": 1,
+      "explanation": "延度表征沥青在外力拉伸下承受塑性变形的能力。延度越大，沥青的柔韧性越好，路面越不易开裂。道路石油沥青通常测定15℃延度，SBS改性沥青还需测定5℃低温延度以评价其低温性能。",
+      "references": [
+        {
+          "title": "百度百科：延度",
+          "url": "https://baike.baidu.com/item/延度"
+        },
+        {
+          "title": "B站视频搜索：沥青延度试验",
+          "url": "https://search.bilibili.com/all?keyword=沥青延度试验"
+        }
+      ],
+      "level": 2
+    },
+    {
+      "id": 5,
+      "q": "DSR（动态剪切流变仪）主要用于评价沥青的哪方面性能？",
+      "options": [
+        "低温抗裂性能",
+        "高温抗车辙性能",
+        "与集料的粘附性",
+        "耐光老化性能"
+      ],
+      "answer": 1,
+      "explanation": "DSR通过测定复数剪切模量G*和相位角δ计算车辙因子G*/sinδ，评价沥青的高温抗车辙性能，是Superpave沥青分级（PG分级）中高温等级的核心指标。车辙因子越大，高温抗永久变形能力越强。",
+      "references": [
+        {
+          "title": "B站视频搜索：动态剪切流变仪 DSR",
+          "url": "https://search.bilibili.com/all?keyword=动态剪切流变仪"
+        },
+        {
+          "title": "B站视频搜索：Superpave 沥青PG分级",
+          "url": "https://search.bilibili.com/all?keyword=Superpave沥青PG分级"
+        }
+      ],
+      "level": 3
+    },
+    {
+      "id": 6,
+      "q": "BBR（弯曲梁流变仪）试验测定的劲度模量S和蠕变速率m值，用于评价沥青的哪方面性能？",
+      "options": [
+        "低温抗裂性能",
+        "高温抗车辙性能",
+        "抗水损害性能",
+        "施工和易性"
+      ],
+      "answer": 0,
+      "explanation": "BBR在低温条件下（如-12℃、-18℃）测定沥青的劲度模量S（越小说明越柔软）和蠕变速率m值（越大说明应力松弛能力越强），两者共同评价沥青的低温抗裂性能，是PG分级低温等级的依据。",
+      "references": [
+        {
+          "title": "B站视频搜索：弯曲梁流变仪 BBR",
+          "url": "https://search.bilibili.com/all?keyword=弯曲梁流变仪BBR"
+        }
+      ],
+      "level": 3
+    },
+    {
+      "id": 7,
+      "q": "SBS改性沥青中的SBS是指哪种材料？",
+      "options": [
+        "苯乙烯-丁二烯-苯乙烯嵌段共聚物",
+        "硅铝酸盐沸石分子筛",
+        "磺化沥青乳液",
+        "顺丁橡胶"
+      ],
+      "answer": 0,
+      "explanation": "SBS是苯乙烯-丁二烯-苯乙烯（Styrene-Butadiene-Styrene）三嵌段共聚物，属于热塑性弹性体。掺入沥青后形成网络结构，可显著改善沥青的高温稳定性、低温延性和弹性恢复性能，是目前应用最广泛的改性剂之一。",
+      "references": [
+        {
+          "title": "百度百科：SBS改性沥青",
+          "url": "https://baike.baidu.com/item/SBS改性沥青"
+        },
+        {
+          "title": "B站视频搜索：SBS改性沥青原理",
+          "url": "https://search.bilibili.com/all?keyword=SBS改性沥青"
+        }
+      ],
+      "level": 2
+    },
+    {
+      "id": 8,
+      "q": "沥青在热氧老化后，其常规指标的一般变化规律是？",
+      "options": [
+        "针入度增大，软化点降低",
+        "针入度减小，软化点升高，延度降低",
+        "针入度、软化点、延度均增大",
+        "三大指标均无明显变化"
+      ],
+      "answer": 1,
+      "explanation": "沥青老化后轻组分挥发、组分向重组分迁移，宏观表现为变硬变脆：针入度减小、软化点升高、延度显著降低。因此沥青路面使用多年后易出现裂缝等病害，施工中也需控制加热温度和时间以减轻短期老化。",
+      "references": [
+        {
+          "title": "B站视频搜索：沥青老化机理",
+          "url": "https://search.bilibili.com/all?keyword=沥青老化机理"
+        }
+      ],
+      "level": 4
+    },
+    {
+      "id": 9,
+      "q": "原油评价工作的核心目的是什么？",
+      "options": [
+        "确定原油的市场销售价格",
+        "为确定原油加工方案和产品结构提供依据",
+        "评价原油的开采难度",
+        "检测原油的运输安全性"
+      ],
+      "answer": 1,
+      "explanation": "原油评价是通过一系列分析测试，摸清原油的组成、性质及其各馏分的产率和性质，为炼厂选择加工方案、确定产品结构、优化工艺条件提供依据。例如评价沥青基（环烷基）原油适合生产优质道路沥青。",
+      "references": [
+        {
+          "title": "百度百科：原油评价",
+          "url": "https://baike.baidu.com/item/原油评价"
+        },
+        {
+          "title": "B站视频搜索：原油评价 原油加工方案",
+          "url": "https://search.bilibili.com/all?keyword=原油评价"
+        }
+      ],
+      "level": 2
+    },
+    {
+      "id": 10,
+      "q": "沥青的四组分（SARA）分析是将沥青分离为哪四个组分？",
+      "options": [
+        "饱和分、芳香分、胶质、沥青质",
+        "石蜡、烯烃、芳烃、杂环化合物",
+        "轻油、重油、蜡、碳青质",
+        "直链烃、支链烃、环烷烃、胶质"
+      ],
+      "answer": 0,
+      "explanation": "四组分分析（SARA）用色谱法将沥青分为饱和分（Saturates）、芳香分（Aromatics）、胶质（Resins）和沥青质（Asphaltenes）。胶质→沥青质的转化与老化相关；沥青质含量高的沥青高温性能好但低温易脆，各组分比例决定沥青的胶体结构类型。",
+      "references": [
+        {
+          "title": "百度百科：沥青质",
+          "url": "https://baike.baidu.com/item/沥青质"
+        },
+        {
+          "title": "B站视频搜索：沥青四组分 SARA分析",
+          "url": "https://search.bilibili.com/all?keyword=沥青四组分分析"
+        }
+      ],
+      "level": 5
+    }
+  ]
+}
