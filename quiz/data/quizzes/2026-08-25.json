@@ -1,0 +1,368 @@
+{
+  "date": "2026-08-25",
+  "title": "沥青每日答题 2026-08-25",
+  "topic": "沥青试验操作与原油评价",
+  "plainSummary": "今天题目围绕「沥青试验操作与原油评价」展开，从针入度、软化点、延度三大基础指标的定义与标准条件，逐步进阶到仪器操作细节、TFOT/RTFOT老化、PG分级、DSR/BBR流变评价，最后以针入度指数PI、当量软化点T800计算和JTG F40规范综合判定收尾。建议先答基础概念，再挑战仪器参数与计算题。",
+  "questions": [
+    {
+      "id": 1,
+      "level": 1,
+      "q": "沥青针入度试验中，针入度的单位是？",
+      "options": [
+        "0.01mm",
+        "0.1mm",
+        "1mm",
+        "10mm"
+      ],
+      "answer": 1,
+      "explanation": "依据GB/T 4509-2010，针入度是以标准针在规定条件（25℃、100g、5s）下垂直贯入沥青试样的深度表示，单位为0.1mm。",
+      "plain": "想象用一根标准针戳沥青，看它扎进去多深。深度的基本单位不是1毫米，而是「0.1毫米」，所以测出来68针入度，实际只扎进去了6.8mm。",
+      "references": [
+        {
+          "title": "针入度测定计 科普中国",
+          "url": "https://www.kepuchina.cn/article/articleinfo?business_type=100&ar_id=260367"
+        },
+        {
+          "title": "针入度试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青针入度试验操作"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "q": "沥青软化点反映沥青的哪项性能？",
+      "options": [
+        "低温抗裂性",
+        "高温稳定性",
+        "施工和易性",
+        "疲劳耐久性"
+      ],
+      "answer": 1,
+      "explanation": "软化点是沥青由半固态向粘流态转变的温度，反映沥青在高温条件下抵抗变形的能力，即高温稳定性。",
+      "plain": "软化点就是沥青「开始变软」的温度。温度越高才变软，说明它夏天越不容易被晒软、被车轮压出车辙，高温稳定性越好。",
+      "references": [
+        {
+          "title": "软化点(环球法)检测 中析研究所",
+          "url": "https://www.yjssi.com/showinfo-4-69950-0.html"
+        },
+        {
+          "title": "沥青软化点测定 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青软化点环球法"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "q": "沥青延度主要评价沥青的哪项能力？",
+      "options": [
+        "抗老化",
+        "低温抗裂",
+        "高温抗车辙",
+        "抗水损害"
+      ],
+      "answer": 1,
+      "explanation": "延度是沥青试样在规定温度下以规定拉伸速度拉伸至断裂时的长度，主要评价沥青的低温柔性和抗裂性能。",
+      "plain": "延度就像拉橡皮筋，看能拉多长才断。拉得越长，沥青越柔韧，冬天路面收缩时越不容易开裂，所以它是低温抗裂的重要指标。",
+      "references": [
+        {
+          "title": "沥青延度测定 中析检测",
+          "url": "https://test.yjssishiliu.com/shiyouhuagong/2613.html"
+        },
+        {
+          "title": "延度试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青延度试验"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "level": 2,
+      "q": "沥青针入度标准试验条件为？",
+      "options": [
+        "25℃、100g、5s",
+        "15℃、50g、10s",
+        "30℃、100g、5s",
+        "25℃、50g、10s"
+      ],
+      "answer": 0,
+      "explanation": "依据GB/T 4509-2010/JTG E20 T0604，针入度标准试验条件为温度25±0.1℃、标准针与附加砝码总质量100±0.05g、贯入时间5s。",
+      "plain": "针入度试验就像「规定动作」：温度固定在25℃，标准针加砝码正好100g，让针自由下落5秒后读数。三个条件缺一不可，否则数据没法互相比较。",
+      "references": [
+        {
+          "title": "基于GB/T 4509-2010的石油沥青针入度测定技术应用",
+          "url": "https://www.chem17.com/tech_news/detail/4544544.html"
+        },
+        {
+          "title": "针入度试验标准 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=GB4509针入度标准条件"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "level": 2,
+      "q": "环球法测定沥青软化点时，标准升温速率为？",
+      "options": [
+        "2℃/min",
+        "5℃/min",
+        "10℃/min",
+        "任意恒定"
+      ],
+      "answer": 1,
+      "explanation": "依据GB/T 4507-2014/JTG E20 T0606，软化点试验升温速率应为5℃/min±0.5℃/min；升温过快测得值偏高，过慢则偏低。",
+      "plain": "软化点试验要「匀速加热」，标准是每分钟升5℃。升太快，沥青还没反应过来就软了，测得偏低；升太慢，热透了才记录，测得偏高。",
+      "references": [
+        {
+          "title": "沥青软化点测定器(环球法)使用说明",
+          "url": "https://www.chem17.com/Technology/detail/585592.html"
+        },
+        {
+          "title": "软化点试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青软化点试验操作"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "q": "沥青延度试验的标准拉伸速度为？",
+      "options": [
+        "1cm/min",
+        "5cm/min",
+        "10cm/min",
+        "50cm/min"
+      ],
+      "answer": 1,
+      "explanation": "依据GB/T 4508-2010/JTG E20 T0605，延度试验非特殊说明时拉伸速度为5cm/min±0.25cm/min。",
+      "plain": "延度仪就像一台慢速拉力机，把八字形沥青试样以每分钟5厘米的速度拉长，直到拉断，看它能拉多长。速度变了，结果会明显不同。",
+      "references": [
+        {
+          "title": "GB/T 4508-2025 沥青延度测定法",
+          "url": "https://ima.qq.com/wiki/?shareId=fe8a115e410b6dff03b66a821af76609917484a4b20c90b3de87f4a16348ab74"
+        },
+        {
+          "title": "延度试验速度 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青延度仪拉伸速度"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "level": 3,
+      "q": "GB/T 4509-2010规定，同一沥青试样针入度平行试验应至少测定几次？",
+      "options": [
+        "1次",
+        "2次",
+        "3次",
+        "5次"
+      ],
+      "answer": 2,
+      "explanation": "依据GB/T 4509-2010，每组试样应完成3次平行试验，取平均值作为结果；各测点间及距盛样皿边缘距离不小于10mm，以减少偶然误差。",
+      "plain": "做针入度不能只戳一次，要戳3个不同的点，互相离远点。取平均值才能减少偶然误差，就像投篮不能只投一个就定命中率。",
+      "references": [
+        {
+          "title": "针入度试验 中析研究所",
+          "url": "https://www.yjsjiu.com/jiance/qitajiance/1240.html"
+        },
+        {
+          "title": "针入度仪操作 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青针入度仪操作"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "level": 3,
+      "q": "沥青软化点试验中，标准钢球的直径和质量分别为？",
+      "options": [
+        "9.53mm、3.50g",
+        "10.0mm、5.0g",
+        "9.53mm、5.0g",
+        "10.0mm、3.50g"
+      ],
+      "answer": 0,
+      "explanation": "依据GB/T 4507-2014/JTG E20 T0606，软化点试验标准钢球直径为9.53mm，质量为3.50±0.05g。",
+      "plain": "软化点试验里，钢球是「压垮」沥青的砝码。它的尺寸和质量必须严格标准：直径9.53mm、重3.50g，换别的大小结果就不准。",
+      "references": [
+        {
+          "title": "沥青软化点测定国家标准 中析研究所",
+          "url": "https://www.yjswu.com/cailiaoshiyanshi/qitacailiaojiance/167454.html"
+        },
+        {
+          "title": "软化点钢球规格 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青软化点钢球9.53"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "level": 3,
+      "q": "克利夫兰开口杯法测定沥青闪点时，接近闪点时的升温速率应控制在？",
+      "options": [
+        "14~17℃/min",
+        "5.5℃/min±0.5℃/min",
+        "2℃/min",
+        "10℃/min"
+      ],
+      "answer": 1,
+      "explanation": "依据JTG E20 T0611，开始加热可快速升温，当温度升至预期闪点前28℃时，升温速率应控制在5.5℃/min±0.5℃/min，并每升高2℃点火一次。",
+      "plain": "测闪点要先快后慢。快到闪点前28度，就要像「慢火炖汤」一样控制升温，否则一闪而过的蓝色火焰很容易被错过，导致结果偏高。",
+      "references": [
+        {
+          "title": "克利夫兰开口闪点试验器测定道路沥青闪点与燃点方法",
+          "url": "https://m.instrument.com.cn/netshow/SH103372/solution-s984658.html"
+        },
+        {
+          "title": "沥青闪点试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青闪点克利夫兰开口杯"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "level": 4,
+      "q": "关于薄膜加热试验(TFOT)与旋转薄膜加热试验(RTFOT)，下列说法正确的是？",
+      "options": [
+        "TFOT试验温度为163℃±1℃，时间为5h；RTFOT温度为163℃±0.5℃，时间为75min",
+        "TFOT和RTFOT的温度和时间完全相同",
+        "RTFOT的转盘转速为5.5r/min",
+        "TFOT使用玻璃瓶，RTFOT使用不锈钢盘"
+      ],
+      "answer": 0,
+      "explanation": "依据JTG E20 T0609/T0610，TFOT：163℃±1℃、5h、沥青膜厚约3.2mm、转盘转速5.5±1r/min；RTFOT：163℃±0.5℃、75min、空气流量4000±200mL/min、转盘转速15±0.2r/min。RTFOT更接近实际拌和老化。",
+      "plain": "TFOT是传统「平底锅」式老化，试样铺在盘里烘5小时；RTFOT是「旋转瓶子」式，沥青在玻璃瓶里边转边吹热风，75分钟就能模拟更强的短期老化。",
+      "references": [
+        {
+          "title": "薄膜加热试验 百度百科",
+          "url": "https://baike.baidu.com/item/薄膜加热试验/53721639"
+        },
+        {
+          "title": "TFOT与RTFOT对比 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青旋转薄膜烘箱RTFOT"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "level": 4,
+      "q": "沥青PG分级PG64-22中，数字64和-22分别表示？",
+      "options": [
+        "最高路面设计温度不超过64℃，最低路面设计温度不低于-22℃",
+        "沥青软化点为64℃，脆点为-22℃",
+        "高温试验温度64℃，低温试验温度-22℃",
+        "7天平均气温64℃，年极端低温-22℃"
+      ],
+      "answer": 0,
+      "explanation": "依据AASHTO M320/Superpave规范，PG X-Y中X表示沥青适用最高路面设计温度不超过X℃，Y表示最低路面设计温度不低于-Y℃。高温等级以7天最高平均路面温度为依据，低温等级以年极端最低路面温度为依据。",
+      "plain": "PG分级就是给沥青贴「气候适应标签」。PG64-22表示这沥青最高能耐64℃的路面高温，最低能扛-22℃的低温，适合温带地区使用。",
+      "references": [
+        {
+          "title": "沥青PG分级体系解析",
+          "url": "https://www.lutai0477.cn"
+        },
+        {
+          "title": "PG分级 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青PG分级Superpave"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "level": 4,
+      "q": "动态剪切流变仪(DSR)测得的G*/sinδ主要用于评价沥青的哪项性能？",
+      "options": [
+        "低温抗裂",
+        "疲劳开裂",
+        "高温抗车辙",
+        "施工和易性"
+      ],
+      "answer": 2,
+      "explanation": "依据AASHTO M320，DSR测复合剪切模量G*和相位角δ。原样及RTFOT残留沥青分别要求G*/sinδ≥1.0kPa、≥2.2kPa，用于评价高温抗车辙性能；PAV残留要求G*·sinδ≤5000kPa，用于评价疲劳开裂。",
+      "plain": "DSR就像给沥青做「扭一扭」体检。G*/sinδ越大，沥青越硬越弹，夏天越不容易被车轮压出车辙；而G*·sinδ则和长期疲劳开裂有关。",
+      "references": [
+        {
+          "title": "Asphalt Binder PG Tests FHWA",
+          "url": "https://www.fhwa.dot.gov/pavement/materials/hmec/pubs/module_f/lab_manual_asphalt.pdf"
+        },
+        {
+          "title": "DSR动态剪切流变仪 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青DSR试验"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "level": 5,
+      "q": "某沥青针入度-温度回归方程为lgP=K+A·T，回归系数A=0.034。按公式PI=(20-500A)/(1+50A)计算，其针入度指数PI约为？",
+      "options": [
+        "-1.0",
+        "1.0",
+        "2.0",
+        "3.0"
+      ],
+      "answer": 1,
+      "explanation": "PI=(20-500×0.034)/(1+50×0.034)=(20-17)/(1+1.7)=3/2.7≈1.11，约为1.0。PI越大，沥青温度敏感性越低。",
+      "plain": "针入度指数PI就像沥青的「脾气指数」，看它的软硬随温度变化大不大。把A=0.034代入公式，上面20-17=3，下面1+1.7=2.7，一算约等于1.11，接近1.0。",
+      "references": [
+        {
+          "title": "针入度指数计算 科普中国",
+          "url": "https://www.kepuchina.cn/article/articleinfo?ar_id=357725&business_type=100&classify=0"
+        },
+        {
+          "title": "针入度指数计算 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青针入度指数PI计算"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "level": 5,
+      "q": "已知某沥青针入度-温度回归方程为lgP=K+0.033T，常数项K=0.50。则其当量软化点T800约为？（公式：T800=(lg800-K)/A，lg800≈2.903）",
+      "options": [
+        "55℃",
+        "60℃",
+        "73℃",
+        "85℃"
+      ],
+      "answer": 2,
+      "explanation": "T800=(lg800-K)/A=(2.903-0.50)/0.033=2.403/0.033≈72.8℃，约为73℃。当量软化点表示针入度为800(0.1mm)时对应的温度，反映沥青高温性能。",
+      "plain": "当量软化点T800就是假设针入度达到800时的温度。把K=0.50、A=0.033代入公式，就像解一道「反推温度计」的题：2.903减0.5，再除以0.033，约等于73℃。",
+      "references": [
+        {
+          "title": "针入度指数与当量软化点 科普中国",
+          "url": "https://cloud.kepuchina.cn/newSearch/imgText?id=6974132864811556864"
+        },
+        {
+          "title": "T800计算 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=沥青当量软化点T800"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "level": 5,
+      "q": "某70号道路石油沥青经检测：25℃针入度68（0.1mm），软化点47℃，10℃延度95cm，闪点245℃，RTFOT后质量变化-0.3%，残留物针入度比62%。按JTG F40-2004中A级70号技术要求，下列结论正确的是？",
+      "options": [
+        "全部指标合格",
+        "闪点不合格（A级70号要求≥260℃）",
+        "软化点不合格（要求≥46℃）",
+        "10℃延度不合格（要求≥20cm）"
+      ],
+      "answer": 1,
+      "explanation": "JTG F40-2004 A级70号技术要求：针入度60~80(0.1mm)、软化点≥46℃、10℃延度≥20cm、闪点≥260℃、RTFOT质量变化≤±0.8%、残留针入度比≥61%。题中闪点245℃<260℃，故闪点不合格；其余指标均合格。",
+      "plain": "这道题像做「体检报告判读」。70号A级沥青有及格线：针入度68在60~80内，软化点47过46的线，延度95远超20，但闪点245没达到260的门槛，所以判定闪点不合格。",
+      "references": [
+        {
+          "title": "JTG F40-2004 道路石油沥青技术要求 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=JTG+F40+70号沥青技术要求"
+        },
+        {
+          "title": "沥青闪点测试 中析研究所",
+          "url": "https://www.yjsshisan.com/testinfo/127572.html"
+        }
+      ]
+    }
+  ]
+}
