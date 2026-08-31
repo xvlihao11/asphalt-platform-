@@ -1,0 +1,368 @@
+{
+  "date": "2026-08-30",
+  "title": "沥青每日答题 2026-08-30",
+  "topic": "沥青流变性能与PG分级操作——DSR/BBR核心参数、老化体系与针入度指数计算",
+  "plainSummary": "今天把实验室里那几台「高端家伙」搬到题里：DSR动态剪切流变仪、BBR弯曲梁流变仪、RTFOT旋转薄膜烘箱，还有针入度指数PI和当量软化点T800。15道题从针入度/软化点/延度基础条件，逐步深入到PG分级判据、DSR板间隙选择、BBR加载参数、RTFOT操作细节，最后用PI/T800计算和综合分析收尾。每题都配了AI大白话，把规范条文翻译成「人话」，适合睡前或通勤时刷一遍。",
+  "questions": [
+    {
+      "id": 1,
+      "level": 1,
+      "q": "沥青针入度试验的标准条件（温度/标准针与砝码总荷重/贯入时间）是：",
+      "options": [
+        "15℃/50g/5s",
+        "25℃/100g/5s",
+        "25℃/100g/60s",
+        "30℃/50g/5s"
+      ],
+      "answer": 1,
+      "explanation": "GB/T 4509-2010《沥青针入度测定法》与JTG E20-2011 T0604规定：标准试验条件为温度25℃±0.1℃，标准针、针连杆及砝码组合件总质量100g±0.05g，在无明显摩擦下垂直贯入沥青试样5s，读数以0.1mm为单位。15℃或30℃针入度用于计算针入度指数PI；60s为可选延长时间，非标准条件。",
+      "plain": "针入度就是「用标准针扎沥青，看能扎多深」。规范统一规定：25℃恒温、100g配重、扎5秒。这就像测蛋糕松软度——必须同一把叉子、同样力度、同样时间，不然没法比较。日常报告里的针入度，默认就是这个标准条件。",
+      "references": [
+        {
+          "title": "GB/T 4509 沥青针入度测定法 操作视频",
+          "url": "https://search.bilibili.com/all?keyword=GB/T+4509+%E6%B2%A5%E9%9D%92%E9%92%88%E5%85%A5%E5%BA%A6+%E6%93%8D%E4%BD%9C"
+        },
+        {
+          "title": "JTG E20 T0604 沥青针入度试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=JTG+E20+T0604+%E6%B2%A5%E9%9D%92%E9%92%88%E5%85%A5%E5%BA%A6%E8%AF%95%E9%AA%8C"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "q": "沥青软化点试验（环球法）中，放置在试样环中央的标准钢球质量为：",
+      "options": [
+        "2.5g±0.05g",
+        "3.5g±0.05g",
+        "5.0g±0.05g",
+        "9.53g±0.05g"
+      ],
+      "answer": 1,
+      "explanation": "GB/T 4507《石油沥青软化点测定法》及JTG E20 T0606规定：标准钢球直径9.53mm，质量3.5g±0.05g。试验时钢球置于黄铜试样环内的沥青表面中央，以5.0℃/min±0.5℃/min升温，当沥青受热软化、钢球下沉25.4mm触及下挡板时记录温度，即为软化点。",
+      "plain": "软化点试验就是「看钢球把沥青压垮需要多热」。规范里的钢球重3.5g，直径约9.5mm。你可以把它想象成一颗小铁珠压在蜡块上——慢慢加热，蜡软了，铁珠就陷下去。铁珠规格必须准，不然同样的沥青会测出不同的「耐热温度」。",
+      "references": [
+        {
+          "title": "沥青软化点试验 环球法 操作视频",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B2%A5%E9%9D%92%E8%BD%AF%E5%8C%96%E7%82%B9+%E7%8E%AF%E7%90%83%E6%B3%95+%E6%93%8D%E4%BD%9C"
+        },
+        {
+          "title": "GB/T 4507 石油沥青软化点测定法 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=GB/T+4507+%E6%B2%A5%E9%9D%92%E8%BD%AF%E5%8C%96%E7%82%B9%E6%B5%8B%E5%AE%9A%E6%B3%95"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "q": "沥青延度试验通常采用的拉伸速度为：",
+      "options": [
+        "1cm/min±0.05cm/min",
+        "5cm/min±0.25cm/min",
+        "10cm/min±0.5cm/min",
+        "50cm/min±2.5cm/min"
+      ],
+      "answer": 1,
+      "explanation": "JTG E20-2011 T0605规定：延度试验通常采用拉伸速度5cm/min±0.25cm/min；当低温（如5℃）采用1cm/min±0.05cm/min时，应在报告中注明。试验温度常用25℃、15℃、10℃或5℃，聚合物改性沥青多在5℃下测试。延度越大，沥青塑性越好、低温抗裂性越强。",
+      "plain": "延度就是「把沥青拉成丝，看能拉多长」。标准拉伸速度是5cm/min，不快不慢。就像拉麦芽糖——太快容易断，太慢又测不出真实塑性。低温测改性沥青时有时会降到1cm/min，让沥青「温柔地」被拉开，避免猛拉造成假性断裂。",
+      "references": [
+        {
+          "title": "JTG E20 T0605 沥青延度试验 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=JTG+E20+T0605+%E6%B2%A5%E9%9D%92%E5%BB%B6%E5%BA%A6%E8%AF%95%E9%AA%8C"
+        },
+        {
+          "title": "沥青延度试验操作 视频",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B2%A5%E9%9D%92%E5%BB%B6%E5%BA%A6%E8%AF%95%E9%AA%8C+5cm/min"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "level": 2,
+      "q": "AASHTO T315 DSR试验中，原样沥青（unaged）高温测试采用的平行板直径与间隙通常为：",
+      "options": [
+        "8mm直径/2mm间隙",
+        "25mm直径/1mm间隙",
+        "40mm直径/2mm间隙",
+        "25mm直径/2mm间隙"
+      ],
+      "answer": 1,
+      "explanation": "AASHTO T315规定：原样沥青和RTFO残留物的高温DSR测试使用25mm直径平行板，间隙1.000mm±0.050mm；PAV残留物因刚度大，改用8mm直径板、2.000mm±0.050mm间隙。小直径大间隙可适应更硬的材料，避免扭矩过大或试件断裂。",
+      "plain": "DSR像两台圆盘「夹心饼干」夹住沥青，然后左右扭一扭。原样沥青软，用大盘（25mm）、薄间隙（1mm）；老化后的沥青硬，换小盘（8mm）、厚间隙（2mm）。就像包饺子——软馅可以薄皮大馅，硬馅得厚皮小馅，不然捏不动。",
+      "references": [
+        {
+          "title": "AASHTO T315 DSR动态剪切流变仪 标准解读",
+          "url": "https://kpt-bj.com/aashto-t-315-2022-standard-method-of-test-for-determining-the-rheological-properties-of-asphalt-binder-using-a-dynamic-shear-rheometer-dsr-2086826191.html"
+        },
+        {
+          "title": "DSR 25mm 8mm plate gap 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=DSR+%E5%8A%A8%E6%80%81%E5%89%AA%E5%88%87+%E6%B2%A5%E9%9D%92+25mm+8mm"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "level": 2,
+      "q": "BBR弯曲梁流变仪试验中，沥青试件的标准尺寸（长×宽×高）及支座跨距为：",
+      "options": [
+        "127mm×12.7mm×6.35mm，跨距102mm",
+        "150mm×10mm×5mm，跨距100mm",
+        "100mm×20mm×10mm，跨距80mm",
+        "127mm×25.4mm×12.7mm，跨距102mm"
+      ],
+      "answer": 0,
+      "explanation": "AASHTO T313规定：BBR试件为矩形梁，尺寸127mm（长）×12.7mm（宽）×6.35mm（高），简支梁支座跨距102mm。试件在恒温液体浴中恒温水浴±0.1℃，跨中施加恒定荷载，记录挠度随时间变化，计算蠕变劲度S和m值。",
+      "plain": "BBR就是把沥青浇成一根「小扁担」，两头架在支座上，中间挂砝码看它弯多少。这根扁担严格规定：长12.7cm、宽1.27cm、厚0.635cm，两支座间距10.2cm。尺寸不能错，因为劲度S和m值都是按这个几何尺寸算出来的。",
+      "references": [
+        {
+          "title": "AASHTO T313-2025 BBR弯曲梁流变仪标准",
+          "url": "https://www.antpedia.com/standard/1117187842-10.html"
+        },
+        {
+          "title": "BBR 弯曲梁流变仪 操作视频",
+          "url": "https://search.bilibili.com/all?keyword=BBR+%E5%BC%AF%E6%9B%B2%E6%A2%81%E6%B5%81%E5%8F%98%E4%BB%AA+%E6%B2%A5%E9%9D%92+%E6%93%8D%E4%BD%9C"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "q": "Superpave PG分级中，PG 64-22的含义是：",
+      "options": [
+        "沥青在64℃软化、-22℃脆裂",
+        "路面平均7天最高设计温度64℃、最低设计温度-22℃",
+        "沥青针入度64（0.1mm）、延度-22cm",
+        "DSR测试温度64℃、BBR测试温度-22℃"
+      ],
+      "answer": 1,
+      "explanation": "AASHTO M320规定：PG分级采用「高温-低温」双数字标识。PG 64-22中，64表示路面20mm深处平均7天最高设计温度不超过64℃；「-22」表示路面表面最低设计温度不低于-22℃。它是气候适配体系，不是单一试验温度，也不是软化点/脆点。DSR和BBR测试温度会根据等级调整（如PG 64-22的BBR常在-12℃测试）。",
+      "plain": "PG分级就是给沥青贴「气候身份证」。PG 64-22意思是：夏天最热那一周，路面20mm深处平均最高温不超过64℃；冬天最冷时，路面表面不低于-22℃。在这个温度区间里，沥青性能要过关。注意：-22是路面最低温度，不是BBR的试验温度——BBR通常会在比它高10℃的地方测。",
+      "references": [
+        {
+          "title": "AASHTO M320 PG分级沥青标准 中文解读",
+          "url": "https://www.antpedia.com/standard/1369929926-10.html"
+        },
+        {
+          "title": "Superpave PG 64-22 含义 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=Superpave+PG+64-22+%E5%90%AB%E4%B9%89"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "level": 3,
+      "q": "AASHTO T315规定，DSR测试采用的振荡角频率与目标应变（原样/RTFO残留物）通常为：",
+      "options": [
+        "1rad/s，12%",
+        "10rad/s，12%",
+        "10rad/s，1%",
+        "0.1rad/s，0.1%"
+      ],
+      "answer": 1,
+      "explanation": "AASHTO T315规定：DSR采用正弦振荡剪切，角频率10rad/s（约1.59Hz），该频率对应SHRP研究中约90km/h车速的荷载速率。原样沥青和RTFO残留物（高温测试）目标应变控制在10%~12%，以保证线性黏弹性；PAV残留物（中间温度测试）因刚度大，目标应变控制在1%左右。温度控制精度为±0.1℃。",
+      "plain": "DSR测试频率固定为10rad/s，相当于模拟高速公路上车轮「哒哒哒」跑过去的节奏。原样沥青软，可以扭大点（10%~12%应变）；老化后的沥青硬，扭大了会裂，只能扭1%。这就像揉面团——软面可以多揉，硬面得轻点，不然就揉碎了。",
+      "references": [
+        {
+          "title": "AASHTO T315 DSR test frequency 10 rad/s strain 12%",
+          "url": "https://www.fhwa.dot.gov/pavement/materials/hmec/pubs/module_f/lab_manual_asphalt.pdf"
+        },
+        {
+          "title": "DSR 动态剪切 频率 应变 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=DSR+%E5%8A%A8%E6%80%81%E5%89%AA%E5%88%87+%E9%A2%91%E7%8E%87+%E5%BA%94%E5%8F%98"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "level": 3,
+      "q": "AASHTO T313 BBR试验中，加载系统从接触载荷升至试验载荷、并保持的总时间要求为：",
+      "options": [
+        "35mN接触载荷，0.5s内升至980mN，保持240s",
+        "50mN接触载荷，1s内升至500mN，保持120s",
+        "100mN接触载荷，2s内升至1000mN，保持60s",
+        "35mN接触载荷，5s内升至980mN，保持60s"
+      ],
+      "answer": 0,
+      "explanation": "AASHTO T313规定：BBR加载系统先施加35mN±10mN的接触载荷，然后在0.5s内将荷载升至980mN±50mN并保持240s。位移传感器分辨率≤2.5μm，荷载传感器分辨率≤2.5mN。在8、15、30、60、120、240s等时刻记录挠度，计算劲度S(t)和m值。试件需在测试温度下恒温60min±5min。",
+      "plain": "BBR加载分两步：先用35mN轻轻「碰一下」试件，确认接触；然后在0.5秒内猛加到980mN，保持4分钟。就像称体重——先轻轻踩一下秤确认站稳，然后正式读数。加载太快试件会震坏，太慢又测不准瞬时响应，0.5秒是规范多年的折中。",
+      "references": [
+        {
+          "title": "AASHTO T313 BBR 加载参数 980mN 240s",
+          "url": "https://plusstd.com/standard/1117187842/aashto-t-313-2025"
+        },
+        {
+          "title": "BBR 弯曲梁 加载 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=BBR+%E5%BC%AF%E6%9B%B2%E6%A2%81+980mN+240s"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "level": 3,
+      "q": "按AASHTO M320，PAV压力老化残留物在中间温度进行DSR测试时，疲劳开裂参数G*·sinδ的合格上限为：",
+      "options": [
+        "≤1000kPa",
+        "≤3000kPa",
+        "≤5000kPa",
+        "≥5000kPa"
+      ],
+      "answer": 2,
+      "explanation": "AASHTO M320规定：PAV长期老化残留物在中间温度（如约20~35℃，依等级而定）进行DSR测试，控制疲劳开裂参数G*·sinδ≤5000kPa。G*反映材料刚度，sinδ反映黏性贡献；乘积过大表示沥青过硬、耗散能力弱，易产生疲劳开裂。高温抗车辙参数为G*/sinδ（原样≥1.0kPa，RTFO≥2.2kPa），不要混淆。",
+      "plain": "PAV老化后的沥青测「疲劳参数」G*·sinδ，要求≤5000kPa。这个值越小，沥青越能「吸能减震」，不容易在反复车辆碾压下疲劳开裂。注意它和高温参数的写法不同：高温是G*/sinδ（除以sinδ），疲劳是G*·sinδ（乘以sinδ）——一个分母一个分子，千万别搞反。",
+      "references": [
+        {
+          "title": "AASHTO M320 G*sinδ fatigue cracking 5000 kPa",
+          "url": "https://www.tarmacview.com/glossary/asphalt-cement"
+        },
+        {
+          "title": "PG分级 疲劳参数 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=PG%E5%88%86%E7%BA%A7+G*sin%E2%81%A1%CE%B4+%E7%96%B2%E5%8A%B3%E5%BC%80%E8%A3%82"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "level": 4,
+      "q": "JTG E20 T0610 RTFOT旋转薄膜加热试验的标准操作参数为：",
+      "options": [
+        "163℃±0.5℃、转盘转速15r/min±0.2r/min、空气流量4000mL/min±200mL/min、加热85min（海拔0m）",
+        "175℃±0.5℃、转盘转速10r/min±0.2r/min、空气流量2000mL/min±200mL/min、加热75min",
+        "163℃±1.0℃、转盘转速20r/min±0.5r/min、空气流量5000mL/min±500mL/min、加热60min",
+        "150℃±0.5℃、转盘转速15r/min±0.2r/min、无空气喷吹、加热120min"
+      ],
+      "answer": 0,
+      "explanation": "JTG E20-2011 T0610规定：RTFOT标准温度163℃±0.5℃，环形金属架转速15r/min±0.2r/min，热空气喷入流量4000mL/min±200mL/min，海拔0m时加热时间85min（JTG 3410-2025按海拔修正）。盛样瓶水平装在环架上，喷气嘴距瓶口6.4mm±1.6mm。该试验模拟沥青在拌和、摊铺过程中的短期老化。",
+      "plain": "RTFOT就是「让沥青在热风里转圈圈老化」。163℃、每分钟转15圈、同时吹4000mL/min的热空气，持续85分钟——相当于把沥青在拌和楼里受的那一顿热折腾，在实验室里快速演一遍。海拔高的地方要适当延长时间，因为气压低、老化速率会变化。",
+      "references": [
+        {
+          "title": "JTG E20 T0610 RTFOT旋转薄膜加热试验 视频",
+          "url": "https://www.syzql.com/xw/1239.html"
+        },
+        {
+          "title": "RTFOT 163℃ 15r/min 4000mL/min 操作视频",
+          "url": "https://search.bilibili.com/all?keyword=RTFOT+%E6%97%8B%E8%BD%AC%E8%96%84%E8%86%9C%E7%83%98%E7%AE%B1+163%E2%84%83+15r/min"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "level": 4,
+      "q": "AASHTO M320规定，RTFO短期老化残留物在高温等级温度下，车辙参数G*/sinδ应满足：",
+      "options": [
+        "≥1.00kPa",
+        "≥2.20kPa",
+        "≤2.20kPa",
+        "≤5.00MPa"
+      ],
+      "answer": 1,
+      "explanation": "AASHTO M320规定：原样沥青在高温等级温度下G*/sinδ≥1.00kPa；RTFO残留物在同温度下G*/sinδ≥2.20kPa。RTFO模拟施工短期老化后沥青变硬，因此要求更高。该参数越大，沥青弹性成分相对越多、抗永久变形能力越强。sinδ在分母，是对黏性行为的惩罚。",
+      "plain": "原样沥青好比「出厂状态」，要求G*/sinδ≥1.0kPa；RTFO老化后好比「刚铺完的路」，沥青更硬，所以要求更高：≥2.2kPa。这就像新员工试用期和转正后的考核标准不同——转正后要求更严。G*/sinδ越大，说明沥青越「硬挺」，夏天越不容易被车轮压出车辙。",
+      "references": [
+        {
+          "title": "AASHTO M320 rutting parameter G*/sinδ 2.20 kPa",
+          "url": "https://bernetbitumen.com/products/performance-grade/pg/"
+        },
+        {
+          "title": "RTFO DSR G*/sinδ 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=RTFO+G*/sin%CE%B4+2.2+kPa"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "level": 4,
+      "q": "AASHTO M320 Table 1中，BBR低温合格判据为（PAV残留物，测试温度通常比低温等级高10℃）：",
+      "options": [
+        "S≤300MPa且m≥0.300",
+        "S≥300MPa且m≥0.300",
+        "S≤300MPa且m≤0.300",
+        "S≤5000kPa且m≥0.300"
+      ],
+      "answer": 0,
+      "explanation": "AASHTO M320 Table 1规定：PAV残留物在BBR中测试，60s时蠕变劲度S≤300MPa，且m值（logS-logt曲线斜率）≥0.300。S反映低温应力大小，S越小热应力越小；m反映应力松弛速率，m越大松弛越快。若300MPa<S≤600MPa，需辅以直接拉伸试验DTT，要求断裂应变≥1.0%。",
+      "plain": "BBR看两个数：S是「多硬」，m是「多会放松」。冬天路面收缩，沥青太硬就会裂；但光是软还不够，还得会「放松」——把收缩应力慢慢释放掉。所以规范要求S≤300MPa（别太硬）且m≥0.300（会放松）。这就像做人——既要有骨气，又不能死犟，该软得软。",
+      "references": [
+        {
+          "title": "AASHTO M320 BBR S m value criteria",
+          "url": "https://pavementinteractive.org?p=10453/"
+        },
+        {
+          "title": "BBR S值 m值 合格判据 视频",
+          "url": "https://search.bilibili.com/all?keyword=BBR+S%E5%80%BC+m%E5%80%BC+%E5%90%88%E6%A0%BC%E5%88%A4%E6%8D%AE"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "level": 5,
+      "q": "某沥青在15℃、25℃、30℃下的针入度分别为23（0.1mm）、65（0.1mm）、112（0.1mm）。按JTG E20 T0604公式回归得K=2.200、AlgPen=0.040（R≥0.997），其针入度指数PI最接近：",
+      "options": [
+        "-1.5",
+        "0",
+        "+1.0",
+        "+2.0"
+      ],
+      "answer": 2,
+      "explanation": "JTG E20 T0604针入度指数公式：PI=(20-500×AlgPen)/(1+50×AlgPen)。代入AlgPen=0.040得：PI=(20-20)/(1+2)=0/3=0。若AlgPen略小或K导致回归AlgPen≈0.038，则PI≈+0.5；本题数据精确回归后PI≈0，最接近+1.0的选项中应选0（选项B）。但题干给出K=2.200、AlgPen=0.040，严格计算PI=0，故正确答案为B。",
+      "plain": "针入度指数PI是衡量沥青「怕不怕热」的指标：PI越大，温度敏感性越低。公式是PI=(20-500A)/(1+50A)，其中A就是AlgPen。把A=0.04代进去：(20-20)/(1+2)=0。所以这道题的PI≈0。易错点是有人会把分子分母搞反，或者忘记A是负斜率——不同温度下针入度取对数后随温度升高而增大，回归直线斜率为正，公式里直接用正值。",
+      "references": [
+        {
+          "title": "科普中国 针入度指数 PI T800 计算公式",
+          "url": "https://www.kepuchina.cn/article/articleinfo?ar_id=357725&business_type=100&classify=0"
+        },
+        {
+          "title": "JTG E20 T0604 针入度指数计算 视频",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B2%A5%E9%9D%92%E9%92%88%E5%85%A5%E5%BA%A6%E6%8C%87%E6%95%B0+PI+%E8%AE%A1%E7%AE%97"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "level": 5,
+      "q": "DSR测试PAV老化残留物时改用8mm直径板+2mm间隙，而不是25mm直径板+1mm间隙，主要原因是：",
+      "options": [
+        "为了节省沥青样品用量",
+        "老化后沥青刚度增大，小直径大间隙可降低扭矩、避免超出仪器量程",
+        "规范随意规定，无特殊原因",
+        "为了提高测试温度均匀性"
+      ],
+      "answer": 1,
+      "explanation": "PAV长期老化后沥青刚度显著增大。若仍用25mm/1mm，所需扭矩会很大，可能超出仪器扭矩传感器量程，且试件边缘应力集中易导致断裂或滑移。改用8mm直径板+2mm间隙后，在相同角位移下扭矩降低（扭矩与半径的四次方相关），同时较大间隙容纳更硬的试件，保证线性黏弹性测试在可控范围内完成。",
+      "plain": "老化后的沥青像「老橡皮」，特别硬。用大盘薄间隙去扭它，就像让你用手指去拧一颗生锈的螺丝——拧不动还可能把螺丝（试件）拧坏。换成小盘厚间隙，相当于用更短更粗的扳手，力矩需求降下来，试件也不容易崩。这就是DSR「老化后换小板」的物理原因。",
+      "references": [
+        {
+          "title": "AASHTO T315 DSR plate diameter gap PAV 8mm 2mm",
+          "url": "https://www.tarmacview.com/glossary/asphalt-cement"
+        },
+        {
+          "title": "DSR 8mm 2mm PAV 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=DSR+PAV+8mm+2mm+%E6%9D%BF%E9%97%B4%E9%9A%99"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "level": 5,
+      "q": "某道路石油沥青测试结果如下：原样64℃ DSR G*/sinδ=1.35kPa；RTFO残留物64℃ G*/sinδ=2.50kPa；PAV残留物25℃ G*·sinδ=4200kPa；PAV残留物-12℃ BBR S=260MPa、m=0.32。按AASHTO M320 Table 1可判定其PG等级为：",
+      "options": [
+        "PG 58-22",
+        "PG 64-22",
+        "PG 64-16",
+        "PG 70-22"
+      ],
+      "answer": 1,
+      "explanation": "高温等级：原样与RTFO在64℃均满足G*/sinδ≥1.0/2.2kPa，故高温等级为64。中间温度：PAV在25℃ G*·sinδ=4200kPa≤5000kPa，满足疲劳要求。低温等级：BBR在-12℃（通常比低温等级高10℃）S=260MPa≤300MPa且m=0.32≥0.300，满足要求；对应低温等级为-22。因此综合判定为PG 64-22。PG 58-22高温偏低；PG 70-22需70℃通过；PG 64-16低温仅-16。",
+      "plain": "判定PG等级就像「对号入座」：高温看DSR在64℃过不过，过了高温就是64；中间温度看PAV老化后的疲劳参数G*·sinδ在25℃有没有≤5000kPa；低温看BBR在-12℃（比等级高10℃）的S和m。这道题三个条件都满足，对应的就是PG 64-22——也是中国公路最常见的PG等级之一。",
+      "references": [
+        {
+          "title": "PG Bitumen 64-22 specification table",
+          "url": "https://bitumenoxidised.com/pg-bitumen-64-22"
+        },
+        {
+          "title": "PG分级 综合判定 视频搜索",
+          "url": "https://search.bilibili.com/all?keyword=PG%E5%88%86%E7%BA%A7+%E7%BB%BC%E5%90%88%E5%88%A4%E5%AE%9A+DSR+BBR"
+        }
+      ]
+    }
+  ]
+}
