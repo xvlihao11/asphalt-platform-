@@ -1,0 +1,368 @@
+{
+  "date": "2026-09-20",
+  "title": "沥青每日答题 2026-09-20",
+  "topic": "沥青多重应力蠕变恢复试验（MSCR T0647）规范细节——2025版新增方法、蠕变恢复循环与应力水平、恢复率与Jnr计算、AASHTO M332交通分级判据（依据 JTG 3410-2025）",
+  "plainSummary": "今日主题：沥青多重应力蠕变恢复试验（MSCR，T0647-2025 新增方法）。它是 DSR 的「升级玩法」：给老化后的沥青 反复加力 1 秒、松开 9 秒，看它弹回多少（恢复率 R）、留下多少永久变形（不可恢复蠕变柔量 Jnr），再用 0.1 与 3.2 kPa 两个轻重荷载对比，评价高温抗车辙与应力依赖性，直接对接 AASHTO M332 的 S/H/V/E 交通分级。15 题从概念入门，经应力水平、循环安排、间隙选择等试验细节，到 R 与 Jnr 的计算判读、交通分级限值。建议先作答再对照解析，记牢三组数：1s 蠕变+9s 恢复共 30 个循环 300s；Jnr3.2 限值 4.5/2.0/1.0/0.5 kPa⁻¹；Jnrdiff 上限 75%。",
+  "questions": [
+    {
+      "id": 1,
+      "level": 1,
+      "q": "按 JTG 3410-2025 T0647，多重应力蠕变恢复试验（MSCR）直接测定的两个核心参数是？",
+      "options": [
+        "复数剪切模量 G* 与相位角 δ",
+        "车辙因子 G*/sinδ 与疲劳因子 G*·sinδ",
+        "恢复率 R 与不可恢复蠕变柔量 Jnr",
+        "蠕变劲度 S 与蠕变速率 m 值"
+      ],
+      "answer": 2,
+      "explanation": "T0647 第1.1条：本方法适用于多重应力蠕变法测定高温条件下沥青的恢复率和不可恢复蠕变柔量。其中恢复率评价沥青的弹性响应及其应力依赖性，不可恢复蠕变柔量评价高温条件下沥青的抗永久变形能力及其应力依赖性。A 是 T0628 DSR 频率扫描的基本参数；B 分别是 DSR 的车辙因子与疲劳因子；C 的 S 与 m 值是 T0627 弯曲梁流变（BBR）的低温参数。",
+      "plain": "MSCR 的玩法是「压下去再松开」：看沥青弹回去多少，这就是恢复率 R；再看留下多少永久变形，换算一下就是不可恢复蠕变柔量 Jnr。Jnr 越小，高温下越不容易被压出车辙。G*、S、m 那些是 DSR 和 BBR 的指标，别混进来。",
+      "references": [
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        },
+        {
+          "title": "MSCR 试验 视频搜索（bilibili）",
+          "url": "https://search.bilibili.com/all?keyword=MSCR%E8%AF%95%E9%AA%8C"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "level": 1,
+      "q": "按 T0647 第2.2条，MSCR 试验采用动态剪切流变仪进行，其加载控制模式与试验盘直径为？",
+      "options": [
+        "应力控制模式，直径 25mm",
+        "应变控制模式，直径 25mm",
+        "应力控制模式，直径 8mm",
+        "应变控制模式，直径 8mm"
+      ],
+      "answer": 0,
+      "explanation": "T0647 第2.2条：动态剪切流变仪采用应力控制模式，采用直径为 25mm 的试验盘。MSCR 施加的是恒定蠕变应力（0.1 与 3.2 kPa），故为应力控制；应变控制模式用于 T0628 的频率扫描等试验。8mm 试验盘是 DSR 中低温试验（小盘）的配置，MSCR 高温试验统一用 25mm 大盘。",
+      "plain": "记住口诀：MSCR 是「应力控制、大盘 25mm」。因为它给的是恒定的力（应力），让沥青自己变形，而不是拉着它变形（应变控制）。25mm 大盘比 8mm 小盘受力和变形都更稳，适合高温蠕变这种大变形试验。",
+      "references": [
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        },
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "level": 1,
+      "q": "按 T0647 第1.2条，下列哪一项材料不在 MSCR 方法的适用范围内？",
+      "options": [
+        "道路石油沥青",
+        "聚合物改性沥青",
+        "乳化沥青的残留物",
+        "沥青混合料马歇尔试件"
+      ],
+      "answer": 3,
+      "explanation": "T0647 第1.2条：本方法适用于道路石油沥青、聚合物改性沥青，或稀释沥青、乳化沥青的残留物。MSCR 是沥青胶结料试验，针对混合料的永久变形应采用沥青混合料车辙试验等专门方法。另需注意：若对含颗粒的沥青进行测试，沥青中颗粒尺寸应小于 250μm。",
+      "plain": "MSCR 测的是沥青「胶结料」本身，就像尝调味汁而不是吃整锅菜。基质沥青、改性沥青、稀释沥青和乳化沥青的残留物都能测，唯独沥青混合料试件不行——那是轮辙试验的活儿。顺带记住：含颗粒的沥青要测，颗粒得小于 250μm。",
+      "references": [
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        },
+        {
+          "title": "沥青高温性能 视频搜索（bilibili）",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B2%A5%E9%9D%92%E9%AB%98%E6%B8%A9%E6%80%A7%E8%83%BD"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "level": 2,
+      "q": "按 T0647 第5.3条，MSCR 试验在试验温度下先后施加的两个恒定蠕变应力水平分别是？",
+      "options": [
+        "0.1 kPa 与 1.0 kPa",
+        "0.1 kPa 与 3.2 kPa",
+        "1.0 kPa 与 3.2 kPa",
+        "0.1 MPa 与 3.2 MPa"
+      ],
+      "answer": 1,
+      "explanation": "T0647 第5.3条：在试验温度条件下，先后施加两个恒定蠕变应力（0.1kPa 和 3.2kPa）进行蠕变恢复试验。注意单位是 kPa：3.2kPa 相当于重载车轮对路面的应力水平，0.1kPa 相当于标准荷载。C 选项漏掉轻应力水平；D 选项单位错大了 1000 倍（MPa 级别会直接把试件压坏）。",
+      "plain": "先轻踩一脚（0.1 kPa），再重踩一脚（3.2 kPa），对比沥青在轻载和重载下的表现差多少。这个「轻重对比」正是 MSCR 的灵魂——评价应力依赖性。单位是 kPa，别看成 MPa，差着 1000 倍呢。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Review of Illinois MSCR Data for Future Implementation（美国交通部 ROSAP）",
+          "url": "https://rosap.ntl.bts.gov/view/dot/72829/dot_72829_DS1.pdf"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "level": 2,
+      "q": "按 T0647 第5.3条，MSCR 的 1 个蠕变恢复循环在时间上的构成是？",
+      "options": [
+        "蠕变加载 1s，卸载恢复 9s",
+        "蠕变加载 9s，卸载恢复 1s",
+        "蠕变加载 10s，卸载恢复 10s",
+        "蠕变加载 1s，卸载恢复 30s"
+      ],
+      "answer": 0,
+      "explanation": "T0647 第5.3条：1 个蠕变恢复包括 1s 蠕变阶段和 9s 恢复阶段——蠕变时恒定应力加载持续 1s，恢复时卸载至零应力持续 9s，一个循环共 10s。这与 AASHTO T350、ASTM D7405 规定一致。加载短、观察长，目的就是捕捉卸载后的弹性回缩与残余变形。",
+      "plain": "加载 1 秒、松手看 9 秒，一个循环正好 10 秒。就像快速按一下弹簧，然后慢慢看：它弹回来多少？还剩多少压扁了？加载时间必须严格 1 秒，长了短了变形量都会失真。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "level": 2,
+      "q": "按 T0647 第4.2条，多重应力蠕变试验用试样一般采用何种状态的沥青？",
+      "options": [
+        "原样沥青（未老化）",
+        "T0609 薄膜加热老化（TFOT）后的残留物",
+        "T0610 旋转薄膜加热老化（RTFOT）后的残留物",
+        "T0630 压力老化（PAV）后的残留物"
+      ],
+      "answer": 2,
+      "explanation": "T0647 第4.2条：多重应力蠕变试验用试样一般采用按 T0610 方法进行旋转薄膜加热老化后的沥青残留物；当采用其他条件的试样时应在报告中注明。这与 AASHTO T350 一致——车辙主要发生在路面服役初期，故评价高温抗车辙用模拟施工短期老化的 RTFOT 残留物；PAV 长期老化残留物用于疲劳类评价（如 G*·sinδ、LAS）。另按第4.3条，也可直接采用 DSR 试验用试样，DSR 试验结束后继续恒温、应力松弛 1min 后直接进行 MSCR 试验。",
+      "plain": "试验要用「刚出烤炉」的沥青——RTFOT 短期老化残留物，模拟拌和摊铺后的状态。因为车辙大多发生在通车初期。PAV 长期老化的样是留给疲劳试验的，别搞混。还有个省事的办法：DSR 试验做完别拆样，恒着温松驰 1 分钟接着做 MSCR。",
+      "references": [
+        {
+          "title": "Performance Assessment of Eco-Friendly Asphalt Binders（MDPI，MSCR 试验流程实例）",
+          "url": "https://www.mdpi.com/2412-3811/9/12/224"
+        },
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "level": 3,
+      "q": "按 T0647 第4.1条，MSCR 标准试件的试验盘直径与盘间隙为？对胶粉橡胶沥青等含颗粒的沥青试件，盘间隙可调整为？",
+      "options": [
+        "25mm、1mm；可调整为 1.5mm",
+        "8mm、2mm；可调整为 3mm",
+        "25mm、2mm；可调整为 3mm",
+        "25mm、1mm；可调整为 2mm"
+      ],
+      "answer": 3,
+      "explanation": "T0647 第4.1条：试验盘直径为 25mm，盘间隙为 1mm；但对于胶粉橡胶沥青等含有颗粒的沥青试件，盘间隙可调整为 2mm。橡胶颗粒粒径大，若仍用 1mm 间隙会顶住上下盘使试验失真，故放宽到 2mm；配合第1.2条要求，颗粒尺寸应小于 250μm。",
+      "plain": "普通沥青夹在两块 25mm 圆盘之间，缝隙 1mm。胶粉改性沥青里混着橡胶颗粒，容易卡缝、把试件架空，所以缝隙放宽到 2mm，给颗粒留个容身之地。仪器同 DSR，就是盘和缝的搭配要按材料选。",
+      "references": [
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        },
+        {
+          "title": "MSCR 试验 视频搜索（bilibili）",
+          "url": "https://search.bilibili.com/all?keyword=MSCR%E8%AF%95%E9%AA%8C"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "level": 3,
+      "q": "按 T0647 第5.3条，MSCR 试验蠕变恢复循环的安排及两阶段蠕变试验所需的总时间是？",
+      "options": [
+        "0.1kPa 下 10 个循环 + 3.2kPa 下 10 个循环，共 20 个，总时间 200s",
+        "0.1kPa 下 20 个循环 + 3.2kPa 下 10 个循环，共 30 个，总时间 300s",
+        "0.1kPa 下 10 个循环 + 3.2kPa 下 20 个循环，共 30 个，总时间 300s",
+        "0.1kPa 下 20 个循环 + 3.2kPa 下 20 个循环，共 40 个，总时间 400s"
+      ],
+      "answer": 1,
+      "explanation": "T0647 第5.3条：试验总计施加 30 个蠕变恢复——在 0.1kPa 蠕变应力水平下进行 20 个蠕变恢复，然后在 3.2kPa 蠕变应力水平下进行 10 个蠕变恢复。其中 0.1kPa 下前 10 个蠕变恢复的目的是对试样进行预加载，相关试验数据不用于计算。30 个循环连续完成，每个循环 10s，总时间 300s。",
+      "plain": "30 个循环、每个 10 秒，5 分钟跑完全程。顺序是先轻后重：0.1 kPa 做 20 个，其中前 10 个是「热身」不算成绩；真正计分的是轻载后 10 个加重载 10 个。循环必须连续做完，中途歇了材料状态就变了。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Superpave - Performance grading based on MSCR test（ScienceDirect 主题页）",
+          "url": "https://sciencedirect.com/topics/engineering/superpave"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "level": 3,
+      "q": "按 T0647 第5.5条，每个蠕变循环中应在蠕变阶段开始后多长时间内达到 100% 应力值？",
+      "options": [
+        "0.01s 内",
+        "0.1s 内",
+        "0.03s 内",
+        "0.5s 内"
+      ],
+      "answer": 2,
+      "explanation": "T0647 第5.5条：每个蠕变循环中应在每个蠕变阶段开始后的 0.03s 达到 100% 应力值。蠕变阶段总长仅 1s，若应力爬升过慢，实际有效加载时间不足，应变会系统性偏小，Jnr 随之失真。相关配套要求还有（第5.2条）试验温度控制到目标温度 ±0.1℃、恒温不少于 10min；（第5.4条）蠕变阶段数据采集频率 0.1s 至少 1 次、恢复阶段 0.45s 至少 1 次，并在每次加载开始第 1s 记录峰值应变、第 10s 记录恢复应变。",
+      "plain": "1 秒的加载窗口，「力」必须在前 0.03 秒就顶满——相当于瞬间砸实。如果力是慢慢加上去的，真正受力的时间就缩水，测出的变形偏小，Jnr 就虚低了。顺带记两个数：控温 ±0.1℃、恒温至少 10 分钟。",
+      "references": [
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        },
+        {
+          "title": "沥青流变性能 视频搜索（bilibili）",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B2%A5%E9%9D%92%E6%B5%81%E5%8F%98%E6%80%A7%E8%83%BD"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "level": 4,
+      "q": "按 T0647 第6.6~6.7条，单个蠕变恢复循环的不可恢复蠕变柔量 Jnr 的计算式为（τ 为蠕变应力）？",
+      "options": [
+        "Jnr = ε10 / τ，其中 ε10 为恢复阶段结束时（加载开始 10s 后）的应变增量",
+        "Jnr = ε1 / τ，其中 ε1 为蠕变阶段结束时（加载开始 1s 后）的应变增量",
+        "Jnr = (ε1 − ε10) / τ，即蠕变与恢复应变增量之差除以应力",
+        "Jnr = τ / ε10，即应力除以残余应变增量"
+      ],
+      "answer": 0,
+      "explanation": "T0647 第6.6/6.7条：Jnr = ε10/应力（0.1 或 3.2 kPa），ε10 为恢复阶段结束时（即每次加载开始 10s 后）的应变增量（ε10 = εr − ε0），单位 kPa⁻¹，精确至 0.01。(ε1−ε10)/ε1×100 才是恢复率 R 的分子结构；C 选项把「恢复掉的应变」除以应力得到的是可恢复部分，不是规范定义的 Jnr；D 分子分母颠倒。平均值再按第6.8/6.9条对各自有效循环取算术平均。",
+      "plain": "Jnr 的核心：只认「再也弹不回来」的那部分变形。用 10 秒后仍残余的应变增量 ε10，除以施加的应力 τ，单位 kPa⁻¹。注意别用 1 秒的峰值应变 ε1，也别把分子分母写反。算到小数点后两位。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Review of Illinois MSCR Data for Future Implementation（美国交通部 ROSAP）",
+          "url": "https://rosap.ntl.bts.gov/view/dot/72829/dot_72829_DS1.pdf"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "level": 4,
+      "q": "按 AASHTO M332 交通分级体系（以 Jnr3.2 为依据），S、H、V、E 四个交通等级对应的 Jnr3.2 最大限值（kPa⁻¹）正确的是？",
+      "options": [
+        "S≤2.0、H≤4.5、V≤1.0、E≤0.5",
+        "S≤4.5、H≤1.0、V≤2.0、E≤0.5",
+        "S≤4.5、H≤2.0、V≤0.5、E≤1.0",
+        "S≤4.5、H≤2.0、V≤1.0、E≤0.5"
+      ],
+      "answer": 3,
+      "explanation": "AASHTO M332-14：S（标准交通，<1000 万 ESALs 且车速>70km/h）Jnr3.2≤4.5 kPa⁻¹；H（重载，1000万~3000万 ESALs 或车速 20~70km/h）≤2.0；V（超重，>3000 万 ESALs 或车速<20km/h）≤1.0；E（特重，>3000 万 ESALs 且车速<20km/h）≤0.5。交通越重，允许的不可恢复变形越小。另对 S/H/V 级还要求 Jnrdiff≤75%，E 级不要求 Jnrdiff。注意区分：C 选项把 V 与 E 的限值对调，V≤1.0、E≤0.5 才对。",
+      "plain": "交通越重、车速越慢的路，对沥青「不留永久变形」的要求越苛刻：4.5 → 2.0 → 1.0 → 0.5，逐级砍半。认字母选料：S 标准、H 重载、V 超重、E 特重。还有个隐藏条件：S、H、V 级要求轻重载 Jnr 差异率不超 75%，E 级反而不管这条。",
+      "references": [
+        {
+          "title": "Asphalt Binder Grading Systems and Properties（AAPTP 沥青铺面手册，含 AASHTO M332 分级表）",
+          "url": "https://handbook.asphaltpavement.org/asphalt-materials-and-mix-design/3-2-asphalt-binder-grading-systems-and-properties"
+        },
+        {
+          "title": "Review of Illinois MSCR Data for Future Implementation（美国交通部 ROSAP）",
+          "url": "https://rosap.ntl.bts.gov/view/dot/72829/dot_72829_DS1.pdf"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "level": 4,
+      "q": "按 T0647 第6.1~6.2条，关于单个循环恢复率 R 的计算与数据处理，符合规范规定的是？",
+      "options": [
+        "R = (ε1 − ε10) / ε1 × 100，若计算值小于 0 取 0 值，精确至 0.1",
+        "R = ε10 / ε1 × 100，若计算值小于 0 保留负值，精确至 0.1",
+        "R = (ε1 − ε10) / ε10 × 100，精确至 1",
+        "R = ε1 / ε10 × 100，精确至 0.01"
+      ],
+      "answer": 0,
+      "explanation": "T0647 第6.1/6.2条：R = (ε1 − ε10)/ε1 × 100，即蠕变阶段应变增量中「被恢复掉」的部分占蠕变应变增量的百分数；若计算值小于 0 取 0 值；精确至 0.1。R0.1 对 0.1kPa 下第 11~20 循环逐个计算后取平均（第6.3条），R3.2 对 3.2kPa 下全部 10 个循环计算取平均（第6.4条）。B 选项算出的是残余变形占比；C 分母错；D 是倒数且精度错。",
+      "plain": "恢复率 = 弹回去的 ÷ 当初压下去的。分子分母都用「应变增量」（先减掉初始应变）。沥青被彻底压「趴」时，10 秒后残余的比 1 秒峰值还大，算出负数——规范说直接记 0，反正意思就是一点没弹回来。结果保留一位小数。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Superpave - Performance grading based on MSCR test（ScienceDirect 主题页）",
+          "url": "https://sciencedirect.com/topics/engineering/superpave"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "level": 5,
+      "q": "MSCR 试验某循环（3.2kPa 应力下）：蠕变阶段开始时初始应变 ε0=1.0%，加载 1s 时应变 εc=13.0%，恢复至 10s 时应变 εr=5.0%。该循环的恢复率 R3.2 与不可恢复蠕变柔量 Jnr3.2 分别为？",
+      "options": [
+        "R=61.5%，Jnr=1.56 kPa⁻¹",
+        "R=33.3%，Jnr=1.25 kPa⁻¹",
+        "R=66.7%，Jnr=1.25 kPa⁻¹",
+        "R=66.7%，Jnr=3.75 kPa⁻¹"
+      ],
+      "answer": 2,
+      "explanation": "按 T0647 第5.6/6.1/6.6 条计算：蠕变阶段应变增量 ε1 = εc − ε0 = 13.0 − 1.0 = 12.0%；恢复阶段应变增量 ε10 = εr − ε0 = 5.0 − 1.0 = 4.0%。恢复率 R = (ε1 − ε10)/ε1 × 100 = (12.0 − 4.0)/12.0 × 100 = 66.7%（精确至 0.1）；不可恢复蠕变柔量 Jnr = ε10/τ = 4.0/3.2 = 1.25 kPa⁻¹（精确至 0.01）。A 选项未减初始应变 ε0（把 εc、εr 直接当增量）；B 选项把残余占比 4/12 当恢复率；D 选项误用 ε1 而非 ε10 计算 Jnr。",
+      "plain": "两步走：先把两个增量算出来——加载后变形 12（13−1），卸载后还剩 4（5−1）。然后弹回比例 8÷12≈66.7%；Jnr=4÷3.2=1.25。最大陷阱：ε0 别忘减！直接拿 13 和 5 去算就掉坑里了。",
+      "references": [
+        {
+          "title": "Multiple stress creep and recovery test for bituminous binders（MSCR 关键试验参数研究，DiVA 学术文库）",
+          "url": "https://www.diva-portal.org/smash/get/diva2:1748540/FULLTEXT01.pdf"
+        },
+        {
+          "title": "Evaluating the Elastic Behavior of Asphalt Binders Using the MSCR Test（AASHTO 格式，Asphalt Pavement Alliance）",
+          "url": "http://www.asphaltpavement.org/PDFs/Engineering_ETGs/Binder_201409/Anderson%20M_Evaluating%20the%20Elastic%20Behavior%20of%20Asphalt%20Binders%20Using%20the%20MSCR%20Test_AASHTO%20Format.pdf"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "level": 5,
+      "q": "某 RTFOT 残留物在试验温度下测得 Jnr0.1=0.80 kPa⁻¹、Jnr3.2=1.20 kPa⁻¹。按 AASHTO M332 交通分级，该沥青最高可满足的交通等级及 Jnrdiff 分别为？",
+      "options": [
+        "H 级；Jnrdiff=50.0%",
+        "V 级；Jnrdiff=50.0%",
+        "H 级；Jnrdiff=33.3%",
+        "E 级；Jnrdiff=33.3%"
+      ],
+      "answer": 0,
+      "explanation": "Jnrdiff 按 T0647 第6.10条计算：Jnrdiff = (Jnr3.2 − Jnr0.1)/Jnr0.1 × 100 = (1.20 − 0.80)/0.80 × 100 = 50.0%（精确至 0.1），未超过 AASHTO M332 对 S/H/V 级规定的 75% 上限。交通等级看 Jnr3.2=1.20 kPa⁻¹：≤2.0 满足 H 级，但 >1.0 不满足 V 级（V 级限值 1.0），更达不到 E 级（0.5），故最高 H 级。B 选项高估了等级；C/D 选项把 Jnrdiff 分母错用为 Jnr3.2。",
+      "plain": "两问拆开：第一问拿 Jnr3.2=1.20 对号入座——比 1.0 大，够不上 V，但小于 2.0，所以最高 H 级。第二问算轻重载差异：(1.20−0.80)÷0.80=50%，没超 75% 红线。易错点：分母是低应力下的 Jnr0.1，不是 Jnr3.2。",
+      "references": [
+        {
+          "title": "Asphalt Binder Grading Systems and Properties（AAPTP 沥青铺面手册，含 AASHTO M332 分级表）",
+          "url": "https://handbook.asphaltpavement.org/asphalt-materials-and-mix-design/3-2-asphalt-binder-grading-systems-and-properties"
+        },
+        {
+          "title": "Superpave - Performance grading based on MSCR test（ScienceDirect 主题页）",
+          "url": "https://sciencedirect.com/topics/engineering/superpave"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "level": 5,
+      "q": "关于 MSCR 在沥青高温性能分级体系中的作用，下列说法错误的是？",
+      "options": [
+        "采用 MSCR 分级后，可按交通条件选用 S/H/V/E 后缀标注沥青等级，不再需要对高温 PG 等级进行人工提升（grade bumping）",
+        "Jnr3.2 替代了原 Superpave 体系中 RTFOT 老化后沥青的 G*/sinδ 高温判据，且与实测车辙的相关性更好",
+        "对 S/H/V 三个交通等级，Jnrdiff 均要求不超过 75%，E 级则不设 Jnrdiff 要求",
+        "MSCR 试验必须在 PAV 压力长期老化残留物上进行，以评价沥青在路面服役期的永久变形"
+      ],
+      "answer": 3,
+      "explanation": "D 错误：按 T0647 第4.2条与 AASHTO T350，MSCR 试验一般采用 T0610 旋转薄膜加热（RTFOT，短期老化）后的残留物，评价的是高温抗永久变形能力；PAV 长期老化残留物用于疲劳类评价（如 G*·sinδ≤5000kPa 判据、LAS 试验）。A、B 正确：Illinois 等 ALF 加速加载数据表明 Jnr 与实测车辙的相关性显著优于 G*/sinδ，AASHTO M332 据此以 Jnr3.2 替代 RTFO 老化后的 G*/sinδ，并以 S/H/V/E 后缀直接表达交通等级，取消高温等级人工提升；C 正确：S/H/V 级要求 Jnrdiff≤75%，E 级不要求。此外 AASHTO M332/TP70 还可用标准曲线 R3.2min=29.371×(Jnr3.2)^−0.2633 判断沥青是否具有弹性聚合物改性的显著弹性响应（Jnr3.2 在 0.1~2.0 kPa⁻¹ 时适用；<0.1 时要求 R3.2≥55.0%）。",
+      "plain": "一句话排雷：MSCR 用「短期老化」的 RTFOT 残留物，评的是高温车辙；PAV 长期老化的样是给疲劳指标用的。另外记住大方向：Jnr 比老指标 G*/sinδ 更会「预测车辙」，有了 S/H/V/E 后缀就不用再把 PG 高温等级硬往上抬两个等级了。",
+      "references": [
+        {
+          "title": "Superpave - Performance grading based on MSCR test（ScienceDirect 主题页）",
+          "url": "https://sciencedirect.com/topics/engineering/superpave"
+        },
+        {
+          "title": "Asphalt Binder Grading Systems and Properties（AAPTP 沥青铺面手册，含 AASHTO M332 分级表）",
+          "url": "https://handbook.asphaltpavement.org/asphalt-materials-and-mix-design/3-2-asphalt-binder-grading-systems-and-properties"
+        }
+      ]
+    }
+  ]
+}
