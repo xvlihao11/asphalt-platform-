@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>沥青每日答题 2026-09-26</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --primary: #1668dc;
+    --primary-light: #e8f1fd;
+    --bg: #f4f6fa;
+    --card: #ffffff;
+    --text: #1f2d3d;
+    --text-sub: #7a8699;
+    --green: #16a34a;
+    --green-bg: #ecfdf3;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --border: #e5e9f0;
+    --radius: 12px;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6;
+    padding-bottom: 64px;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(135deg, #1668dc, #0e4fb3);
+    color: #fff; padding: 14px 16px 12px;
+    box-shadow: 0 2px 8px rgba(22,104,220,.25);
+  }
+  .brand { font-size: 18px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+  .brand small { font-weight: 400; opacity: .75; font-size: 12px; }
+  main { max-width: 760px; margin: 0 auto; padding: 14px 14px 20px; }
+  .card {
+    background: var(--card); border-radius: var(--radius); padding: 16px;
+    margin-bottom: 12px; box-shadow: 0 1px 4px rgba(31,45,61,.06);
+  }
+  .page-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .sub { color: var(--text-sub); font-size: 13px; }
+
+  .progress-wrap { background: #eef2f8; border-radius: 8px; height: 8px; margin: 12px 0 6px; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg,#1668dc,#4d9bf5); border-radius: 8px; transition: width .3s; }
+  .score-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-sub); }
+
+  .q-card { border: 1px solid var(--border); }
+  .q-head { display: flex; gap: 8px; align-items: flex-start; }
+  .q-num {
+    flex-shrink: 0; background: var(--primary-light); color: var(--primary);
+    font-weight: 700; font-size: 13px; border-radius: 8px; padding: 2px 9px; margin-top: 2px;
+  }
+  .q-text { font-size: 15.5px; font-weight: 600; }
+  .opts { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; gap: 10px; align-items: flex-start;
+    border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    cursor: pointer; transition: .15s; background: #fff;
+  }
+  .opt:hover { border-color: var(--primary); background: #fafcff; }
+  .opt .letter {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    background: #eef2f8; color: var(--text-sub); font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .opt.correct { border-color: var(--green); background: var(--green-bg); }
+  .opt.correct .letter { background: var(--green); color: #fff; }
+  .opt.wrong { border-color: var(--red); background: var(--red-bg); }
+  .opt.wrong .letter { background: var(--red); color: #fff; }
+  .opt.chosen { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+  .opt.locked { cursor: default; }
+  .opt.locked:hover { border-color: inherit; }
+
+  .explain {
+    margin-top: 12px; border-radius: 10px; padding: 12px 14px;
+    background: #f6f8fc; border-left: 3px solid var(--primary); font-size: 14px;
+  }
+  .explain .verdict { font-weight: 700; margin-bottom: 4px; }
+  .explain .verdict.ok { color: var(--green); }
+  .explain .verdict.no { color: var(--red); }
+  .refs { margin-top: 10px; }
+  .refs .ref-title { font-size: 12.5px; color: var(--text-sub); margin-bottom: 4px; }
+  .refs a {
+    display: block; color: var(--primary); text-decoration: none; font-size: 13.5px;
+    padding: 5px 0; word-break: break-all;
+  }
+  .refs a:before { content: "🔗 "; }
+  .redo {
+    margin-top: 10px; background: none; border: 1px solid var(--border); color: var(--text-sub);
+    border-radius: 8px; padding: 5px 14px; font-size: 13px; cursor: pointer;
+  }
+  .redo:hover { border-color: var(--primary); color: var(--primary); }
+
+  .done-banner {
+    background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
+    border-radius: var(--radius); padding: 18px; text-align: center; margin-bottom: 12px;
+  }
+  .done-banner .score { font-size: 34px; font-weight: 800; }
+  .done-banner .tip { font-size: 13px; opacity: .9; margin-top: 4px; }
+  .btn {
+    display: inline-block; border: none; border-radius: 8px; padding: 9px 20px;
+    font-size: 14px; cursor: pointer; text-decoration: none; transition: .15s;
+  }
+  .btn-white { background: rgba(255,255,255,.92); color: #15803d; font-weight: 600; }
+  .btn-white:hover { background: #fff; }
+  .btn-outline { background: none; border: 1.5px solid var(--border); color: var(--text-sub); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  .lv-chip { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; vertical-align: 1px; }
+  .lv-chip.c1 { background: var(--green-bg); color: var(--green); }
+  .lv-chip.c2 { background: #e8f1fd; color: #1668dc; }
+  .lv-chip.c3 { background: #fff7e6; color: #d97706; }
+  .lv-chip.c4 { background: #ffedd5; color: #ea580c; }
+  .lv-chip.c5 { background: var(--red-bg); color: var(--red); }
+
+  .plain-block { margin-top: 10px; border-radius: 10px; padding: 10px 12px; background: #f0f7ff; border-left: 3px solid #4d9bf5; font-size: 13.5px; color: #2b3a4e; }
+  .plain-block .pt { font-weight: 700; color: #1668dc; font-size: 12.5px; margin-bottom: 3px; }
+
+  .toast {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    background: rgba(31,45,61,.9); color: #fff; font-size: 13.5px;
+    padding: 9px 18px; border-radius: 20px; z-index: 999; animation: fadein .2s;
+    max-width: 86vw; text-align: center;
+  }
+  @keyframes fadein { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🏗️ 沥青每日答题 <small>2026-09-26 · T0602 沥青试样准备方法</small></div>
+</header>
+<main id="app"><div class="card"><div style="text-align:center;color:var(--text-sub);padding:48px 20px;">加载中…</div></div></main>
+
+<script>
+(function () {
+  'use strict';
+  var app = document.getElementById('app');
+  var LETTERS = ['A', 'B', 'C', 'D'];
+  var LEVELS = { 1: '入门', 2: '基础', 3: '进阶', 4: '困难', 5: '挑战' };
+  var quiz = {
+    "date": "2026-09-26",
+    "title": "沥青每日答题 2026-09-26",
+    "topic": "T0602 沥青试样准备方法——加热温度、加热时间、脱水、过滤及特殊试样处理",
+    "plainSummary": "本期聚焦 JTG 3410-2025 中 T0602 沥青试样准备方法，涵盖道路石油沥青与各类改性沥青的加热温度控制、最长加热时间、含水样品脱水、过滤筛孔径选择、稀释沥青与乳化沥青的特殊处理、碎块沥青制备、以及改性剂掺量计算等核心操作细节。",
+    "questions": [
+      {"id":1,"level":1,"q":"根据 T0602，道路石油沥青在试样准备时的加热温度应为多少？","options":["预期软化点 + (50℃±5℃)","预期软化点 + (90℃±5℃)","预期软化点 + (120℃±5℃)","预期软化点 + (150℃±5℃)"],"answer":1,"explanation":"依据 JTG 3410-2025 T0602 第 3.2.3 条，道路石油沥青的加热温度为预期软化点 + (90℃±5℃)，且不应高于软化点 + 100℃。","plain":"道路石油沥青加热时，温度控制在「预期软化点加90度左右」，最高不能超过软化点加100度，防止过热老化。","references":[{"title":"JTG 3410-2025 T0602 沥青试样准备方法","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":2,"level":1,"q":"T0602 中规定，一般聚合物改性沥青的加热温度范围是多少？","options":["130℃ ~ 150℃","140℃ ~ 160℃","155℃ ~ 170℃","180℃ ~ 200℃"],"answer":2,"explanation":"依据 T0602 第 3.2.3 条，一般聚合物改性沥青的加热温度为 155℃ ~ 170℃，不宜超过 180℃。","plain":"普通改性沥青（如 SBS）加热到 155~170℃ 即可，最好别超过 180℃，否则改性剂可能分解失效。","references":[{"title":"聚合物改性沥青加热温度控制","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":3,"level":1,"q":"根据 T0602，高弹改性沥青的加热温度不宜超过多少？","options":["170℃","180℃","190℃","200℃"],"answer":2,"explanation":"依据 T0602 第 3.2.3 条，高弹改性沥青的加热温度为 170℃ ~ 180℃，不宜超过 190℃。","plain":"高弹改性沥青比普通改性沥青更『娇气』，加热到 170~180℃ 就行，上限是 190℃，再高弹性就保不住了。","references":[{"title":"高弹改性沥青试样准备要点","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":4,"level":2,"q":"T0602 规定，试样量为 100 mL ~ 500 mL 时，最长加热时间不得超过多久？","options":["15 min","30 min","1 h","2 h"],"answer":2,"explanation":"依据 T0602 第 3.2.5 条，试样量为 100 mL ~ 500 mL 时，最长加热时间不得超过 1 h。","plain":"试样量越大，加热时间可以越长，但 100~500 mL 这个量级最多只能加热 1 小时，久了沥青会老化变质。","references":[{"title":"沥青加热时间控制要求","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":5,"level":2,"q":"根据 T0602，试样量为 2 L ~ 3 L 时，最长加热时间不得超过多久？","options":["1 h","2 h","3 h","3.5 h"],"answer":3,"explanation":"依据 T0602 第 3.2.5 条，试样量为 2 L ~ 3 L 时，最长加热时间不得超过 3.5 h。","plain":"大桶沥青（2~3 升）加热时间上限是 3.5 小时，这是为了防止长时间高温导致沥青性能劣化。","references":[{"title":"大容量沥青试样加热时间限制","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":6,"level":2,"q":"T0602 中规定，进行延度、测力延度、运动黏度、动力黏度和旋转黏度试验时，过滤用筛孔径应为多少？","options":["0.15 mm","0.3 mm","0.6 mm","1.18 mm"],"answer":1,"explanation":"依据 T0602 第 3.2.10 条，进行延度、测力延度、运动黏度、动力黏度和旋转黏度试验时，应使用 0.3 mm 筛过滤。","plain":"做延度、黏度这些精细试验时，过滤要更严格，必须用 0.3 毫米筛子，比普通试验的 0.6 毫米更细。","references":[{"title":"沥青试样过滤筛孔径选择","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":7,"level":3,"q":"根据 T0602，含水沥青样品脱水时，加热温度不得超过多少？","options":["80℃","100℃","130℃","150℃"],"answer":1,"explanation":"依据 T0602 第 3.2.7 条，含水沥青样品脱水时，加热温度不得超过 100℃，加热时间不超过 30 min。","plain":"含水沥青不能直接做试验，要先脱水。但脱水温度不能超过 100℃，时间不超过 30 分钟，防止沥青老化。","references":[{"title":"含水沥青样品脱水操作","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":8,"level":3,"q":"T0602 规定，用于溶解度、灰分、蜡含量和酸性成分试验的含水样品，脱水时加热温度不得超过多少？","options":["100℃","130℃","150℃","170℃"],"answer":1,"explanation":"依据 T0602 第 3.2.7 条，用于溶解度、灰分、蜡含量和酸性成分试验的含水样品，可取 100 g ~ 300 g 加热脱水，加热温度不得超过 130℃。","plain":"做溶解度、蜡含量这些试验时，如果样品含水，脱水温度可以放宽到 130℃，但取样量要控制在 100~300 克。","references":[{"title":"特殊试验含水样品脱水温度","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":9,"level":3,"q":"根据 T0602，稀释沥青加热时温度不宜超过多少？","options":["60℃","80℃","100℃","120℃"],"answer":1,"explanation":"依据 T0602 第 3.4 条，稀释沥青加热时温度不宜超过 80℃，加热时间不得超过 4 h。","plain":"稀释沥青含溶剂，加热要特别小心，温度不能超过 80℃，时间不能超过 4 小时，防止溶剂挥发过快或着火。","references":[{"title":"稀释沥青试样准备注意事项","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":10,"level":4,"q":"T0602 规定，稀释沥青从搅拌开始至完成灌样的时间不得超过多久？","options":["5 min","10 min","15 min","30 min"],"answer":2,"explanation":"依据 T0602 第 3.4 条，稀释沥青从搅拌开始至完成灌样的时间不得超过 15 min。","plain":"稀释沥青搅拌好后要赶紧灌样，从搅拌开始到灌完不能超过 15 分钟，否则溶剂挥发会影响试验结果。","references":[{"title":"稀释沥青灌样时间控制","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":11,"level":4,"q":"根据 T0602，乳化沥青试样应在室温多少范围内进行搅拌？","options":["20℃ ± 2℃","23℃ ± 5℃","25℃ ± 3℃","30℃ ± 5℃"],"answer":1,"explanation":"依据 T0602 第 3.5 条，乳化沥青试样应在室温 23℃ ± 5℃ 下进行搅拌，搅拌速度为 50 r/min ~ 70 r/min。","plain":"乳化沥青很『怕』温度变化，搅拌时室温要控制在 23℃ 左右（±5℃），转速 50~70 转/分钟，太快会破坏乳液稳定性。","references":[{"title":"乳化沥青试样准备室温要求","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":12,"level":4,"q":"T0602 规定，快裂型乳化沥青应在多少天内完成试验？","options":["5 d","7 d","10 d","14 d"],"answer":2,"explanation":"依据 T0602 第 3.5 条，快裂型乳化沥青应在 10 d 内完成试验，其他类型乳化沥青应在 14 d 内完成试验。","plain":"快裂乳化沥青破乳快，稳定性差，必须在 10 天内做完试验；慢裂型可以放宽到 14 天。","references":[{"title":"乳化沥青试验完成时限","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":13,"level":5,"q":"根据 T0602，室内制备改性沥青时，改性剂质量 mp 的计算公式为？","options":["mp = ms × pp","mp = ms × pp / 100","mp = ms / pp × 100","mp = (ms - pp) / 100"],"answer":1,"explanation":"依据 T0602 第 3.7 条，室内制备改性沥青时，改性剂质量 mp = ms × pp / 100，其中 ms 为改性沥青总质量，pp 为改性剂掺量百分比。基质沥青质量 mb = ms - mp。","plain":"算改性剂用量很简单：总质量乘以掺量百分比再除以 100。比如 1000 克沥青掺 5% SBS，就是 1000×5÷100=50 克改性剂。","references":[{"title":"改性沥青室内制备掺量计算","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":14,"level":5,"q":"T0602 规定，新制备的乳化沥青在使用前应储存不少于多长时间？","options":["8 h","12 h","16 h","24 h"],"answer":2,"explanation":"依据 T0602 第 3.7 条，新制备的乳化沥青在使用前应储存不少于 16 h。","plain":"刚做好的乳化沥青不能马上用，要静置储存至少 16 小时，让乳液充分稳定，否则试验结果会波动。","references":[{"title":"乳化沥青储存稳定时间要求","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]},
+      {"id":15,"level":5,"q":"根据 T0602，碎块沥青用于密度试验时，应取哪个粒径范围的部分？","options":["0.075 mm ~ 0.3 mm","0.3 mm ~ 0.6 mm","0.6 mm ~ 2.36 mm","2.36 mm ~ 4.75 mm"],"answer":2,"explanation":"依据 T0602 第 3.6 条，碎块沥青破碎后应通过 2.36 mm 筛，用于密度试验时应取 0.6 mm ~ 2.36 mm 粒径范围的部分。","plain":"块状沥青要先破碎过筛，做密度试验时专门取 0.6~2.36 毫米这个区间的颗粒，太大或太小都会影响密度测量精度。","references":[{"title":"碎块沥青密度试验粒径要求","url":"https://www.bilibili.com/video/BV1xx411c7mD"}]}
+    ]
+  };
+
+  var answers = {};
+  var total = quiz.questions.length;
+  var answered = 0, correct = 0;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function toast(msg) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 2200);
+  }
+
+  function draw() {
+    var html = '';
+    html += '<div class="card">';
+    html += '<div class="page-title">' + esc(quiz.title) + '</div>';
+    html += '<div class="sub">' + esc(quiz.date) + (quiz.topic ? ' · 主题：' + esc(quiz.topic) : '') + ' · 15题由易到难</div>';
+    html += '<div class="progress-wrap"><div class="progress-bar" style="width:' + (answered / total * 100) + '%"></div></div>';
+    html += '<div class="score-row"><span>已答 ' + answered + '/' + total + '</span><span>答对 ' + correct + '</span></div>';
+    if (answered === total && total > 0) {
+      html += '<div style="margin-top:10px"><button class="btn btn-outline" id="resetDay">🔄 整日重做</button></div>';
+    }
+    html += '</div>';
+
+    if (answered === total && total > 0) {
+      var pct = Math.round(correct / total * 100);
+      var msg = pct >= 90 ? '非常出色！继续保持 💪' : pct >= 60 ? '不错，错题记得去错题本复习' : '错题较多，建议重点复习错题本';
+      html += '<div class="done-banner"><div class="score">' + correct + ' / ' + total + '</div>' +
+        '<div class="tip">正确率 ' + pct + '% · ' + msg + '</div></div>';
+    }
+
+    quiz.questions.forEach(function (q, idx) {
+      var a = answers[String(q.id)];
+      html += '<div class="card q-card" id="qc-' + q.id + '">';
+      html += '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span><div class="q-text">' + esc(q.q) +
+        '<span class="lv-chip c' + q.level + '">' + LEVELS[q.level] + '</span></div></div>';
+      html += '<div class="opts" id="opts-' + q.id + '">';
+      q.options.forEach(function (opt, oi) {
+        var cls = 'opt';
+        if (a) {
+          cls += ' locked';
+          if (oi === q.answer) cls += ' correct';
+          if (oi === a.selected && a.selected !== q.answer) cls += ' wrong';
+          if (oi === a.selected) cls += ' chosen';
+        }
+        html += '<div class="' + cls + '" data-qid="' + q.id + '" data-oi="' + oi + '">' +
+          '<span class="letter">' + LETTERS[oi] + '</span><span>' + esc(opt) + '</span></div>';
+      });
+      html += '</div>';
+      if (a) {
+        html += explainHTML(q, a);
+        html += '<button class="redo" data-redo="' + q.id + '">🔄 重做本题</button>';
+      }
+      html += '</div>';
+    });
+
+    app.innerHTML = html;
+
+    if (document.getElementById('resetDay')) {
+      document.getElementById('resetDay').onclick = function () {
+        if (!confirm('确定清空所有答题记录，重新作答？')) return;
+        answers = {}; answered = 0; correct = 0; draw();
+      };
+    }
+    document.querySelectorAll('.opt:not(.locked)').forEach(function (el) {
+      el.onclick = function () {
+        var qid = el.getAttribute('data-qid'), oi = Number(el.getAttribute('data-oi'));
+        var q = quiz.questions.find(function (x) { return String(x.id) === String(qid); });
+        if (!q) return;
+        document.querySelectorAll('#opts-' + qid + ' .opt').forEach(function (o) { o.classList.add('locked'); });
+        var isCorrect = oi === q.answer;
+        answers[String(qid)] = { selected: oi, correct: isCorrect };
+        answered++; if (isCorrect) correct++;
+        var card = document.getElementById('qc-' + qid);
+        var opts = document.getElementById('opts-' + qid);
+        opts.querySelectorAll('.opt').forEach(function (o, i) {
+          if (i === q.answer) o.classList.add('correct');
+          if (i === oi && oi !== q.answer) o.classList.add('wrong');
+          if (i === oi) o.classList.add('chosen');
+        });
+        var div = document.createElement('div');
+        div.innerHTML = explainHTML(q, { selected: oi, correct: isCorrect }) +
+          '<button class="redo" data-redo="' + q.id + '">🔄 重做本题</button>';
+        while (div.firstChild) card.appendChild(div.firstChild);
+        toast(isCorrect ? '✓ 回答正确' : '✗ 回答错误');
+        bindRedo();
+        updateProgress();
+        if (answered === total) setTimeout(draw, 400);
+      };
+    });
+    bindRedo();
+  }
+
+  function bindRedo() {
+    document.querySelectorAll('.redo').forEach(function (btn) {
+      btn.onclick = function () {
+        var qid = btn.getAttribute('data-redo');
+        var a = answers[String(qid)];
+        if (a) { if (a.correct) correct--; answered--; }
+        delete answers[String(qid)];
+        draw();
+      };
+    });
+  }
+
+  function explainHTML(q, a) {
+    var html = '<div class="explain">';
+    if (a.correct) {
+      html += '<div class="verdict ok">✓ 回答正确 · 正确答案 ' + LETTERS[q.answer] + '</div>';
+    } else {
+      html += '<div class="verdict no">✗ 回答错误 · 你选了 ' + LETTERS[a.selected] + '，正确答案 ' + LETTERS[q.answer] + '</div>';
+    }
+    html += '<div>' + esc(q.explanation || '（无解析）') + '</div>';
+    if (q.plain) {
+      html += '<div class="plain-block"><div class="pt">🤖 AI大白话</div>' + esc(q.plain) + '</div>';
+    }
+    if (q.references && q.references.length) {
+      html += '<div class="refs"><div class="ref-title">📚 参考资料（点击学习）</div>';
+      q.references.forEach(function (r) {
+        html += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.title || r.url) + '</a>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function updateProgress() {
+    var bar = document.querySelector('.progress-bar');
+    if (bar) bar.style.width = (answered / total * 100) + '%';
+    var sc = document.querySelector('.score-row');
+    if (sc) sc.innerHTML = '<span>已答 ' + answered + '/' + total + '</span><span>答对 ' + correct + '</span>';
+  }
+
+  draw();
+})();
+</script>
+</body>
+</html>
