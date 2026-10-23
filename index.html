@@ -2,1289 +2,975 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>沥青答题平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沥青研发智能体工作平台</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  :root {
-    --primary: #1668dc;
-    --primary-light: #e8f1fd;
-    --bg: #f4f6fa;
-    --card: #ffffff;
-    --text: #1f2d3d;
-    --text-sub: #7a8699;
-    --green: #16a34a;
-    --green-bg: #ecfdf3;
-    --red: #dc2626;
-    --red-bg: #fef2f2;
-    --border: #e5e9f0;
-    --radius: 12px;
-  }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6;
-    padding-bottom: 64px;
-  }
-  header {
-    position: sticky; top: 0; z-index: 100;
-    background: linear-gradient(135deg, #1668dc, #0e4fb3);
-    color: #fff; padding: 14px 16px 12px;
-    box-shadow: 0 2px 8px rgba(22,104,220,.25);
-  }
-  .brand { font-size: 18px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-  .brand small { font-weight: 400; opacity: .75; font-size: 12px; }
-  nav { display: flex; gap: 4px; margin-top: 10px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: none; }
-  nav::-webkit-scrollbar { display: none; }
-  nav a {
-    color: rgba(255,255,255,.8); text-decoration: none; font-size: 14px; flex-shrink: 0;
-    padding: 5px 14px; border-radius: 20px; white-space: nowrap; transition: .15s;
-  }
-  nav a.active, nav a:hover { background: rgba(255,255,255,.18); color: #fff; }
-  main { max-width: 760px; margin: 0 auto; padding: 14px 14px 20px; }
-  .card {
-    background: var(--card); border-radius: var(--radius); padding: 16px;
-    margin-bottom: 12px; box-shadow: 0 1px 4px rgba(31,45,61,.06);
-  }
-  .page-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .sub { color: var(--text-sub); font-size: 13px; }
-  .empty { text-align: center; color: var(--text-sub); padding: 48px 20px; }
-  .empty .big { font-size: 40px; margin-bottom: 10px; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f0f2f5;color:#2c3e50;min-height:100vh}
+.container{max-width:1000px;margin:0 auto;padding:16px}
 
-  .progress-wrap { background: #eef2f8; border-radius: 8px; height: 8px; margin: 12px 0 6px; overflow: hidden; }
-  .progress-bar { height: 100%; background: linear-gradient(90deg,#1668dc,#4d9bf5); border-radius: 8px; transition: width .3s; }
-  .score-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-sub); }
+/* Header */
+.header{background:linear-gradient(135deg,#1a5276 0%,#2c3e50 100%);color:#fff;padding:20px;border-radius:12px;margin-bottom:14px;box-shadow:0 4px 12px rgba(26,82,118,.15)}
+.header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.header-title{font-size:20px;font-weight:700;letter-spacing:1px}
+.header-sub{font-size:12px;opacity:.85;margin-top:3px}
+.header-date{font-size:12px;opacity:.9;text-align:right}
 
-  .q-card { border: 1px solid var(--border); }
-  .q-head { display: flex; gap: 8px; align-items: flex-start; }
-  .q-num {
-    flex-shrink: 0; background: var(--primary-light); color: var(--primary);
-    font-weight: 700; font-size: 13px; border-radius: 8px; padding: 2px 9px; margin-top: 2px;
-  }
-  .q-text { font-size: 15.5px; font-weight: 600; }
-  .opts { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-  .opt {
-    display: flex; gap: 10px; align-items: flex-start;
-    border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px;
-    cursor: pointer; transition: .15s; background: #fff;
-  }
-  .opt:hover { border-color: var(--primary); background: #fafcff; }
-  .opt .letter {
-    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
-    background: #eef2f8; color: var(--text-sub); font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; margin-top: 1px;
-  }
-  .opt.correct { border-color: var(--green); background: var(--green-bg); }
-  .opt.correct .letter { background: var(--green); color: #fff; }
-  .opt.wrong { border-color: var(--red); background: var(--red-bg); }
-  .opt.wrong .letter { background: var(--red); color: #fff; }
-  .opt.chosen { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
-  .opt.locked { cursor: default; }
-  .opt.locked:hover { border-color: inherit; }
+/* Nav */
+.nav{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.nav-item{flex:1;min-width:70px;text-align:center;padding:10px 8px;background:#fff;border:1px solid #e8ecf1;border-radius:10px;font-size:13px;font-weight:600;color:#5d6d7e;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-item:hover{border-color:#1a5276}
+.nav-item.active{background:#1a5276;color:#fff;border-color:#1a5276}
+.nav-item .ico{font-size:17px;display:block;margin-bottom:2px}
 
-  .explain {
-    margin-top: 12px; border-radius: 10px; padding: 12px 14px;
-    background: #f6f8fc; border-left: 3px solid var(--primary); font-size: 14px;
-  }
-  .explain .verdict { font-weight: 700; margin-bottom: 4px; }
-  .explain .verdict.ok { color: var(--green); }
-  .explain .verdict.no { color: var(--red); }
-  .refs { margin-top: 10px; }
-  .refs .ref-title { font-size: 12.5px; color: var(--text-sub); margin-bottom: 4px; }
-  .refs a {
-    display: block; color: var(--primary); text-decoration: none; font-size: 13.5px;
-    padding: 5px 0; word-break: break-all;
-  }
-  .refs a:before { content: "🔗 "; }
-  .redo {
-    margin-top: 10px; background: none; border: 1px solid var(--border); color: var(--text-sub);
-    border-radius: 8px; padding: 5px 14px; font-size: 13px; cursor: pointer;
-  }
-  .redo:hover { border-color: var(--primary); color: var(--primary); }
+/* Section */
+.section{margin-bottom:18px}
+.section-title{font-size:15px;font-weight:600;color:#1a5276;margin:14px 0 10px;display:flex;align-items:center;gap:6px;padding-bottom:6px;border-bottom:2px solid #e8ecf1}
+.count{background:#1a5276;color:#fff;font-size:11px;padding:2px 8px;border-radius:10px}
 
-  .done-banner {
-    background: linear-gradient(135deg,#16a34a,#15803d); color: #fff;
-    border-radius: var(--radius); padding: 18px; text-align: center; margin-bottom: 12px;
-  }
-  .done-banner .score { font-size: 34px; font-weight: 800; }
-  .done-banner .tip { font-size: 13px; opacity: .9; margin-top: 4px; }
-  .done-actions { margin-top: 10px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; border: none; border-radius: 8px; padding: 9px 20px;
-    font-size: 14px; cursor: pointer; text-decoration: none; transition: .15s;
-  }
-  .btn-white { background: rgba(255,255,255,.92); color: #15803d; font-weight: 600; }
-  .btn-white:hover { background: #fff; }
-  .btn-outline { background: none; border: 1.5px solid var(--border); color: var(--text-sub); }
-  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-  .btn-primary { background: var(--primary); color: #fff; font-weight: 600; }
+/* Cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;cursor:pointer;border:1px solid #e8ecf1;text-decoration:none;color:inherit;display:block}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.card-icon{font-size:26px;margin-bottom:6px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.card-desc{font-size:12px;color:#7f8c8d;line-height:1.5}
+.card-meta{font-size:11px;color:#95a5a6;margin-top:8px;padding-top:8px;border-top:1px solid #f0f2f5}
+.chip{display:inline-block;background:#e8f8f0;color:#27ae60;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
 
-  .row {
-    display: flex; align-items: center; gap: 12px; padding: 13px 4px;
-    border-bottom: 1px solid var(--border); cursor: pointer; text-decoration: none; color: inherit;
-  }
-  .row:last-child { border-bottom: none; }
-  .row:hover { background: #fafcff; }
-  .row .date-badge {
-    flex-shrink: 0; text-align: center; background: var(--primary-light); color: var(--primary);
-    border-radius: 8px; padding: 4px 8px; font-size: 12px; font-weight: 700; line-height: 1.3;
-  }
-  .row .info { flex: 1; min-width: 0; }
-  .row .info .t { font-weight: 600; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .row .score-chip { flex-shrink: 0; font-weight: 700; font-size: 14px; }
-  .score-chip.good { color: var(--green); }
-  .score-chip.mid { color: #d97706; }
-  .score-chip.low { color: var(--red); }
-  .status-chip { font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; }
-  .status-chip.done { background: var(--green-bg); color: var(--green); }
-  .status-chip.part { background: #fff7e6; color: #d97706; }
-  .status-chip.new { background: var(--primary-light); color: var(--primary); }
+/* Date selector */
+.date-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.date-chip{padding:8px 14px;background:#fff;border:1px solid #e8ecf1;border-radius:20px;font-size:13px;font-weight:600;color:#5d6d7e;cursor:pointer;transition:all .2s}
+.date-chip:hover{border-color:#1a5276}
+.date-chip.active{background:#1a5276;color:#fff;border-color:#1a5276}
+.date-chip.today::after{content:"今天";font-size:10px;margin-left:4px;opacity:.8}
 
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .stat { text-align: center; padding: 10px 4px; }
-  .stat .v { font-size: 20px; font-weight: 800; color: var(--primary); }
-  .stat .k { font-size: 11.5px; color: var(--text-sub); }
+/* Quiz */
+.quiz-box{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.quiz-progress{display:flex;justify-content:space-between;font-size:12px;color:#95a5a6;margin-bottom:6px}
+.progress-track{height:6px;background:#e8ecf1;border-radius:3px;overflow:hidden;margin-bottom:16px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#1a5276,#2ecc71);transition:width .3s;border-radius:3px}
+.q-text{font-size:16px;font-weight:600;line-height:1.6;margin-bottom:16px}
+.opt{display:block;width:100%;text-align:left;padding:13px 16px;margin-bottom:10px;background:#f8f9fb;border:2px solid #e8ecf1;border-radius:10px;font-size:14px;cursor:pointer;transition:all .15s;line-height:1.5;color:#2c3e50}
+.opt:hover{border-color:#1a5276}
+.opt .lab{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;background:#1a5276;color:#fff;border-radius:50%;font-size:12px;font-weight:700;margin-right:10px}
+.opt.correct{background:#e8f8f0;border-color:#27ae60}
+.opt.correct .lab{background:#27ae60}
+.opt.wrong{background:#fdecea;border-color:#e74c3c}
+.opt.wrong .lab{background:#e74c3c}
+.opt:disabled{cursor:default}
+.exp-box{background:#eaf2f8;border-left:4px solid #1a5276;border-radius:8px;padding:14px;font-size:13px;line-height:1.7;margin-top:6px}
+.exp-box .verdict{font-size:14px;font-weight:700;margin-bottom:6px}
+.verdict.ok{color:#27ae60}.verdict.no{color:#e74c3c}
+.btn{padding:11px 24px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-top:14px}
+.btn-primary{background:#1a5276;color:#fff}
+.btn-ghost{background:#fff;color:#1a5276;border:2px solid #1a5276}
+.btn:hover{opacity:.85}
+.next-row{text-align:right}
+.score-hero{text-align:center;padding:20px 0}
+.score-num{font-size:52px;font-weight:800;color:#1a5276}
+.score-sub{font-size:14px;color:#7f8c8d;margin-top:6px}
+.score-msg{font-size:15px;font-weight:600;margin-top:10px}
+.review-item{background:#f8f9fb;border-radius:10px;padding:14px;margin-bottom:10px;font-size:13px;line-height:1.6}
+.review-item .rq{font-weight:600;margin-bottom:6px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;margin-right:6px}
+.tag-ok{background:#e8f8f0;color:#27ae60}.tag-no{background:#fdecea;color:#e74c3c}
+.review-item .ans-line{color:#5d6d7e;margin:3px 0}
 
-  .search-bar { display: flex; gap: 8px; margin-bottom: 12px; }
-  .search-bar input {
-    flex: 1; border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px;
-    font-size: 14px; outline: none; background: #fff;
-  }
-  .search-bar input:focus { border-color: var(--primary); }
-  .search-result { padding: 12px 4px; border-bottom: 1px solid var(--border); }
-  .search-result:last-child { border-bottom: none; }
-  .search-result .q-line { font-weight: 600; font-size: 14.5px; cursor: pointer; }
-  .search-result .q-line:hover { color: var(--primary); }
-  .search-result .snippet { font-size: 13px; color: var(--text-sub); margin-top: 3px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .search-result .meta { font-size: 12px; color: var(--primary); margin-top: 3px; }
+/* News */
+.news-box{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.md h1{font-size:20px;color:#1a5276;margin-bottom:12px;line-height:1.4}
+.md h2{font-size:17px;color:#1a5276;margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid #eaf2f8}
+.md h3{font-size:15px;color:#2c3e50;margin:18px 0 8px}
+.md h4{font-size:14px;margin:14px 0 6px}
+.md p{font-size:14px;line-height:1.9;margin:8px 0;color:#34495e}
+.md ul{margin:8px 0 8px 22px}
+.md li{font-size:14px;line-height:1.8;color:#34495e}
+.md hr{border:none;border-top:1px solid #e8ecf1;margin:16px 0}
+.md a{color:#1a5276;text-decoration:none;border-bottom:1px dashed #1a5276;word-break:break-all}
+.table-wrap{overflow-x:auto;margin:12px 0;border-radius:8px;border:1px solid #e8ecf1}
+.md table{border-collapse:collapse;width:100%;font-size:13px}
+.md td{padding:9px 12px;border-bottom:1px solid #f0f2f5;line-height:1.5;color:#34495e}
+.md tr:last-child td{border-bottom:none}
+.md tr:first-child td{background:#eaf2f8;font-weight:600;color:#1a5276}
+.loading{text-align:center;padding:40px;color:#95a5a6;font-size:14px}
 
-  .wrong-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; background: #fff; }
-  .wrong-item .wq { font-weight: 600; }
-  .wrong-item .wmeta { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
-  details summary { cursor: pointer; color: var(--primary); font-size: 13.5px; margin-top: 8px; user-select: none; }
-  .wrong-item .ans-line { font-size: 13.5px; margin-top: 8px; }
-  .wrong-item .ans-line b.green { color: var(--green); }
-  .wrong-item .ans-line b.red { color: var(--red); }
-  .link { color: var(--primary); text-decoration: none; cursor: pointer; }
-  .wrong-item .w-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-  .wrong-item .w-redo-area { margin-top: 10px; }
-  .wrong-item .redo.ok { border-color: var(--green); color: var(--green); }
-  .wrong-item .redo.ok:hover { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-  .w-removed-bar { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-sub); }
+/* Reports */
+.report-card{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;transition:all .2s}
+.report-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1);border-color:#1a5276}
+.report-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.report-card-title{font-size:15px;font-weight:600;color:#2c3e50;line-height:1.5}
+.report-card-cat{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600;white-space:nowrap}
+.cat-tech{background:#e8f8f0;color:#27ae60}
+.cat-market{background:#eaf2f8;color:#1a5276}
+.cat-futures{background:#fef9e7;color:#f39c12}
+.cat-chain{background:#f5eef8;color:#8e44ad}
+.cat-geo{background:#fdedec;color:#e74c3c}
+.cat-export{background:#e0f2f1;color:#00695c}
+.report-card-date{font-size:12px;color:#95a5a6}
+.report-card-summary{font-size:13px;color:#5d6d7e;line-height:1.7;margin-top:6px}
+.report-back{display:inline-block;margin-bottom:14px;font-size:14px;font-weight:600;color:#1a5276;cursor:pointer}
+.report-back:hover{text-decoration:underline}
+.report-meta-bar{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
 
-  .backup-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+/* Automation list */
+.auto-list{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;border:1px solid #e8ecf1}
+.auto-item{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid #f0f2f5}
+.auto-item:last-child{border-bottom:none}
+.auto-time{font-size:12px;font-weight:700;color:#1a5276;min-width:64px;text-align:center;background:#eaf2f8;padding:4px 8px;border-radius:6px;margin-right:12px}
+.auto-name{font-size:13px;font-weight:500}
+.auto-desc{font-size:11px;color:#95a5a6;margin-top:2px}
+.auto-status{margin-left:auto}
 
-  .toast {
-    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-    background: rgba(31,45,61,.9); color: #fff; font-size: 13.5px;
-    padding: 9px 18px; border-radius: 20px; z-index: 999; animation: fadein .2s;
-    max-width: 86vw; text-align: center;
-  }
-  @keyframes fadein { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
-  /* 返回时定位到的题目高亮 */
-  .flash { animation: flashHL 2.5s ease; }
-  @keyframes flashHL { 0%, 55% { box-shadow: 0 0 0 3px rgba(22,104,220,.5); } 100% { box-shadow: none; } }
+/* KB & tools */
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.kb-card{background:#fff;border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e8ecf1;cursor:pointer;position:relative;overflow:hidden}
+.kb-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1a5276,#2ecc71)}
+.kb-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.kb-stats{font-size:11px;color:#95a5a6}
+.search-box{background:#fff;border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #e8ecf1}
+.search-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.search-input{flex:1;min-width:160px;padding:10px 14px;border:2px solid #e8ecf1;border-radius:8px;font-size:14px;outline:none}
+.search-input:focus{border-color:#1a5276}
+.btn-s{padding:10px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:#fff}
+.btn-s.p{background:#1a5276}.btn-s.g{background:#27ae60}
+.search-hint{font-size:12px;color:#95a5a6;line-height:1.7}
+.search-results{margin-top:14px}
+.result-item{background:#fff;border:1px solid #e8ecf1;border-radius:8px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.result-item:hover{border-color:#1a5276;box-shadow:0 2px 8px rgba(26,82,118,.1)}
+.result-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.result-type{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap}
+.result-type.report{background:#e8f0fe;color:#1a5276}
+.result-type.news-d{background:#e8f8f0;color:#27ae60}
+.result-type.news-f{background:#fef9e7;color:#b7950b}
+.result-type.quiz{background:#f5eef8;color:#7d3c98}
+.result-type.doc-gj{background:#fdedec;color:#a04000}
+.result-type.doc-ll{background:#ebf5fb;color:#21618c}
+.result-type.doc-px{background:#fef5e7;color:#9c640c}
+.result-title{font-size:14px;font-weight:600;color:#2c3e50;flex:1}
+.result-date{font-size:11px;color:#95a5a6}
+.result-snippet{font-size:13px;color:#555;line-height:1.6}
+.result-snippet mark{background:#fff3cd;color:#856404;padding:0 2px;border-radius:2px}
+.search-loading{text-align:center;padding:30px;color:#95a5a6;font-size:14px}
+.search-empty{text-align:center;padding:30px;color:#95a5a6;font-size:13px}
+.action-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.action-btn{background:#fff;border:2px solid #e8ecf1;border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s}
+.action-btn:hover{border-color:#1a5276;background:#eaf2f8}
+.action-icon{font-size:22px;margin-bottom:4px}
+.action-text{font-size:13px;font-weight:600}
+.action-hint{font-size:11px;color:#95a5a6;margin-top:3px}
 
-  /* 难度分级 */
-  .lv-bar { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-  .lv-btn { border: 1.5px solid var(--border); background: #fff; color: var(--text-sub); border-radius: 18px; padding: 5px 14px; font-size: 13px; cursor: pointer; transition: .15s; }
-  .lv-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
-  .lv-chip { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 7px; margin-left: 6px; white-space: nowrap; vertical-align: 1px; }
-  .lv-chip.c1 { background: var(--green-bg); color: var(--green); }
-  .lv-chip.c2 { background: #e8f1fd; color: #1668dc; }
-  .lv-chip.c3 { background: #fff7e6; color: #d97706; }
-  .lv-chip.c4 { background: #ffedd5; color: #ea580c; }
-  .lv-chip.c5 { background: var(--red-bg); color: var(--red); }
+/* Status badge & toast */
+.status-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500;background:#e8f8f0;color:#27ae60}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#2c3e50;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;opacity:0;transition:all .3s;z-index:1000}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.footer{text-align:center;padding:18px;color:#95a5a6;font-size:12px;border-top:1px solid #e8ecf1;margin-top:18px}
 
-  /* AI大白话 */
-  .plain-block { margin-top: 10px; border-radius: 10px; padding: 10px 12px; background: #f0f7ff; border-left: 3px solid #4d9bf5; font-size: 13.5px; color: #2b3a4e; }
-  .plain-block .pt { font-weight: 700; color: #1668dc; font-size: 12.5px; margin-bottom: 3px; }
+/* 新闻交互按钮 */
+.interest-btn{display:inline-block;margin:8px 0 4px;padding:5px 14px;border:1.5px solid #1a5276;border-radius:18px;background:#fff;color:#1a5276;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.interest-btn:active{opacity:.7;transform:scale(.97)}
+.interest-btn.sending{color:#f0a020;border-color:#f0a020;background:#fff8ee}
+.interest-btn.uploading{color:#22c55e;border-color:#22c55e;background:#f0fdf4}
+.interest-btn.done{color:#1faf6b;border-color:#1faf6b;background:#eefaf4}
+.interest-btn.fail{color:#e5533d;border-color:#e5533d;background:#fdeef0}
+.interest-btn.duplicate{color:#7d3c98;border-color:#7d3c98;background:#f5eef8}
+.feedback-box{margin-top:20px;background:#f8fbff;border:1px solid #d6e4f0;border-radius:10px;padding:16px}
+.feedback-box h2{font-size:15px;font-weight:800;color:#1a5276;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.feedback-box h2::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,#1a5276,#d6e4f0);border-radius:2px;margin-left:4px}
+.feedback-box textarea{width:100%;border:1.5px solid #d6e4f0;border-radius:8px;padding:10px;font-size:14px;resize:vertical;min-height:60px;box-sizing:border-box;font-family:inherit}
+.feedback-box textarea:focus{border-color:#1a5276;outline:none}
+.feedback-box .fb-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.feedback-box .fb-btn{padding:7px 20px;border:none;border-radius:8px;background:#1a5276;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
+.feedback-box .fb-btn:active{opacity:.8;transform:scale(.97)}
+.feedback-box .fb-btn:disabled{opacity:.5}
+.feedback-box .fb-hint{font-size:12px;color:#95a5a6}
 
-  /* 语音包 */
-  .persona-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-  .persona-card { border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; background: #fff; cursor: pointer; transition: .15s; position: relative; }
-  .persona-card.on { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); background: #f5faff; }
-  .persona-card .pname { font-weight: 700; font-size: 14.5px; padding-right: 40px; }
-  .persona-card .pdesc { font-size: 12px; color: var(--text-sub); margin-top: 3px; min-height: 32px; }
-  .persona-card .ptag { position: absolute; top: 8px; right: 8px; font-size: 10.5px; background: var(--primary-light); color: var(--primary); border-radius: 8px; padding: 1px 7px; }
-  .voice-opts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  .voice-opt { display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--border); border-radius: 18px; padding: 6px 14px; font-size: 13.5px; cursor: pointer; background: #fff; }
-  .voice-opt.on { border-color: var(--primary); color: var(--primary); background: #f5faff; font-weight: 600; }
-  @media (max-width: 480px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:600px){
+  .container{padding:10px}
+  .quiz-box,.news-box{padding:14px}
+  .card-grid{grid-template-columns:1fr 1fr}
+  .kb-grid{grid-template-columns:1fr 1fr}
+  .q-text{font-size:15px}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">🏗️ 沥青答题平台 <small>每日一练 · 可溯源 · 可复习</small></div>
-  <nav id="nav">
-    <a href="#/today" data-route="today">今日答题</a>
-    <a href="#/history" data-route="history">历史记录</a>
-    <a href="#/wrong" data-route="wrong">错题本</a>
-    <a href="#/search" data-route="search">题库搜索</a>
-    <a href="#/ai" data-route="ai">AI助手</a>
-    <a href="#/voice" data-route="voice">语音包</a>
-  </nav>
-</header>
-<main id="app"><div class="empty">加载中…</div></main>
-<input type="file" id="importFile" accept=".json" style="display:none">
+<div class="container">
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="header-title">沥青研发智能体工作平台</div>
+      <div class="header-sub">许力豪 · 京博（海南）新材料 · 沥青研发岗</div>
+    </div>
+    <div class="header-date">
+      <div id="currentDate"></div>
+      <div id="currentTime" style="font-size:17px;font-weight:700"></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav" id="nav">
+  <a class="nav-item" href="#/home" data-page="home"><span class="ico">🏠</span>首页</a>
+  <a class="nav-item" href="#/quiz" data-page="quiz"><span class="ico">📝</span>每日答题</a>
+  <a class="nav-item" href="#/news/dom" data-page="news"><span class="ico">📰</span>国内新闻</a>
+  <a class="nav-item" href="#/news/for" data-page="news"><span class="ico">🌏</span>出口国新闻</a>
+  <a class="nav-item" href="#/reports" data-page="reports"><span class="ico">📊</span>研究报告</a>
+  <a class="nav-item" href="#/library" data-page="library"><span class="ico">📚</span>资料库</a>
+  <a class="nav-item" href="#/tools" data-page="tools"><span class="ico">🧰</span>知识库·工具</a>
+</div>
+
+<div id="view"><div class="loading">加载中…</div></div>
+
+<div class="footer">沥青研发智能体工作平台 · 京博（海南）新材料 · Powered by WorkBuddy</div>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
-(function () {
-  'use strict';
-  var app = document.getElementById('app');
-  var LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
-  var LEVELS = { 1: '入门', 2: '基础', 3: '进阶', 4: '困难', 5: '挑战' };
-  function levelGroup(lv) { return lv <= 2 ? 1 : (lv === 3 ? 2 : 3); } // 1基础 2进阶 3挑战
-  var levelFilter = 0; // 0=全部 1=基础(1-2级) 2=进阶(3级) 3=挑战(4-5级)
-  var GROUP_NAMES = { 0: '全部', 1: '基础', 2: '进阶', 3: '挑战' };
-  var LS_KEY = 'asphaltQuizRecords';
-  var WRONG_REMOVED_KEY = 'asphaltWrongRemoved'; // { date: [qid,...] } 已移出错题本的条目
+/* ================= 基础工具 ================= */
+var MANIFEST=null;
+var todayStr=(function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
 
-  /* ---------- 基础工具 ---------- */
-  function esc(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-  function toast(msg) {
-    var t = document.createElement('div');
-    t.className = 'toast'; t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(function () { t.remove(); }, 2200);
-  }
-  function fetchJSON(path) {
-    // 加时间戳防止 CDN/浏览器缓存旧题库
-    return fetch(path + (path.indexOf('?') >= 0 ? '&' : '?') + '_t=' + Date.now())
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
-  }
+function updateTime(){
+  var now=new Date(),days=['日','一','二','三','四','五','六'];
+  var p=function(n){return String(n).padStart(2,'0');};
+  document.getElementById('currentDate').textContent=now.getFullYear()+'年'+p(now.getMonth()+1)+'月'+p(now.getDate())+'日 星期'+days[now.getDay()];
+  document.getElementById('currentTime').textContent=p(now.getHours())+':'+p(now.getMinutes())+':'+p(now.getSeconds());
+}
+updateTime();setInterval(updateTime,1000);
 
-  /* ---------- 语音夸夸包 ---------- */
-  var PERSONAS = [
-    { key: 'loli',    name: '小萝莉',            desc: '软萌元气，声音尖尖的超可爱', pitch: 1.6,  rate: 1.05, style: 'cute' },
-    { key: 'sweet',   name: '甜妹',              desc: '甜甜糯糯，夸人很贴心',       pitch: 1.3,  rate: 1.0,  style: 'sweet' },
-    { key: 'yj',      name: '御姐',              desc: '低音炮气场全开，傲娇式夸奖', pitch: 0.75, rate: 0.95, style: 'yj' },
-    { key: 'gentle',  name: '温柔姐姐',          desc: '轻声细语，治愈系鼓励',       pitch: 1.0,  rate: 0.88, style: 'gentle' },
-    { key: 'sichuan', name: '川妹子（四川话）',  desc: '巴适得板！热辣豪爽川味夸人', pitch: 1.25, rate: 1.0,  style: 'sc' },
-    { key: 'shandong',name: '鲁妹子（山东话）',  desc: '直爽实在：中！恁真厉害！',   pitch: 1.05, rate: 0.95, style: 'sd' }
-  ];
-  /* 开场惊叹词（随机拼在主夸前，制造灵动的节奏感） */
-  var EXCL = {
-    cute:   ['哇！', '耶——！', '哇塞！'],
-    sweet:  ['哇哦～', '呀！', '哇！'],
-    yj:     ['嚯！', '哦？', '啧，可以啊！'],
-    gentle: ['呀！', '哇～', '嗯？'],
-    sc:     ['哎哟！', '巴适！', '要得！'],
-    sd:     ['哎，中！', '中！', '哎哟！']
-  };
-  /* 连对欢呼（连对2/3/5/10，越连越燃） */
-  var STREAK = {
-    cute:   ['两连对！手感来了哦！', '三连对！今天状态爆棚呀！', '五连对！杀疯了杀疯了！', '十连对！无敌是多么，多么寂寞～'],
-    sweet:  ['两连对啦！状态越来越好了～', '三连对！你也太稳了吧～', '五连对！这波直接起飞～', '十连对！你已经是大神本神啦～'],
-    yj:     ['两连对，可以啊。', '三连对？有点意思。', '五连对，行，你彻底把我镇住了。', '十连对。好，从今天起，你就是我大哥。'],
-    gentle: ['两连对了，节奏很好呢。', '三连对，状态越来越稳了。', '五连对，你已经完全进入状态了。', '十连对，太惊人了，真为你骄傲。'],
-    sc:     ['连到两个咯！要得！', '三连对！凶得很噻！', '五连对咯！杀疯了杀疯了！', '十连对？哥老倌你莫不是神仙哦！'],
-    sd:     ['连着两个喽，中！', '三连对！恁可真能哈！', '好家伙，五连对！恁真管！', '十连对！我的娘来，恁成精喽！']
-  };
-  var PRAISE = {
-    cute: [
-      ['哇！答对啦！我就知道你可以的！', '嘿嘿，答对咯！奖励你一朵小红花！', '答对啦答对啦！开心得想转圈圈！', '叮咚！答对啦！你今天也超棒的！', '答对了！快让我抱抱你转一个！', '哇哦，又对一题！你是小天才吧？', '答对啦！今天的你也闪闪发光哦！', '嗯嗯！就是这个答案，真乖真棒！'],
-      ['天哪！这么难的题都答对了？！', '哇塞哇塞！你也太聪明了吧！', '呜哇！厉害厉害，佩服佩服！', '小天才就是你吧！太棒啦！', '这都会！我要把你的名字写在光荣榜上！', '不得了不得了！快来让我膜拜一下！', '哇！这题都拿下，你是开挂了吧！', '太厉害啦！我要告诉全世界你有多棒！'],
-      ['跪了跪了！大佬收下我的膝盖！', '这题都会？！我宣布你就是神！', '呜呜，太崇拜你了，求抱大腿！', '大佬带带我！我要跟着你学！', '我的天，这是什么神仙大脑啊！', '一百分？不行，一百分根本不够夸你！', '怎么办，我已经变成你的头号粉丝了！', '这种题都能秒杀？请收下我的十级崇拜！']
-    ],
-    sweet: [
-      ['答对啦，真棒～', '嗯嗯，答对了呢，好厉害～', '答对啦，给你点个赞～', '呀，答对了，开心的说～', '答对啦，继续保持哦～', '叮～答对啦，奖励你一颗糖！', '又答对一题，甜甜的你真棒～', '答对啦，今天的运气和实力都在线哦～'],
-      ['哇，答对了！你今天状态好棒！', '这么难都答对，好佩服你呀～', '答对啦！你认真起来的样子真好看～', '太厉害了吧，快让我夸夸你～', '又对了！你是不是偷偷变聪明了呀～', '哇塞，这题都被你拿下了，好厉害呀！', '答对啦！我就知道你可以的，超棒～', '这么难的题都会，想不想被我夸上天呀～'],
-      ['天呐，你已经厉害到让我词穷了！', '满分！我要把你的战绩裱起来！', '太强了，崇拜的小眼神已经藏不住了！', '你是神吧！就是神！', '这么难的题都拿下，我宣布你就是全场最靓！', '不行不行，再夸下去我自己都要脸红了！', '大神答题的瞬间，被我偷偷记下来了哦～', '你已经是我心里闪闪发光的大神啦！']
-    ],
-    yj: [
-      ['不错嘛，答对了。', '可以，这题答得干净利落。', '嗯，答对了，有点东西。', '答对了，表现不错。', '这题可难不倒你，嗯。', '行，算你答对了，勉强表扬一下。', '答对了？呵，看来根本不用我出手。', '嗯哼，这才像话。'],
-      ['厉害啊，深藏不露。', '答得漂亮，我看好你。', '有点本事啊，继续。', '这题都能答对，可以啊。', '不错，越来越让我刮目相看了。', '哟，可以啊，没想到你还留着这一手。', '这波答题，有点秀到我了。', '行啊你，我倒是小看你了。'],
-      ['服了，真有你的。', '这都行？我开始崇拜你了。', '行了行了，承认你是大佬还不行吗。', '厉害到我想给你鼓掌三分钟。', '你这水平，我竟找不出词来夸了。', '好吧，我收回之前所有小看你的话。', '这种题都秒了？你到底是何方神圣。', '记住啊，是我先发现你这个天才的。']
-    ],
-    gentle: [
-      ['答对了，你做得很好。', '嗯，答对了，慢慢来，不着急。', '又答对一题，真棒。', '答对了，你的努力看得见哦。', '做得好，继续保持这个节奏。', '嗯嗯，答对了，给你倒杯热茶庆祝一下。', '真棒，这题答得又稳又准。', '答对了呢，今天的你也很努力呀。'],
-      ['答得真好，进步很大呢。', '这么难的题都答对了，真为你高兴。', '你越来越熟练了，真棒。', '答对了，你的坚持有了回报。', '做得漂亮，我都想为你鼓掌了。', '哇，这题都答对了，你真的在悄悄变强呢。', '这么难都难不倒你，真是让人安心呀。', '答对了！你认真的样子，真的很动人。'],
-      ['太优秀了，真为你骄傲。', '你把这么难的题都解开了，了不起。', '看到你这么厉害，真欣慰。', '满分表现，你值得所有掌声。', '今天的你，闪闪发光。', '这么难的题都拿下，你已经超越很多人了。', '说实话，你比你自己以为的还要优秀。', '为你骄傲，这样的你，真的很了不起。']
-    ],
-    sc: [
-      ['要得！答对了，巴适！', '答对了噻，硬是要得！', '可以可以，答对了，安逸！', '对头！答对了，巴适得很！', '答对咯，莫得问题噻！', '要得要得，这题答得安逸！', '答对了，稳当！继续雄起噻！', '对喽对喽，就是这么答的，巴适！'],
-      ['哎呀，你咋个恁个凶哦！', '凶得很！这题都遭你拿下了！', '要得要得，你是有点儿东西哦！', '巴适惨咯！答对了，雄起！', '乖乖，这都会，服你！', '哇哦，答对咯！你今天凶得很噻！', '要得！这题拿捏得死死的！', '硬是可以哦，连到答对，怕是要起飞咯！'],
-      ['哥老倌，你太凶咯，我服气！', '硬是凶得很！跟你学一手嘛！', '哎哟喂，你怕不是神哦！', '厉害惨咯，我要给你扎起！', '你这么凶，让我崇拜一哈嘛！', '服咯服咯！你就是这条街最凶的崽！', '这都答对咯？你莫不是开了外挂哦！', '巴适得板！今天你就是最靓的仔！']
-    ],
-    sd: [
-      ['中，答对了哈，不错。', '哎，这题答对喽，行。', '对喽，就是这答案，怪好。', '行，这题你拿下了。', '中中中，答得挺好。', '嗯，对喽，没毛病。', '怪好，这题答对了。', '可以可以，答对了呗。'],
-      ['哎哟，这题不简单，恁都答上来了，厉害。', '中！恁这脑子，真不亏。', '行啊，越答越顺了哈。', '哎呀，这么难的题都难不住恁。', '恁可真行，这题都拿下了。', '中中中，恁是下过功夫的。', '够厉害，这题答得又快又准。', '哎，恁这水平，真不赖。'],
-      ['我的娘来，这题都答对喽，恁是真厉害。', '中！恁这水平，俺服气。', '哎哟喂，恁太能了，这都能答对。', '恁真是个人才，这题都不带含糊的。', '厉害厉害，恁这脑子好使得很。', '中中中，恁是真有两下子。', '俺说啥来着，恁就是行。', '了不得，这题都拿下喽，恁真管。']
-    ]
-  };
-  /* 全局音频互斥：新音频播放前先停掉所有正在播的，杜绝"两个人在说话"叠加 */
-  var activeAudios = [];
-  function stopAllAudio() {
-    for (var i = 0; i < activeAudios.length; i++) {
-      try { activeAudios[i].pause(); activeAudios[i].src = ''; } catch (e) {}
-    }
-    activeAudios = [];
-  }
-  function removeAudio(a) {
-    var ix = activeAudios.indexOf(a);
-    if (ix >= 0) activeAudios.splice(ix, 1);
-  }
-  var Voice = {
-    recent: {},
-    streak: 0,
-    streakDate: '',
-    settings: (function () { try { return JSON.parse(localStorage.getItem('asphaltQuizVoice') || '{}'); } catch (e) { return {}; } })(),
-    save: function () { try { localStorage.setItem('asphaltQuizVoice', JSON.stringify(this.settings)); } catch (e) {} },
-    dayIndex: function () { var d = new Date(); var s = new Date(d.getFullYear(), 0, 0); return Math.floor((d - s) / 86400000); },
-    currentPersona: function () {
-      var key = this.settings.persona;
-      if (key && key !== 'auto') {
-        for (var i = 0; i < PERSONAS.length; i++) if (PERSONAS[i].key === key) return PERSONAS[i];
-      }
-      return PERSONAS[this.dayIndex() % PERSONAS.length];
-    },
-    pickPraise: function (style, tier) {
-      var pool = (PRAISE[style] && PRAISE[style][tier]) || PRAISE.cute[tier];
-      var rk = style + '-' + tier, rec = this.recent[rk] || [], idx;
-      if (pool.length <= 2 || rec.length >= pool.length) {
-        idx = Math.floor(Math.random() * pool.length);
-      } else {
-        do { idx = Math.floor(Math.random() * pool.length); } while (rec.indexOf(idx) >= 0);
-      }
-      rec.push(idx);
-      if (rec.length > Math.max(2, Math.floor(pool.length / 2))) rec = rec.slice(-Math.max(2, Math.floor(pool.length / 2)));
-      this.recent[rk] = rec;
-      return { text: pool[idx], idx: idx };
-    },
-    praise: function (level) {
-      if (this.settings.enabled === false) return;
-      var p = this.currentPersona();
-      var tier = level >= 5 ? 2 : (level >= 3 ? 1 : 0);
-      /* 震动反馈：即使静音，答对也有"手感" */
-      try { if (navigator.vibrate) navigator.vibrate(50); } catch (e) {}
-      /* 连对追踪 */
-      var today = new Date().toISOString().slice(0, 10);
-      if (this.streakDate !== today) { this.streak = 0; this.streakDate = today; }
-      this.streak++;
-      /* 连对里程碑欢呼（2/3/5/10） */
-      var sm = { 2: 0, 3: 1, 5: 2, 10: 3 };
-      if (sm[this.streak] != null) {
-        var si = sm[this.streak];
-        var stext = (STREAK[p.style] && STREAK[p.style][si]) || STREAK.cute[si];
-        this.playAudio(p.style, 'streak' + this.streak, stext, p.pitch, p.rate);
-        if (this.streak >= 3) toast('🔥 ' + this.streak + '连对！');
-        return;
-      }
-      /* 叹词开场 + 主夸（顺序播放，灵动有节奏） */
-      var pk = this.pickPraise(p.style, tier);
-      var exArr = EXCL[p.style] || EXCL.cute;
-      var ei = Math.floor(Math.random() * exArr.length);
-      this.playSequence(p.style, ['excl-' + ei, tier + '-' + pk.idx], pk.text, p.pitch, p.rate);
-    },
-    /* 顺序播放多个音频文件（叹词→主夸），全程互斥，全部失败只弹文字不调系统引擎 */
-    playSequence: function (style, names, fallbackText, pitch, rate) {
-      var idx = 0, anyPlayed = false, moved = false;
-      function next() {
-        if (moved) return; /* 防 onerror 与 play() 失败回调双重推进 */
-        if (idx >= names.length) {
-          if (!anyPlayed && fallbackText) toast('🔊 ' + fallbackText);
-          return;
-        }
-        moved = true;
-        var name = names[idx++];
-        try {
-          stopAllAudio();
-          var a = new Audio('audio/' + style + '-' + name + '.mp3');
-          activeAudios.push(a);
-          a.volume = 1;
-          a.onended = function () { removeAudio(a); moved = false; next(); };
-          a.onerror = function () { removeAudio(a); moved = false; next(); };
-          var pr = a.play();
-          if (pr && pr.then) pr.then(function () { anyPlayed = true; }).catch(function () { removeAudio(a); moved = false; next(); });
-          else anyPlayed = true;
-        } catch (e) { moved = false; next(); }
-      }
-      next();
-    },
-    resetStreak: function () { this.streak = 0; },
-    /* 播放平台内置的真人语音包MP3（不依赖手机朗读引擎，任何浏览器可用） */
-    playAudio: function (style, name, fallbackText, pitch, rate) {
-      var failed = false;
-      function fallback() {
-        if (failed) return;
-        failed = true;
-        if (fallbackText) toast('🔊 ' + fallbackText); /* 文件缺失时只弹文字，不再启动系统朗读引擎 */
-      }
-      try {
-        stopAllAudio();
-        var a = new Audio('audio/' + style + '-' + name + '.mp3');
-        activeAudios.push(a);
-        a.volume = 1;
-        a.onerror = function () { removeAudio(a); fallback(); };
-        var pr = a.play();
-        if (pr && pr.catch) pr.catch(function () { removeAudio(a); fallback(); });
-      } catch (e) { fallback(); }
-    },
-    speak: function (text, pitch, rate) {
-      if (!text) return;
-      if (!('speechSynthesis' in window)) { toast(text); return; }
-      try {
-        speechSynthesis.cancel();
-        var u = new SpeechSynthesisUtterance(text);
-        u.lang = 'zh-CN';
-        var vs = speechSynthesis.getVoices() || [];
-        var zh = vs.filter(function (v) { return /zh|cmn|Chinese/i.test(v.lang + ' ' + v.name); });
-        var likelyNoZh = vs.length > 0 && !zh.length; /* 有语音引擎但没中文包，大概率无声 */
-        if (zh.length) u.voice = zh[0];
-        u.pitch = Math.max(0, Math.min(2, pitch || 1));
-        u.rate = Math.max(0.5, Math.min(2, rate || 1));
-        u.volume = 1;
-        u.onerror = function () { toast(text); };
-        speechSynthesis.speak(u);
-        if (likelyNoZh) toast('🔊 ' + text); /* 无中文语音包时至少弹文字夸奖 */
-      } catch (e) { toast(text); }
-    },
-    zhVoices: function () {
-      if (!('speechSynthesis' in window)) return null;
-      var vs = speechSynthesis.getVoices() || [];
-      return vs.filter(function (v) { return /zh|cmn|Chinese/i.test(v.lang + ' ' + v.name); });
-    }
-  };
-  if ('speechSynthesis' in window) {
-    try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function () { speechSynthesis.getVoices(); }; } catch (e) {}
-  }
-  /* 手机浏览器解锁：iOS/部分安卓必须在用户手势内先"空说"一次，语音引擎才被激活，否则之后全部无声 */
-  var voiceUnlocked = false;
-  function voiceUnlock() {
-    if (voiceUnlocked || !('speechSynthesis' in window)) return;
-    voiceUnlocked = true;
-    try {
-      var u = new SpeechSynthesisUtterance('');
-      u.volume = 0; u.lang = 'zh-CN';
-      speechSynthesis.speak(u);
-    } catch (e) {}
-  }
-  ['touchend', 'click', 'touchstart'].forEach(function (ev) {
-    document.addEventListener(ev, voiceUnlock, { once: true, capture: true });
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2500);
+}
+function copyPrompt(text){
+  var done=function(){showToast('提示词已复制，粘贴到 WorkBuddy 对话框即可执行');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(function(){fallbackCopy(text,done);});
+  }else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');done();}catch(e){showToast('复制失败：'+text.substring(0,30));}
+  document.body.removeChild(ta);
+}
+function get(url,cb){ /* XHR 兼容钉钉 WebView */
+  try{
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET',url+(url.indexOf('?')<0?'?':'&')+'t='+Date.now(),true);
+    xhr.onload=function(){if(xhr.status>=200&&xhr.status<300)cb(null,xhr.responseText);else cb('HTTP '+xhr.status);};
+    xhr.onerror=function(){cb('网络错误');};
+    xhr.send();
+  }catch(e){cb(e.message||'请求异常');}
+}
+function loadManifest(cb){
+  if(MANIFEST){cb(null,MANIFEST);return;}
+  get('data/manifest.json',function(err,txt){
+    if(err){cb(err);return;}
+    try{MANIFEST=JSON.parse(txt);cb(null,MANIFEST);}
+    catch(e){cb('manifest 解析失败');}
   });
+}
 
-  /* ---------- 数据层（题库=静态JSON，记录=localStorage） ---------- */
-  var manifest = null;          // { dates: [{date,title,topic,total}] } 按日期倒序
-  var quizCache = {};           // date -> quiz 对象
-
-  function loadManifest() {
-    if (manifest) return Promise.resolve(manifest);
-    return fetchJSON('data/index.json').then(function (m) {
-      m.dates = (m.dates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-      manifest = m;
-      return m;
-    });
-  }
-  function loadQuiz(date) {
-    if (quizCache[date]) return Promise.resolve(quizCache[date]);
-    return fetchJSON('data/quizzes/' + date + '.json').then(function (quiz) {
-      quiz.questions = (quiz.questions || []).map(function (q, i) {
-        return {
-          id: q.id != null ? q.id : i + 1,
-          q: String(q.q || ''),
-          options: (q.options || []).map(String),
-          answer: Number(q.answer) || 0,
-          explanation: String(q.explanation || ''),
-          plain: String(q.plain || ''),
-          level: Math.min(5, Math.max(1, Number(q.level) || 3)),
-          references: q.references || []
-        };
-      });
-      quiz.questions.sort(function (a, b) { return (a.level - b.level) || (a.id - b.id); });
-      quizCache[date] = quiz;
-      return quiz;
-    });
-  }
-  function loadAllQuizzes() {
-    return loadManifest().then(function (m) {
-      return Promise.all(m.dates.map(function (d) {
-        return loadQuiz(d.date).catch(function () { return null; });
-      })).then(function (arr) { return arr.filter(Boolean); });
-    });
-  }
-
-  function getRecords() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (e) { return {}; }
-  }
-  function saveRecords(r) {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(r)); }
-    catch (e) { toast('⚠️ 本地存储写入失败：' + e.message); }
-  }
-  function getRec(date) { return getRecords()[date] || { answers: {}, finished: false }; }
-  function nowISO() { return new Date().toISOString(); }
-
-  function submitAnswer(date, q, selected) {
-    var records = getRecords();
-    if (!records[date]) records[date] = { answers: {}, finished: false };
-    if (!records[date].answers) records[date].answers = {};
-    var correct = Number(selected) === Number(q.answer);
-    records[date].answers[String(q.id)] = { selected: Number(selected), correct: correct, level: Number(q.level) || 3, answeredAt: nowISO() };
-    records[date].updatedAt = nowISO();
-    saveRecords(records);
-    return { correct: correct, answer: q.answer, explanation: q.explanation, references: q.references };
-  }
-  function finishDay(date) {
-    var records = getRecords();
-    if (!records[date]) records[date] = { answers: {}, finished: false };
-    records[date].finished = true;
-    records[date].updatedAt = nowISO();
-    saveRecords(records);
-  }
-  function resetQuestion(date, qid) {
-    var records = getRecords();
-    if (records[date] && records[date].answers) {
-      delete records[date].answers[String(qid)];
-      records[date].finished = false;
-      records[date].updatedAt = nowISO();
-      saveRecords(records);
-    }
-  }
-  function resetDay(date) {
-    var records = getRecords();
-    records[date] = { answers: {}, finished: false, updatedAt: nowISO() };
-    saveRecords(records);
-  }
-
-  /* ---------- 汇总计算 ---------- */
-  function summarize(entry) {
-    var rec = getRec(entry.date);
-    var answers = rec.answers || {};
-    var answered = Object.keys(answers).length;
-    var correct = 0;
-    var groups = { 1: { a: 0, c: 0 }, 2: { a: 0, c: 0 }, 3: { a: 0, c: 0 } };
-    Object.keys(answers).forEach(function (k) {
-      if (answers[k].correct) correct++;
-      var g = levelGroup(answers[k].level || 3);
-      groups[g].a++;
-      if (answers[k].correct) groups[g].c++;
-    });
-    return {
-      date: entry.date, title: entry.title || ('沥青每日答题 ' + entry.date),
-      topic: entry.topic || '', total: entry.total || 0, lv: entry.lv || null,
-      answered: answered, correct: correct, finished: !!rec.finished, groups: groups
-    };
-  }
-  function groupLine(d) {
-    var names = { 1: '基', 2: '进', 3: '挑' }, out = '';
-    [1, 2, 3].forEach(function (g) {
-      var tot = 0;
-      if (d.lv && d.lv.length === 5) tot = g === 1 ? d.lv[0] + d.lv[1] : (g === 2 ? d.lv[2] : d.lv[3] + d.lv[4]);
-      var gr = d.groups[g] || { a: 0, c: 0 };
-      if (tot > 0) out += ' · ' + names[g] + ' ' + gr.c + '/' + tot;
-      else if (gr.a > 0) out += ' · ' + names[g] + ' ' + gr.c + '/' + gr.a;
-    });
-    return out;
-  }
-
-  /* ---------- 今日答题 ---------- */
-  function renderToday() {
-    loadManifest().then(function (m) {
-      if (!m.dates.length) {
-        app.innerHTML = '<div class="card"><div class="empty"><div class="big">📭</div>' +
-          '<div>还没有题库</div><div class="sub" style="margin-top:6px">每天 7:30 自动发布当日10道题</div></div></div>';
-        return;
+/* ================= Markdown 渲染 ================= */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function inline(s){
+  s=esc(s);
+  s=s.replace(/【原文链接[:：]\s*(https?:\/\/[^\s】]+)\s*】?/g,'<a href="$1" target="_blank">🔗 原文链接</a>');
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  return s;
+}
+function mdToHtml(md){
+  var lines=md.split(/\r?\n/),html=[],i=0,inList=false;
+  function closeList(){if(inList){html.push('</ul>');inList=false;}}
+  while(i<lines.length){
+    var line=lines[i];
+    if(/^\s*\|/.test(line)){ /* 表格块 */
+      closeList();var rows=[];
+      while(i<lines.length&&/^\s*\|/.test(lines[i])){rows.push(lines[i]);i++;}
+      var trs=[];
+      for(var r=0;r<rows.length;r++){
+        var cells=rows[r].trim().replace(/^\|/,'').replace(/\|$/,'').split('|');
+        for(var c=0;c<cells.length;c++)cells[c]=cells[c].trim();
+        var skip=true;
+        for(var k=0;k<cells.length;k++)if(cells[k]&&!/^[-:\s]*$/.test(cells[k])){skip=false;break;}
+        if(skip||!cells.join(''))continue;
+        var tds='';for(var k2=0;k2<cells.length;k2++)tds+='<td>'+inline(cells[k2])+'</td>';
+        trs.push('<tr>'+tds+'</tr>');
       }
-      renderQuiz(m.dates[0].date, true);
-    }).catch(function (e) { app.innerHTML = '<div class="card empty">加载失败：' + esc(e.message) + '</div>'; });
-  }
-
-  /* ---------- 答题页 ---------- */
-  function renderQuiz(date, isToday) {
-    app.innerHTML = '<div class="card empty">加载中…</div>';
-    loadQuiz(date)
-      .then(function (quiz) { drawQuiz(date, quiz, isToday); })
-      .catch(function (e) { app.innerHTML = '<div class="card empty">加载失败：' + esc(e.message) + '</div>'; });
-  }
-
-  function drawQuiz(date, quiz, isToday) {
-    var record = getRec(date);
-    var answers = record.answers || {};
-    var total = quiz.questions.length;
-    var qs = quiz.questions.filter(function (q) { return levelFilter === 0 || levelGroup(q.level) === levelFilter; });
-    if (!qs.length) qs = quiz.questions;
-    var cnt = { 1: 0, 2: 0, 3: 0 };
-    quiz.questions.forEach(function (q) { cnt[levelGroup(q.level)]++; });
-    var answered = 0, correct = 0;
-    qs.forEach(function (q) {
-      var a = answers[String(q.id)];
-      if (a) { answered++; if (a.correct) correct++; }
-    });
-
-    var html = '';
-    html += '<div class="card">';
-    html += '<div class="page-title">' + esc(quiz.title || ('沥青每日答题 ' + date)) + '</div>';
-    html += '<div class="sub">' + esc(date) + (quiz.topic ? ' · 主题：' + esc(quiz.topic) : '') + (isToday ? ' · 今日' : '') + ' · 15题由易到难</div>';
-    html += '<div class="lv-bar">' +
-      '<button class="lv-btn' + (levelFilter === 0 ? ' on' : '') + '" data-lvf="0">全部 ' + total + '</button>' +
-      (cnt[1] ? '<button class="lv-btn' + (levelFilter === 1 ? ' on' : '') + '" data-lvf="1">基础 ' + cnt[1] + '</button>' : '') +
-      (cnt[2] ? '<button class="lv-btn' + (levelFilter === 2 ? ' on' : '') + '" data-lvf="2">进阶 ' + cnt[2] + '</button>' : '') +
-      (cnt[3] ? '<button class="lv-btn' + (levelFilter === 3 ? ' on' : '') + '" data-lvf="3">挑战 ' + cnt[3] + '</button>' : '') +
-      '</div>';
-    html += '<div class="progress-wrap"><div class="progress-bar" style="width:' + (qs.length ? answered / qs.length * 100 : 0) + '%"></div></div>';
-    html += '<div class="score-row"><span>' + GROUP_NAMES[levelFilter] + '已答 ' + answered + '/' + qs.length + '</span><span>答对 ' + correct + '</span></div>';
-    if (answered === qs.length && qs.length > 0) {
-      html += '<div style="margin-top:10px"><button class="btn btn-outline" id="resetDay">🔄 整日重做</button></div>';
+      if(trs.length)html.push('<div class="table-wrap"><table>'+trs.join('')+'</table></div>');
+      continue;
     }
-    html += '</div>';
-
-    if (answered === qs.length && qs.length > 0) {
-      var pct = Math.round(correct / qs.length * 100);
-      var msg = pct >= 90 ? '非常出色！继续保持 💪' : pct >= 60 ? '不错，错题记得去错题本复习' : '错题较多，建议重点复习错题本';
-      html += '<div class="done-banner"><div class="score">' + correct + ' / ' + qs.length + '</div>' +
-        '<div class="tip">正确率 ' + pct + '% · ' + msg + '</div>' +
-        '<div class="done-actions"><a class="btn btn-white" href="#/wrong">查看错题本</a></div></div>';
-    }
-
-    qs.forEach(function (q, idx) {
-      var a = answers[String(q.id)];
-      html += '<div class="card q-card" id="qc-' + q.id + '">';
-      html += '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span><div class="q-text">' + esc(q.q) +
-        '<span class="lv-chip c' + q.level + '">' + LEVELS[q.level] + '</span></div></div>';
-      html += '<div class="opts" id="opts-' + q.id + '">';
-      q.options.forEach(function (opt, oi) {
-        var cls = 'opt';
-        if (a) {
-          cls += ' locked';
-          if (oi === q.answer) cls += ' correct';
-          if (oi === a.selected && a.selected !== q.answer) cls += ' wrong';
-          if (oi === a.selected) cls += ' chosen';
-        }
-        html += '<div class="' + cls + '" data-qid="' + q.id + '" data-oi="' + oi + '">' +
-          '<span class="letter">' + LETTERS[oi] + '</span><span>' + esc(opt) + '</span></div>';
-      });
-      html += '</div>';
-      if (a) {
-        html += explainHTML(q, a);
-        html += '<button class="redo" data-redo="' + q.id + '">🔄 重做本题</button>';
-      }
-      html += '</div>';
-    });
-
-    app.innerHTML = html;
-
-    document.querySelectorAll('.lv-btn').forEach(function (b) {
-      b.onclick = function () { levelFilter = Number(b.getAttribute('data-lvf')); drawQuiz(date, quiz, isToday); };
-    });
-    if (document.getElementById('resetDay')) {
-      document.getElementById('resetDay').onclick = function () {
-        if (!confirm('确定清空这一天所有答题记录，重新作答？')) return;
-        resetDay(date);
-        renderQuiz(date, isToday);
-      };
-    }
-    document.querySelectorAll('.opt:not(.locked)').forEach(function (el) {
-      el.onclick = function () {
-        var qid = el.getAttribute('data-qid'), oi = Number(el.getAttribute('data-oi'));
-        var q = quiz.questions.find(function (x) { return String(x.id) === String(qid); });
-        if (!q) return;
-        document.querySelectorAll('#opts-' + qid + ' .opt').forEach(function (o) { o.classList.add('locked'); });
-        var r = submitAnswer(date, q, oi);
-        var card = document.getElementById('qc-' + qid);
-        var opts = document.getElementById('opts-' + qid);
-        opts.querySelectorAll('.opt').forEach(function (o, i) {
-          if (i === r.answer) o.classList.add('correct');
-          if (i === oi && oi !== r.answer) o.classList.add('wrong');
-          if (i === oi) o.classList.add('chosen');
-        });
-        var div = document.createElement('div');
-        div.innerHTML = explainHTML(q, { selected: oi, correct: r.correct }) +
-          '<button class="redo" data-redo="' + q.id + '">🔄 重做本题</button>';
-        while (div.firstChild) card.appendChild(div.firstChild);
-        toast(r.correct ? '✓ 回答正确' : '✗ 回答错误');
-        if (r.correct) Voice.praise(q.level);
-        else Voice.resetStreak();
-        bindRedo(date, quiz, isToday);
-        checkFinished(date, quiz, isToday);
-      };
-    });
-    bindRedo(date, quiz, isToday);
+    if(/^\s*(-{3,}|_{3,}|\*{3,})\s*$/.test(line)){closeList();html.push('<hr>');i++;continue;}
+    var h=line.match(/^(#{1,4})\s+(.*)$/);
+    if(h){closeList();var lv=Math.min(h[1].length+1,5);html.push('<h'+lv+'>'+inline(h[2])+'</h'+lv+'>');i++;continue;}
+    var li=line.match(/^\s*[-*]\s+(.*)$/);
+    if(li){if(!inList){html.push('<ul>');inList=true;}html.push('<li>'+inline(li[1])+'</li>');i++;continue;}
+    if(/^\s*$/.test(line)){closeList();i++;continue;}
+    closeList();html.push('<p>'+inline(line)+'</p>');i++;
   }
+  closeList();return html.join('\n');
+}
 
-  function bindRedo(date, quiz, isToday) {
-    document.querySelectorAll('.redo').forEach(function (btn) {
-      btn.onclick = function () {
-        var qid = btn.getAttribute('data-redo');
-        resetQuestion(date, qid);
-        renderQuiz(date, isToday);
-      };
-    });
-  }
+/* ================= 路由 ================= */
+function route(){
+  var h=location.hash||'#/home';
+  var page=h.replace(/^#\//,'');
+  var navItems=document.querySelectorAll('.nav-item');
+  for(var n=0;n<navItems.length;n++)navItems[n].classList.remove('active');
+  document.getElementById('view').innerHTML='<div class="loading">加载中…</div>';
+  if(page.indexOf('quiz')===0){setNav('quiz');renderQuiz();}
+  else if(page.indexOf('news/dom')===0){setNav('news');renderNews('dom');}
+  else if(page.indexOf('news/for')===0){setNav('news');renderNews('for');}
+  else if(page.indexOf('reports')===0){setNav('reports');renderReports();}
+  else if(page.indexOf('library')===0){setNav('library');renderLibrary();}
+  else if(page.indexOf('tools')===0){setNav('tools');renderTools();}
+  else{setNav('home');renderHome();}
+  window.scrollTo(0,0);
+}
+function setNav(key){
+  var el=document.querySelector('.nav-item[data-page="'+key+'"]');
+  if(el)el.classList.add('active');
+}
+window.addEventListener('hashchange',route);
 
-  function explainHTML(q, a) {
-    var html = '<div class="explain">';
-    if (a.correct) {
-      html += '<div class="verdict ok">✓ 回答正确 · 正确答案 ' + LETTERS[q.answer] + '</div>';
-    } else {
-      html += '<div class="verdict no">✗ 回答错误 · 你选了 ' + LETTERS[a.selected] + '，正确答案 ' + LETTERS[q.answer] + '</div>';
-    }
-    html += '<div>' + esc(q.explanation || '（无解析）') + '</div>';
-    if (q.plain) {
-      html += '<div class="plain-block"><div class="pt">🤖 AI大白话</div>' + esc(q.plain) + '</div>';
-    }
-    if (q.references && q.references.length) {
-      html += '<div class="refs"><div class="ref-title">📚 参考资料（点击学习）</div>';
-      q.references.forEach(function (r) {
-        html += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.title || r.url) + '</a>';
-      });
-      html += '</div>';
-    }
-    html += '</div>';
-    return html;
-  }
-
-  function checkFinished(date, quiz, isToday) {
-    var rec = getRec(date);
-    var qs = quiz.questions.filter(function (q) { return levelFilter === 0 || levelGroup(q.level) === levelFilter; });
-    if (!qs.length) qs = quiz.questions;
-    var answeredAll = Object.keys(rec.answers || {}).length;
-    var answered = 0, correct = 0;
-    qs.forEach(function (q) { var a = rec.answers[String(q.id)]; if (a) { answered++; if (a.correct) correct++; } });
-    var bar = document.querySelector('.progress-bar');
-    if (bar && qs.length) bar.style.width = (answered / qs.length * 100) + '%';
-    var sc = document.querySelector('.score-row');
-    if (sc) sc.innerHTML = '<span>' + GROUP_NAMES[levelFilter] + '已答 ' + answered + '/' + qs.length + '</span><span>答对 ' + correct + '</span>';
-    if (answeredAll === quiz.questions.length && answeredAll > 0 && !rec.finished) {
-      finishDay(date);
-      try {
-        var p = Voice.currentPersona();
-        Voice.playAudio(p.style, 'finish', '哇，今天的题全部答完啦！', p.pitch, p.rate);
-      } catch (e) {}
-      renderQuiz(date, isToday);
-    }
-  }
-
-  /* ---------- 历史记录 ---------- */
-  function renderHistory() {
-    loadManifest().then(function (m) {
-      var rows = m.dates.map(summarize);
-      var days = rows.length, finishedDays = 0, totalAnswered = 0, totalCorrect = 0;
-      rows.forEach(function (d) {
-        totalAnswered += d.answered; totalCorrect += d.correct;
-        if (d.finished && d.total > 0 && d.answered === d.total) finishedDays++;
-      });
-      var accuracy = totalAnswered ? Math.round(totalCorrect / totalAnswered * 100) : 0;
-      var html = '';
-      html += '<div class="card"><div class="stats-grid">' +
-        '<div class="stat"><div class="v">' + days + '</div><div class="k">累计天数</div></div>' +
-        '<div class="stat"><div class="v">' + finishedDays + '</div><div class="k">完成天数</div></div>' +
-        '<div class="stat"><div class="v">' + totalAnswered + '</div><div class="k">累计答题</div></div>' +
-        '<div class="stat"><div class="v">' + accuracy + '%</div><div class="k">总正确率</div></div>' +
-        '</div></div>';
-      if (!rows.length) {
-        html += '<div class="card"><div class="empty"><div class="big">📅</div><div>暂无历史记录</div></div></div>';
-      } else {
-        html += '<div class="card">';
-        rows.forEach(function (d) {
-          var pct = d.total ? d.correct / d.total : 0;
-          var cls = pct >= 0.8 ? 'good' : pct >= 0.5 ? 'mid' : 'low';
-          var status = d.answered === 0
-            ? '<span class="status-chip new">未作答</span>'
-            : (d.answered === d.total ? '<span class="status-chip done">已完成</span>' : '<span class="status-chip part">进行中 ' + d.answered + '/' + d.total + '</span>');
-          html += '<div class="row" data-goto="' + d.date + '">' +
-            '<div class="date-badge">' + esc(d.date.slice(5).replace('-', '/')) + '<br><span style="font-weight:400;font-size:11px">' + esc(d.date.slice(0, 4)) + '</span></div>' +
-            '<div class="info"><div class="t">' + esc(d.topic || d.title) + status + '</div>' +
-            '<div class="sub">' + d.answered + '/' + d.total + ' 已答' + groupLine(d) + '</div></div>' +
-            '<div class="score-chip ' + cls + '">' + (d.answered ? d.correct + '/' + d.total : '—') + '</div></div>';
-        });
-        html += '</div>';
-      }
-      html += '<div class="card"><div class="page-title">💾 记录备份</div>' +
-        '<div class="sub">答题记录保存在当前设备浏览器中。换设备前请先导出，再在新设备导入即可延续记录。</div>' +
-        '<div class="backup-bar">' +
-        '<button class="btn btn-primary" id="btnExport">导出答题记录</button>' +
-        '<button class="btn btn-outline" id="btnImport">导入答题记录</button>' +
-        '</div></div>';
-      app.innerHTML = html;
-      document.querySelectorAll('[data-goto]').forEach(function (el) {
-        el.onclick = function () { location.hash = '#/quiz/' + el.getAttribute('data-goto'); };
-      });
-      document.getElementById('btnExport').onclick = exportRecords;
-      document.getElementById('btnImport').onclick = function () { document.getElementById('importFile').click(); };
-    }).catch(function (e) { app.innerHTML = '<div class="card empty">加载失败：' + esc(e.message) + '</div>'; });
-  }
-
-  function exportRecords() {
-    var blob = new Blob([JSON.stringify(getRecords(), null, 2)], { type: 'application/json' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = '沥青答题记录_' + new Date().toISOString().slice(0, 10) + '.json';
-    document.body.appendChild(a); a.click(); a.remove();
-    toast('已导出答题记录');
-  }
-
-  document.getElementById('importFile').addEventListener('change', function (e) {
-    var f = e.target.files[0];
-    if (!f) return;
-    var reader = new FileReader();
-    reader.onload = function () {
-      try {
-        var incoming = JSON.parse(reader.result);
-        if (!incoming || typeof incoming !== 'object') throw new Error('格式不对');
-        var records = getRecords();
-        Object.keys(incoming).forEach(function (date) {
-          var src = incoming[date];
-          if (!src || typeof src !== 'object') return;
-          var dst = records[date] || { answers: {}, finished: false };
-          var srcAnswers = src.answers || {};
-          var dstAnswers = dst.answers || {};
-          Object.keys(srcAnswers).forEach(function (qid) {
-            if (!dstAnswers[qid]) dstAnswers[qid] = srcAnswers[qid];
-          });
-          dst.answers = dstAnswers;
-          if (src.finished) dst.finished = true;
-          dst.updatedAt = src.updatedAt || dst.updatedAt;
-          records[date] = dst;
-        });
-        saveRecords(records);
-        toast('导入成功，记录已合并');
-        renderHistory();
-      } catch (err) {
-        toast('导入失败：文件不是有效的答题记录');
-      }
-      e.target.value = '';
-    };
-    reader.readAsText(f);
+/* ================= 首页 ================= */
+function renderHome(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    var qd=m.quizzes&&m.quizzes.length?m.quizzes[0].date:'—';
+    var dd=m.newsDom&&m.newsDom.length?m.newsDom[0].date:'—';
+    var fd=m.newsFor&&m.newsFor.length?m.newsFor[0].date:'—';
+    var rd=m.reports&&m.reports.length?m.reports.length:0;
+    v.innerHTML=
+    '<div class="section">'+
+      '<div class="section-title">📋 内容模块（点击进入，支持历史回看）</div>'+
+      '<div class="card-grid">'+
+        '<a class="card" href="#/quiz"><div class="card-icon">📝</div><div class="card-title">每日答题</div>'+
+        '<div class="card-desc">沥青知识选择题，在线作答、即时判分、查看解析</div>'+
+        '<div class="card-meta"><span class="chip">'+qd+'</span> · 共 '+(m.quizzes?m.quizzes.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/news/dom"><div class="card-icon">📰</div><div class="card-title">国内沥青新闻日报</div>'+
+        '<div class="card-desc">国内行业动态、价格行情、政策法规，逐日归档</div>'+
+        '<div class="card-meta"><span class="chip">'+dd+'</span> · 共 '+(m.newsDom?m.newsDom.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/news/for"><div class="card-icon">🌏</div><div class="card-title">出口国产业动态日报</div>'+
+        '<div class="card-desc">越南、新西兰、泰国、印尼等 11 国出口目标市场动态</div>'+
+        '<div class="card-meta"><span class="chip">'+fd+'</span> · 共 '+(m.newsFor?m.newsFor.length:0)+' 期可回看</div></a>'+
+        '<a class="card" href="#/reports"><div class="card-icon">📊</div><div class="card-title">沥青研究报告</div>'+
+        '<div class="card-desc">全球市场预测、技术突破、出口国深度研究、产业链分析</div>'+
+        '<div class="card-meta"><span class="chip">'+rd+' 篇</span> · 来自 IMA 研究报告库</div></a>'+
+        '<a class="card" href="#/library"><div class="card-icon">📚</div><div class="card-title">IMA 资料库</div>'+
+        '<div class="card-desc">国家概况与体系标准、壳牌沥青手册、原油评价指南、培训日报全文</div>'+
+        '<div class="card-meta"><span class="chip">'+(m.docs?m.docs.length:0)+' 份</span> · 每日自动同步</div></a>'+
+        '<a class="card" href="#/tools"><div class="card-icon">🧰</div><div class="card-title">知识库 · 工具</div>'+
+        '<div class="card-desc">8 个 IMA 知识库入口、文献检索、网络搜索、快速操作</div>'+
+        '<div class="card-meta">IMA 检索 + 网络搜索</div></a>'+
+      '</div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">⚙️ 自动化任务 <span class="count">6</span></div>'+
+      '<div class="auto-list">'+
+        autoItem('07:00','每日沥青知识选择题','出题并同步到本平台答题模块')+
+        autoItem('07:30','国内沥青新闻日报','排版生成并同步到本平台新闻模块')+
+        autoItem('08:00','出口国产业动态日报','11 国动态收集并同步到本平台')+
+        autoItem('每小时','沥青新闻精选上传','检查新闻库新内容自动归档')+
+        autoItem('20:00','培训日报生成推送','生成培训日报并发送钉钉')+
+        autoItem('21:00','培训课前预告','次日课程预告及预读重点')+
+      '</div>'+
+    '</div>'+
+    '<div class="section">'+
+      '<div class="section-title">ℹ️ 使用说明</div>'+
+      '<div class="search-box"><div class="search-hint">'+
+      '✅ <b>每日答题</b>：选择日期（今日或历史任意一天），逐题作答即时判分，附答案解析与错题回顾<br>'+
+      '✅ <b>新闻日报</b>：国内 / 出口国两个频道，选择日期查看当天完整日报，原文链接可直接跳转<br>'+
+      '✅ <b>研究报告</b>：来自 IMA 沥青研究报告库及出口国深度研究，涵盖全球市场、技术突破、期货行情、产业链分析、地缘政治、出口国研究六大类<br>'+
+      '✅ <b>数据同步</b>：每天 07:00 / 07:30 / 08:00 自动化任务运行后，本平台自动更新当日内容<br>'+
+      '✅ <b>我感兴趣 / 我关心</b>：每条新闻下方可点击「我感兴趣」自动上传 IMA 精选库，底部「我关心」可提交想看的内容'+
+      '</div></div>'+
+    '</div>';
   });
+}
+function autoItem(time,name,desc){
+  return '<div class="auto-item"><div class="auto-time">'+time+'</div><div><div class="auto-name">'+name+'</div><div class="auto-desc">'+desc+'</div></div><div class="auto-status"><span class="status-badge">ACTIVE</span></div></div>';
+}
 
-  /* ---------- 错题本 ---------- */
-  function getWrongRemoved() {
-    try { return JSON.parse(localStorage.getItem(WRONG_REMOVED_KEY) || '{}'); } catch (e) { return {}; }
+/* ================= 答题模块 ================= */
+function renderQuiz(initDate){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.quizzes||!m.quizzes.length){v.innerHTML='<div class="loading">暂无题目数据</div>';return;}
+    var chips='';
+    for(var i=0;i<m.quizzes.length;i++){
+      var q=m.quizzes[i];
+      var isToday=(q.date===todayStr);
+      chips+='<div class="date-chip'+(isToday?' today':'')+'" data-date="'+q.date+'" onclick="quizPick(\''+q.date+'\')">'+(isToday?'今日':q.date)+'</div>';
+    }
+    v.innerHTML='<div class="section-title">📝 选择日期开始答题</div><div class="date-bar">'+chips+'</div><div id="quizArea"></div>';
+    var first=initDate||m.quizzes[0].date;
+    quizPick(first);
+  });
+}
+function quizPick(date){
+  var chips=document.querySelectorAll('.date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].getAttribute('data-date')===date);
+  var area=document.getElementById('quizArea');
+  area.innerHTML='<div class="loading">加载题目中…</div>';
+  loadManifest(function(err,m){
+    if(err){area.innerHTML='<div class="loading">'+esc(err)+'</div>';return;}
+    var entry=null;
+    for(var i=0;i<m.quizzes.length;i++)if(m.quizzes[i].date===date){entry=m.quizzes[i];break;}
+    if(!entry){area.innerHTML='<div class="loading">未找到该日期的题目</div>';return;}
+    get('data/'+entry.file,function(e2,txt){
+      if(e2){area.innerHTML='<div class="loading">题目加载失败：'+esc(e2)+'</div>';return;}
+      var qs;
+      try{qs=JSON.parse(txt);}catch(ex){area.innerHTML='<div class="loading">题目解析失败</div>';return;}
+      startQuiz(date,qs);
+    });
+  });
+}
+var QZ={date:null,qs:[],idx:0,answers:[]};
+function startQuiz(date,qs){
+  QZ={date:date,qs:qs,idx:0,answers:[]};
+  renderQuestion();
+}
+function renderQuestion(){
+  var area=document.getElementById('quizArea');
+  var q=QZ.qs[QZ.idx],total=QZ.qs.length,LAB=['A','B','C','D'];
+  var pct=Math.round(QZ.idx/total*100);
+  var html='<div class="quiz-box">'+
+    '<div class="quiz-progress"><span>'+QZ.date+(QZ.date===todayStr?'（今天）':'')+'</span><span>第 '+(QZ.idx+1)+' / '+total+' 题</span></div>'+
+    '<div class="progress-track"><div class="progress-fill" style="width:'+pct+'%"></div></div>'+
+    '<div class="q-text">'+esc(q.q)+'</div>';
+  for(var i=0;i<q.opts.length;i++){
+    html+='<button class="opt" id="opt'+i+'" onclick="quizAnswer('+i+')"><span class="lab">'+LAB[i]+'</span>'+esc(q.opts[i])+'</button>';
   }
-  function saveWrongRemoved(o) {
-    try { localStorage.setItem(WRONG_REMOVED_KEY, JSON.stringify(o)); }
-    catch (e) { toast('⚠️ 本地存储写入失败：' + e.message); }
+  html+='<div id="expArea"></div><div class="next-row"><button class="btn btn-primary" id="nextBtn" style="display:none" onclick="quizNext()">'+(QZ.idx===total-1?'查看成绩 →':'下一题 →')+'</button></div></div>';
+  area.innerHTML=html;
+  window.scrollTo(0,0);
+}
+function quizAnswer(sel){
+  var q=QZ.qs[QZ.idx],LAB=['A','B','C','D'];
+  for(var i=0;i<q.opts.length;i++){
+    var btn=document.getElementById('opt'+i);
+    if(btn)btn.disabled=true;
   }
-  function removeWrongItem(date, qid) {
-    var m = getWrongRemoved();
-    if (!m[date]) m[date] = [];
-    if (m[date].indexOf(String(qid)) < 0) m[date].push(String(qid));
-    saveWrongRemoved(m);
+  var ok=(sel===q.ans);
+  QZ.answers.push(ok);
+  var selBtn=document.getElementById('opt'+sel);
+  var okBtn=document.getElementById('opt'+q.ans);
+  if(selBtn)selBtn.classList.add(ok?'correct':'wrong');
+  if(okBtn&&!ok)okBtn.classList.add('correct');
+  var exp=document.getElementById('expArea');
+  exp.innerHTML='<div class="exp-box"><div class="verdict '+(ok?'ok':'no')+'">'+(ok?'✅ 回答正确':'❌ 回答错误，正确答案是 '+LAB[q.ans])+'</div>'+esc(q.exp||'')+'</div>';
+  var nb=document.getElementById('nextBtn');
+  if(nb)nb.style.display='inline-block';
+}
+function quizNext(){
+  QZ.idx++;
+  if(QZ.idx<QZ.qs.length){renderQuestion();return;}
+  renderScore();
+}
+function renderScore(){
+  var area=document.getElementById('quizArea');
+  var total=QZ.qs.length,right=0,LAB=['A','B','C','D'];
+  for(var i=0;i<QZ.answers.length;i++)if(QZ.answers[i])right++;
+  var pct=Math.round(right/total*100);
+  var msg=pct===100?'满分！知识掌握非常扎实 💪':pct>=80?'优秀！继续保持 🔥':pct>=60?'良好，错题记得回顾 📖':'错题较多，建议复习后重做 ♻️';
+  var html='<div class="quiz-box"><div class="score-hero">'+
+    '<div class="score-num">'+right+' / '+total+'</div>'+
+    '<div class="score-sub">'+QZ.date+' · 正确率 '+pct+'%</div>'+
+    '<div class="score-msg">'+msg+'</div>'+
+    '<button class="btn btn-ghost" onclick="quizPick(\''+QZ.date+'\')">🔄 重新作答</button>'+
+    '</div><div class="section-title" style="margin-top:8px">错题/答题回顾</div>';
+  for(var i=0;i<QZ.qs.length;i++){
+    var q=QZ.qs[i],ok=QZ.answers[i];
+    html+='<div class="review-item"><span class="tag '+(ok?'tag-ok':'tag-no')+'">'+(ok?'✓ 正确':'✗ 错误')+'</span>'+(i+1)+'. <span class="rq">'+esc(q.q)+'</span>'+
+      '<div class="ans-line">正确答案：<b>'+LAB[q.ans]+'. '+esc(q.opts[q.ans])+'</b></div>'+
+      '<div class="ans-line" style="color:#95a5a6;font-size:12px">'+esc((q.exp||'').substring(0,120))+((q.exp||'').length>120?'…':'')+'</div></div>';
   }
-  function restoreWrongAll() { saveWrongRemoved({}); }
+  html+='</div>';
+  area.innerHTML=html;
+  window.scrollTo(0,0);
+}
 
-  function renderWrong() {
-    loadAllQuizzes().then(function (quizzes) {
-      var records = getRecords();
-      var removed = getWrongRemoved();
-      var wrong = [];
-      var removedCount = 0;
-      quizzes.forEach(function (quiz) {
-        var rec = records[quiz.date];
-        if (!rec || !rec.answers) return;
-        var remList = removed[quiz.date] || [];
-        quiz.questions.forEach(function (q) {
-          var a = rec.answers[String(q.id)];
-          if (a && !a.correct) {
-            if (remList.indexOf(String(q.id)) >= 0) { removedCount++; return; }
-            wrong.push({ date: quiz.date, topic: quiz.topic || '', question: q, selected: a.selected, answeredAt: a.answeredAt });
-          }
-        });
-      });
-      var html = '';
-      if (!wrong.length) {
-        if (removedCount > 0) {
-          html = '<div class="card"><div class="empty"><div class="big">🎉</div><div>错题本已清空！</div>' +
-            '<div class="sub" style="margin-top:6px">你已掌握全部错题 · <span class="link" id="restoreWrong">点此恢复已移出的 ' + removedCount + ' 道</span></div></div></div>';
-        } else {
-          html = '<div class="card"><div class="empty"><div class="big">🎉</div><div>没有错题，继续保持！</div>' +
-            '<div class="sub" style="margin-top:6px">做错的题目会自动收录到这里，方便随时复习</div></div></div>';
+/* ================= 新闻模块 ================= */
+function renderNews(channel){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    var list=(channel==='dom')?(m.newsDom||[]):(m.newsFor||[]);
+    if(!list.length){v.innerHTML='<div class="loading">暂无新闻数据</div>';return;}
+    var title=channel==='dom'?'📰 国内沥青新闻日报':'🌏 出口国产业动态日报';
+    var chips='';
+    for(var i=0;i<list.length;i++){
+      var it=list[i],isToday=(it.date===todayStr);
+      chips+='<div class="date-chip'+(isToday?' today':'')+'" data-date="'+it.date+'" onclick="newsPick(\''+channel+'\',\''+it.date+'\')">'+(isToday?'今日':it.date)+'</div>';
+    }
+    v.innerHTML='<div class="section-title">'+title+' · 选择日期</div><div class="date-bar">'+chips+'</div><div id="newsArea"><div class="loading">加载中…</div></div>';
+    newsPick(channel,list[0].date);
+  });
+}
+function newsPick(channel,date){
+  var chips=document.querySelectorAll('.date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].getAttribute('data-date')===date);
+  var area=document.getElementById('newsArea');
+  area.innerHTML='<div class="loading">加载日报中…</div>';
+  loadManifest(function(err,m){
+    if(err){area.innerHTML='<div class="loading">'+esc(err)+'</div>';return;}
+    var list=(channel==='dom')?m.newsDom:m.newsFor,entry=null;
+    for(var i=0;i<list.length;i++)if(list[i].date===date){entry=list[i];break;}
+    if(!entry){area.innerHTML='<div class="loading">未找到该日期的日报</div>';return;}
+    get('data/'+entry.file,function(e2,txt){
+      if(e2){area.innerHTML='<div class="loading">日报加载失败：'+esc(e2)+'</div>';return;}
+      area.innerHTML='<div class="news-box md" id="newsContent">'+mdToHtml(txt)+'</div>';
+      enhanceNews('newsContent',channel,date);
+      window.scrollTo(0,0);
+    });
+  });
+}
+
+/* ================= 新闻交互（我感兴趣 / 我关心） ================= */
+function enhanceNews(containerId,channel,date){
+  var container=document.getElementById(containerId);
+  if(!container)return;
+  var cfg=channel==='dom'?{
+    interest:'xlh-asphalt-interest-2026',feedback:'xlh-asphalt-feedback-2026',status:'xlh-asphalt-upload-status'
+  }:{
+    interest:'xlh-foreign-interest-2026',feedback:'xlh-foreign-feedback-2026',status:'xlh-foreign-upload-status'
+  };
+  /* 工具：从 DOM 元素中提取链接 URL */
+  function extractUrl(el){
+    var links=el.querySelectorAll('a');
+    for(var l=0;l<links.length;l++){
+      var href=links[l].getAttribute('href');
+      if(href&&href.indexOf('http')===0)return href;
+    }
+    return '';
+  }
+  var items=[];
+  if(channel==='dom'){
+    /* mdToHtml 把 ### 渲染成 <h4>（不是 <h3>），所以查 h3,h4 */
+    var headings=container.querySelectorAll('h3,h4');
+    for(var i=0;i<headings.length;i++){
+      var t=headings[i].textContent.trim();
+      if(/^\d+\./.test(t)){
+        var content='',url='',lastEl=headings[i];
+        var next=headings[i].nextElementSibling;
+        while(next&&next.tagName!=='H3'&&next.tagName!=='H4'&&next.tagName!=='H2'&&next.tagName!=='HR'){
+          content+=next.textContent.trim()+'\n';
+          var u=extractUrl(next);
+          if(u)url=u;
+          lastEl=next;next=next.nextElementSibling;
         }
-      } else {
-        html += '<div class="card"><div class="page-title">错题本</div><div class="sub">共 ' + wrong.length + ' 道错题 · 可「重做本题」当场再答，或「已掌握」移出</div></div>';
-        wrong.forEach(function (w) {
-          var q = w.question;
-          var lv = q.level || 3;
-          html += '<div class="wrong-item" data-date="' + w.date + '" data-qid="' + q.id + '">';
-          html += '<div class="wq"><span class="link" data-goto="' + w.date + '">' + w.date + '</span> · ' + esc(q.q) + '<span class="lv-chip c' + lv + '">' + LEVELS[lv] + '</span></div>';
-          html += '<div class="wmeta">你选了 ' + LETTERS[w.selected] + '，正确答案 ' + LETTERS[q.answer] + '</div>';
-          html += '<div class="w-actions">' +
-            '<button class="redo w-redo-btn" data-date="' + w.date + '" data-qid="' + q.id + '">🔄 重做本题</button>' +
-            '<button class="redo ok w-remove-btn" data-date="' + w.date + '" data-qid="' + q.id + '">✓ 已掌握，移出</button>' +
-            '</div>';
-          html += '<div class="w-redo-area" id="wra-' + w.date + '-' + q.id + '"></div>';
-          html += '<details><summary>查看解析与参考资料</summary><div class="ans-line">' + esc(q.explanation || '（无解析）') + '</div>' +
-            (q.plain ? '<div class="plain-block" style="margin-top:8px"><div class="pt">🤖 AI大白话</div>' + esc(q.plain) + '</div>' : '');
-          if (q.references && q.references.length) {
-            html += '<div class="refs">';
-            q.references.forEach(function (r) { html += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.title || r.url) + '</a>'; });
-            html += '</div>';
-          }
-          html += '</details></div>';
-        });
-        if (removedCount > 0) {
-          html += '<div class="card w-removed-bar">已移出 ' + removedCount + ' 道错题 · <span class="link" id="restoreWrong">点此恢复全部</span></div>';
-        }
+        if(url&&content.indexOf(url)<0)content+='【原文链接: '+url+'】';
+        items.push({startEl:headings[i],lastEl:lastEl,title:t,content:content,url:url});
       }
-      app.innerHTML = html;
-      document.querySelectorAll('[data-goto]').forEach(function (el) {
-        el.onclick = function () { location.hash = '#/quiz/' + el.getAttribute('data-goto'); };
+    }
+  }else{
+    /* 出口国日报：格式不固定（粗体段落标题 或 国家小标题+普通段落+摘要列表），
+       统一用「原文链接」锚点作为每条新闻的分隔标记，向前聚合标题与摘要 */
+    var blocks=container.querySelectorAll('h2,h3,h4,p,li,hr');
+    var cur=null;
+    for(var b=0;b<blocks.length;b++){
+      var el=blocks[b],tag=el.tagName;
+      /* 国家标题/分隔线：结束当前条目（无链接的丢弃） */
+      if(tag==='H2'||tag==='H3'||tag==='H4'||tag==='HR'){
+        if(cur&&cur.url)items.push(cur);
+        cur=null;
+        continue;
+      }
+      var txt=el.textContent.trim();
+      /* 检测「原文链接」锚点（链接为主体的块） */
+      var aEl=el.querySelector('a[href^="http"]');
+      var isLink=false;
+      if(aEl){
+        var clone=el.cloneNode(true);
+        var ca=clone.querySelector('a[href^="http"]');if(ca)ca.remove();
+        if(clone.textContent.trim().length<10)isLink=true;
+      }
+      if(isLink){
+        if(!cur)cur={title:'',content:'',lastEl:el,url:''};
+        cur.url=aEl.getAttribute('href');
+        if(cur.content.indexOf(cur.url)<0)cur.content+='【原文链接: '+cur.url+'】';
+        cur.lastEl=el;
+        items.push(cur);
+        cur=null;
+        continue;
+      }
+      if(!txt)continue; /* 空列表项跳过 */
+      if(!cur)cur={title:'',content:'',lastEl:el,url:''};
+      if(!cur.title&&txt.length>4)cur.title=txt; /* 首个实质性文本作为标题 */
+      cur.content+=txt+'\n';
+      cur.lastEl=el;
+    }
+    if(cur&&cur.url)items.push(cur);
+  }
+  for(var k=0;k<items.length;k++){
+    (function(item,idx){
+      var id=date+'-'+String(idx+1).padStart(2,'0');
+      var btn=document.createElement('button');
+      btn.className='interest-btn';
+      btn.innerHTML='我感兴趣 💗';
+      btn.addEventListener('click',function(){
+        newsSendInterest(cfg,id,item.title,item.content,'',item.url,btn);
       });
-      bindWrongActions();
-    }).catch(function (e) { app.innerHTML = '<div class="card empty">加载失败：' + esc(e.message) + '</div>'; });
+      var wrap=document.createElement('div');
+      wrap.style.textAlign='right';
+      wrap.appendChild(btn);
+      var after=item.lastEl;
+      if(after.tagName==='LI'&&after.parentNode&&after.parentNode.tagName==='UL')after=after.parentNode;
+      after.parentNode.insertBefore(wrap,after.nextSibling);
+    })(items[k],k);
   }
-
-  function bindWrongActions() {
-    // 重做本题（内联作答，答对该题自动移出错题本）
-    document.querySelectorAll('.w-redo-btn').forEach(function (btn) {
-      btn.onclick = function () {
-        var date = btn.getAttribute('data-date');
-        var qid = btn.getAttribute('data-qid');
-        var area = document.getElementById('wra-' + date + '-' + qid);
-        if (!area) return;
-        if (area.getAttribute('data-open') === '1') {
-          area.innerHTML = ''; area.setAttribute('data-open', '0'); btn.textContent = '🔄 重做本题'; return;
-        }
-        loadQuiz(date).then(function (quiz) {
-          var q = quiz.questions.find(function (x) { return String(x.id) === String(qid); });
-          if (!q) return;
-          var html = '<div class="opts" id="wropts-' + date + '-' + qid + '">';
-          q.options.forEach(function (opt, oi) {
-            html += '<div class="opt" data-wrqid="' + qid + '" data-wroi="' + oi + '">' +
-              '<span class="letter">' + LETTERS[oi] + '</span><span>' + esc(opt) + '</span></div>';
-          });
-          html += '</div>';
-          area.innerHTML = html;
-          area.setAttribute('data-open', '1');
-          area.setAttribute('data-answered', '0');
-          btn.textContent = '收起重做';
-          area.querySelectorAll('.opt').forEach(function (el) {
-            el.onclick = function () {
-              if (area.getAttribute('data-answered') === '1') return;
-              var oi = Number(el.getAttribute('data-wroi'));
-              var r = submitAnswer(date, q, oi);
-              area.setAttribute('data-answered', '1');
-              area.querySelectorAll('.opt').forEach(function (o, i) {
-                o.classList.add('locked');
-                if (i === r.answer) o.classList.add('correct');
-                if (i === oi && oi !== r.answer) o.classList.add('wrong');
-                if (i === oi) o.classList.add('chosen');
-              });
-              var res = document.createElement('div');
-              res.innerHTML = explainHTML(q, { selected: oi, correct: r.correct });
-              while (res.firstChild) area.appendChild(res.firstChild);
-              if (r.correct) {
-                toast('✓ 答对了，已从错题本移除');
-                setTimeout(function () { renderWrong(); }, 800);
-              } else {
-                toast('✗ 还是错了，再看看解析');
-                var item = el.closest ? el.closest('.wrong-item') : null;
-                if (item) {
-                  var meta = item.querySelector('.wmeta');
-                  if (meta) meta.innerHTML = '你选了 ' + LETTERS[oi] + '，正确答案 ' + LETTERS[q.answer];
-                }
-              }
-            };
-          });
-        }).catch(function (e) { toast('加载题目失败：' + e.message); });
-      };
-    });
-    // 已掌握，移出错题本（可恢复）
-    document.querySelectorAll('.w-remove-btn').forEach(function (btn) {
-      btn.onclick = function () {
-        if (!confirm('确定将这道错题标记为已掌握并移出错题本？\n移出后仍可在当天答题记录中查看，可随时恢复。')) return;
-        removeWrongItem(btn.getAttribute('data-date'), btn.getAttribute('data-qid'));
-        renderWrong();
-      };
-    });
-    // 恢复全部已移出
-    var rw = document.getElementById('restoreWrong');
-    if (rw) rw.onclick = function () { restoreWrongAll(); renderWrong(); };
-  }
-
-  /* ---------- 题库搜索 ---------- */
-  function renderSearch() {
-    app.innerHTML =
-      '<div class="search-bar"><input id="kw" placeholder="搜索题目、解析、主题关键词…" autocomplete="off"><button class="btn btn-primary" id="doSearch">搜索</button></div>' +
-      '<div id="searchResults"><div class="card"><div class="empty"><div class="big">🔍</div><div>输入关键词查询全部题库</div>' +
-      '<div class="sub" style="margin-top:6px">例如：针入度、软化点、SBS、DSR</div></div></div></div>';
-    var input = document.getElementById('kw');
-    function doSearch() {
-      var kw = input.value.trim().toLowerCase();
-      if (!kw) return;
-      document.getElementById('searchResults').innerHTML = '<div class="card empty">搜索中…</div>';
-      loadAllQuizzes().then(function (quizzes) {
-        var rs = [];
-        quizzes.forEach(function (quiz) {
-          quiz.questions.forEach(function (q) {
-            var hay = (q.q + ' ' + q.explanation + ' ' + (quiz.topic || '') + ' ' + q.options.join(' ')).toLowerCase();
-            if (hay.indexOf(kw) >= 0) {
-              rs.push({ date: quiz.date, topic: quiz.topic || '', id: q.id, q: q.q, explanation: q.explanation, answer: q.answer, options: q.options, references: q.references, level: q.level || 3 });
+  var fb=document.createElement('div');
+  fb.className='feedback-box';
+  fb.innerHTML='<h2>💬 我关心</h2>'+
+    '<textarea id="fbText" rows="3" placeholder="您希望看到哪方面的新闻或专题？请描述您的需求..."></textarea>'+
+    '<div class="fb-row"><button class="fb-btn" id="fbSubmit">提交</button><span class="fb-hint" id="fbHint"></span></div>';
+  container.appendChild(fb);
+  document.getElementById('fbSubmit').addEventListener('click',function(){
+    newsSendFeedback(cfg);
+  });
+}
+function newsSendInterest(cfg,id,title,content,source,url,btn){
+  var data={id:id,title:title,content:content,source:source,url:url};
+  var body=JSON.stringify(data);
+  btn.className='interest-btn sending';
+  btn.innerHTML='发送中... ⏳';
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://ntfy.sh/'+cfg.interest,true);
+  xhr.setRequestHeader('Content-Type','text/plain');
+  try{xhr.setRequestHeader('Title','interest');}catch(e){}
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      if(xhr.status>=200&&xhr.status<300){
+        btn.className='interest-btn uploading';
+        btn.innerHTML='正在上传精选库... 🔄';
+        newsPollStatus(cfg,id,btn);
+      }else{
+        btn.className='interest-btn fail';
+        btn.innerHTML='发送失败 ↻';
+      }
+    }
+  };
+  xhr.onerror=function(){
+    btn.className='interest-btn fail';
+    btn.innerHTML='发送失败 ↻';
+  };
+  xhr.send(body);
+}
+function newsPollStatus(cfg,newsId,btn){
+  var start=Date.now();var maxWait=120000;
+  function check(){
+    if(Date.now()-start>maxWait){
+      btn.className='interest-btn uploading';
+      btn.innerHTML='上传中... 🔄';
+      return;
+    }
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','https://ntfy.sh/'+cfg.status+'/json?poll=1&since=60s',true);
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState===4&&xhr.status>=200&&xhr.status<300){
+        var lines=xhr.responseText.trim().split('\n');
+        var found=false;
+        for(var i=0;i<lines.length;i++){
+          if(!lines[i].trim())continue;
+          try{
+            var msg=JSON.parse(lines[i]);
+            if(msg.event!=='message')continue;
+            var info=JSON.parse(msg.message);
+            if(info.newsId===newsId){
+              found=true;
+              if(info.status==='success'){btn.className='interest-btn done';btn.innerHTML='已上传精选库 ✓';}
+              else if(info.status==='duplicate'){btn.className='interest-btn duplicate';btn.innerHTML='已收录 ✓';}
+              else if(info.status==='failed'){btn.className='interest-btn fail';btn.innerHTML='上传失败 ↻';}
+              else if(info.status==='uploading'){btn.className='interest-btn uploading';btn.innerHTML='正在上传精选库... 🔄';}
+              break;
             }
-          });
-        });
-        if (!rs.length) {
-          document.getElementById('searchResults').innerHTML = '<div class="card"><div class="empty">没有找到与「' + esc(kw) + '」相关的题目</div></div>';
-          return;
+          }catch(e){}
         }
-        var html = '<div class="card"><div class="sub" style="padding:4px 4px 8px">找到 ' + rs.length + ' 道相关题目</div>';
-        rs.forEach(function (r) {
-          html += '<div class="search-result">' +
-            '<div class="q-line" data-goto="' + r.date + '">' + esc(r.q) + '</div>' +
-            '<div class="snippet">' + esc(r.explanation || '') + '</div>' +
-            '<div class="meta">' + esc(r.date) + (r.topic ? ' · ' + esc(r.topic) : '') + ' · 正确答案 ' + LETTERS[r.answer] + ' <span class="lv-chip c' + (r.level || 3) + '">' + LEVELS[r.level || 3] + '</span></div></div>';
-        });
-        html += '</div>';
-        document.getElementById('searchResults').innerHTML = html;
-        document.querySelectorAll('[data-goto]').forEach(function (el) {
-          el.onclick = function () { location.hash = '#/quiz/' + el.getAttribute('data-goto'); };
-        });
-      }).catch(function (e) { toast('搜索失败：' + e.message); });
-    }
-    document.getElementById('doSearch').onclick = doSearch;
-    input.onkeydown = function (e) { if (e.key === 'Enter') doSearch(); };
-  }
-
-  /* ---------- AI助手（大白话讲解） ---------- */
-  function renderAI() {
-    loadManifest().then(function (m) {
-      if (!m.dates.length) {
-        app.innerHTML = '<div class="card"><div class="empty"><div class="big">🤖</div><div>还没有题库</div></div></div>';
-        return;
+        if(!found)setTimeout(check,5000);
       }
-      var latest = m.dates[0];
-      loadQuiz(latest.date).then(function (quiz) {
-        var html = '';
-        html += '<div class="card"><div class="page-title">🤖 AI助手 · 大白话讲解</div>' +
-          '<div class="sub">每天随题目自动生成 · 把复杂的原理和实验步骤讲成人话 · 规范表述以标准原文为准</div></div>';
-        if (quiz.plainSummary) {
-          html += '<div class="card"><div class="page-title">📖 今日主题导读</div>' +
-            '<div class="plain-block" style="margin-top:8px">' + esc(quiz.plainSummary) + '</div></div>';
-        }
-        html += '<div class="card"><div class="sub" style="padding:2px 4px 10px">' + esc(latest.date) +
-          (quiz.topic ? ' · ' + esc(quiz.topic) : '') + ' · 共' + quiz.questions.length + '题（由易到难）· 点击题目跳去作答</div>';
-        quiz.questions.forEach(function (q, i) {
-          html += '<div class="search-result">' +
-            '<div class="q-line" data-goto="' + latest.date + '">' + (i + 1) + '. ' + esc(q.q) +
-            ' <span class="lv-chip c' + q.level + '">' + LEVELS[q.level] + '</span></div>' +
-            '<div class="snippet">' + esc(q.plain || q.explanation || '') + '</div></div>';
-        });
-        html += '</div>';
-        html += '<div class="card"><div class="sub">💡 用法：答题时每题解析里也有「🤖 AI大白话」；这里集中看当天全部讲解。遇到看不懂的原理或实验步骤，先来这里找人话版本。</div></div>';
-        app.innerHTML = html;
-        document.querySelectorAll('[data-goto]').forEach(function (el) {
-          el.onclick = function () { location.hash = '#/quiz/' + el.getAttribute('data-goto'); };
-        });
-      });
-    }).catch(function (e) { app.innerHTML = '<div class="card empty">加载失败：' + esc(e.message) + '</div>'; });
-  }
-
-  /* ---------- 语音包（夸夸奖励） ---------- */
-  function renderVoice() {
-    var cur = Voice.currentPersona();
-    var autoIdx = Voice.dayIndex() % PERSONAS.length;
-    var html = '';
-    html += '<div class="card"><div class="page-title">🎁 语音夸夸包</div>' +
-      '<div class="sub">答对一道题，先来一句灵动叹词开场，再接主夸短语，节奏感拉满。连对2/3/5/10题触发专属升级欢呼，越连越燃。音色每天自动更换，难度越高夸得越热烈、越崇拜。</div>' +
-      '<div class="voice-opts">' +
-      '<div class="voice-opt' + (Voice.settings.persona === 'auto' || !Voice.settings.persona ? ' on' : '') + '" data-vp="auto">🔄 每日自动换（今日：' + esc(PERSONAS[autoIdx].name) + '）</div>' +
-      '<div class="voice-opt' + (Voice.settings.enabled !== false ? ' on' : '') + '" data-vmute="1">' + (Voice.settings.enabled !== false ? '🔊 语音开' : '🔇 语音关') + '</div>' +
-      '</div></div>';
-    html += '<div class="card"><div class="sub" style="padding:2px 4px 8px">选择音色（当前：' + esc(cur.name) + '）</div><div class="persona-grid">';
-    PERSONAS.forEach(function (p, i) {
-      html += '<div class="persona-card' + (cur.key === p.key ? ' on' : '') + '" data-pk="' + p.key + '">' +
-        (i === autoIdx ? '<span class="ptag">今日</span>' : '') +
-        '<div class="pname">' + esc(p.name) + '</div><div class="pdesc">' + esc(p.desc) + '</div>' +
-        '<button class="btn btn-outline" style="margin-top:8px;padding:5px 12px;font-size:12.5px" data-try="' + p.key + '">▶ 试听</button></div>';
-    });
-    html += '</div></div>';
-    html += '<div class="card"><div class="page-title">同一音色，难度越高越崇拜</div>' +
-      '<div class="backup-bar">' +
-      '<button class="btn btn-outline" data-demo="1">入门题夸奖</button>' +
-      '<button class="btn btn-outline" data-demo="3">进阶题夸奖</button>' +
-      '<button class="btn btn-outline" data-demo="5">挑战题夸奖</button>' +
-      '</div></div>';
-    html += '<div class="card"><div class="page-title">🔥 连对欢呼试听</div>' +
-      '<div class="sub" style="margin-bottom:8px">连续答对触发升级欢呼，越连越燃</div>' +
-      '<div class="backup-bar">' +
-      '<button class="btn btn-outline" data-streak="2">2连对</button>' +
-      '<button class="btn btn-outline" data-streak="3">3连对</button>' +
-      '<button class="btn btn-outline" data-streak="5">5连对</button>' +
-      '<button class="btn btn-outline" data-streak="10">10连对</button>' +
-      '</div></div>';
-    /* 语音自检：内置真人语音包为主，系统朗读引擎仅作备用 */
-    var diag = '✅ 平台已内置真人神经网络语音包（Fish Audio 神经网络语音合成，共约200条），播放方式和看视频一样，<b>不依赖手机朗读引擎</b>，任何浏览器都能响。';
-    diag += '<br>如果还是没声音，只需检查两点：① 手机<b>媒体音量</b>（看视频的音量）是否打开；② 尽量用系统浏览器（Safari/Chrome/Edge）打开或加到桌面，个别 App 内置浏览器会拦截音频。';
-    html += '<div class="card"><div class="page-title" style="font-size:16px">🔍 语音自检</div>' +
-      '<div class="sub" style="line-height:1.75">' + diag + '</div>' +
-      '<div class="backup-bar">' +
-      '<button class="btn btn-outline" id="testSound">🔊 点我出声测试</button>' +
-      '</div></div>';
-    html += '<div class="card"><div class="sub" style="line-height:1.75">语音由 Fish Audio 神经网络引擎预合成：小萝莉、甜妹、御姐、温柔姐姐、川妹子（四川话文案）、鲁妹子（山东话文案），每答对一题随机播放不重复；难度越高夸得越热烈。<br>已全程使用平台内置语音包，不会混入手机系统朗读声；万一某个音频加载失败，只会弹出文字提示，不影响答题。</div></div>';
-    app.innerHTML = html;
-
-    document.querySelectorAll('[data-vp]').forEach(function (el) {
-      el.onclick = function () { Voice.settings.persona = 'auto'; Voice.save(); renderVoice(); };
-    });
-    document.querySelector('[data-vmute]').onclick = function () {
-      Voice.settings.enabled = (Voice.settings.enabled === false);
-      Voice.save(); renderVoice();
-      if (Voice.settings.enabled) Voice.praise(1);
     };
-    document.querySelectorAll('.persona-card').forEach(function (card) {
-      card.onclick = function (e) {
-        if (e.target && e.target.getAttribute && e.target.getAttribute('data-try')) return;
-        Voice.settings.persona = card.getAttribute('data-pk');
-        Voice.settings.enabled = true;
-        Voice.save(); renderVoice();
-        Voice.praise(3);
-      };
-    });
-    document.querySelectorAll('[data-try]').forEach(function (btn) {
-      btn.onclick = function (e) {
-        e.stopPropagation();
-        var key = btn.getAttribute('data-try'), p = null;
-        PERSONAS.forEach(function (x) { if (x.key === key) p = x; });
-        if (p) Voice.playAudio(p.style, 'hello', null, p.pitch, p.rate);
-      };
-    });
-    document.querySelectorAll('[data-demo]').forEach(function (btn) {
-      btn.onclick = function () {
-        var lv = Number(btn.getAttribute('data-demo'));
-        var p = Voice.currentPersona();
-        var tier = lv >= 5 ? 2 : (lv >= 3 ? 1 : 0);
-        var pk = Voice.pickPraise(p.style, tier);
-        var exArr = EXCL[p.style] || EXCL.cute;
-        var ei = Math.floor(Math.random() * exArr.length);
-        Voice.playSequence(p.style, ['excl-' + ei, tier + '-' + pk.idx], pk.text, p.pitch, p.rate);
-      };
-    });
-    document.querySelectorAll('[data-streak]').forEach(function (btn) {
-      btn.onclick = function () {
-        var n = Number(btn.getAttribute('data-streak'));
-        var p = Voice.currentPersona();
-        var si = { 2: 0, 3: 1, 5: 2, 10: 3 }[n];
-        var stext = (STREAK[p.style] && STREAK[p.style][si]) || STREAK.cute[si];
-        Voice.playAudio(p.style, 'streak' + n, stext, p.pitch, p.rate);
-      };
-    });
-    document.getElementById('testSound').onclick = function () {
-      var p = Voice.currentPersona();
-      Voice.playAudio(p.style, 'hello', '出声测试，今天由' + p.name + '陪你刷题', p.pitch, p.rate);
-    };
+    xhr.onerror=function(){setTimeout(check,5000);};
+    xhr.send();
   }
-
-  /* ---------- 路由 ---------- */
-  function route() {
-    var h = location.hash || '#/today';
-    var m;
-    document.querySelectorAll('nav a').forEach(function (a) {
-      a.classList.toggle('active', a.getAttribute('href') === h || (h === '#/today' && a.getAttribute('href') === '#/today'));
-    });
-    // 切换 tab 后把当前标签横向居中滚入视野，避免横滑条卡住后回不到第一个
-    try {
-      var act = document.querySelector('nav a.active');
-      if (act) act.scrollIntoView({ inline: 'center', block: 'nearest' });
-    } catch (e) {}
-    if ((m = h.match(/^#\/quiz\/(\d{4}-\d{2}-\d{2})$/))) {
-      renderQuiz(m[1], false);
-    } else if (h === '#/history') {
-      renderHistory();
-    } else if (h === '#/wrong') {
-      renderWrong();
-    } else if (h === '#/search') {
-      renderSearch();
-    } else if (h === '#/ai') {
-      renderAI();
-    } else if (h === '#/voice') {
-      renderVoice();
-    } else {
-      renderToday();
-    }
-  }
-  /* ---------- 返回键体验 ---------- */
-  // 1) 点参考资料链接前记录当前题目，返回时回到该题并高亮
-  // 2) 手机返回键：先在应用内逐级返回，回到首页后再按一次才退出
-  var SS_KEY = 'asphaltQuizView';
-  var RESTORE_WINDOW = 3 * 3600 * 1000; // 3小时内视为同一会话，可恢复浏览位置
-
-  function saveViewState(extra) {
-    try {
-      var s = { hash: location.hash || '#/today', scroll: window.scrollY || 0, t: Date.now() };
-      if (extra) for (var k in extra) s[k] = extra[k];
-      sessionStorage.setItem(SS_KEY, JSON.stringify(s));
-    } catch (e) {}
-  }
-  function getViewState() {
-    try { return JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); } catch (e) { return null; }
-  }
-
-  // 点击参考资料（外部链接）时，记下当时所在题目卡片
-  document.addEventListener('click', function (e) {
-    var a = e.target && e.target.closest ? e.target.closest('a[target="_blank"]') : null;
-    if (!a) return;
-    var card = a.closest ? a.closest('[id^="qc-"], .wrong-item, .card') : null;
-    saveViewState({ qid: card && card.id ? card.id : '' });
-  }, true);
-
-  // 离开页面 / 切后台 / 滚动时保存浏览位置
-  window.addEventListener('pagehide', function () { saveViewState(); });
-  document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'hidden') saveViewState();
-  });
-  var scrollSaveTimer = null;
-  window.addEventListener('scroll', function () {
-    if (scrollSaveTimer) return;
-    scrollSaveTimer = setTimeout(function () { scrollSaveTimer = null; saveViewState(); }, 500);
-  }, { passive: true });
-
-  // 启动恢复：从外部链接返回（页面被重新加载）时，回到之前的视图
-  (function bootRestore() {
-    var s = getViewState();
-    if (s && s.hash && s.hash !== '#/today' && !location.hash && Date.now() - (s.t || 0) < RESTORE_WINDOW) {
-      try { history.replaceState(null, '', s.hash); } catch (e) { location.hash = s.hash; }
-    }
-  })();
-
-  function restoreView() {
-    var s = getViewState();
-    if (!s || Date.now() - (s.t || 0) >= RESTORE_WINDOW) return;
-    var el = s.qid ? document.getElementById(s.qid) : null;
-    if (el) {
-      var y = el.getBoundingClientRect().top + window.scrollY - 84; // 顶部留出导航高度
-      window.scrollTo(0, Math.max(0, y));
-      el.classList.add('flash');
-      setTimeout(function () { el.classList.remove('flash'); }, 2500);
-    } else if (s.scroll > 0) {
-      window.scrollTo(0, s.scroll);
-    }
-  }
-  function waitForRestore(tries) {
-    if (tries <= 0) { restoreView(); return; }
-    if (app.innerHTML.indexOf('加载中') >= 0) { setTimeout(function () { waitForRestore(tries - 1); }, 150); }
-    else { setTimeout(restoreView, 60); }
-  }
-
-  // 首页哨兵：让返回键先在应用内逐级返回，首页时再按一次才退出
-  var lastBackTry = 0;
-  try {
-    history.replaceState({ d: 0 }, '', location.href);
-    history.pushState({ d: 1 }, '', location.href);
-  } catch (e) {}
-  window.addEventListener('popstate', function () {
-    var st = history.state;
-    if (st && st.d === 0) {
-      var h = location.hash || '#/today';
-      if (h !== '#/today') return; // 直接打开的子页面，返回键正常退回上一页
-      var now = Date.now();
-      if (now - lastBackTry < 2200) {
-        lastBackTry = 0;
-        history.back(); // 2.2秒内再按一次 → 真正退出
-      } else {
-        lastBackTry = now;
-        try { history.pushState({ d: 1 }, '', location.href); } catch (e) {}
-        toast('再按一次返回键退出');
+  setTimeout(check,3000);
+}
+function newsSendFeedback(cfg){
+  var ta=document.getElementById('fbText');
+  var hint=document.getElementById('fbHint');
+  var btn=document.getElementById('fbSubmit');
+  var text=ta.value.trim();
+  if(!text){hint.textContent='请输入您想看到的内容';hint.style.color='#e5533d';return;}
+  var data={type:'feedback',content:text};
+  var body=JSON.stringify(data);
+  btn.disabled=true;btn.textContent='提交中...';
+  hint.textContent='';hint.style.color='#95a5a6';
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://ntfy.sh/'+cfg.feedback,true);
+  xhr.setRequestHeader('Content-Type','text/plain');
+  try{xhr.setRequestHeader('Title','feedback');}catch(e){}
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      btn.disabled=false;btn.textContent='提交';
+      if(xhr.status>=200&&xhr.status<300){
+        ta.value='';
+        hint.textContent='已收到，感谢您的反馈！';
+        hint.style.color='#1faf6b';
+      }else{
+        hint.textContent='提交失败，请重试';hint.style.color='#e5533d';
       }
     }
-  });
+  };
+  xhr.onerror=function(){
+    btn.disabled=false;btn.textContent='提交';
+    hint.textContent='网络错误，请重试';hint.style.color='#e5533d';
+  };
+  xhr.send(body);
+}
 
-  window.addEventListener('hashchange', route);
-  route();
-  waitForRestore(40);
-})();
+/* ================= 研究报告模块 ================= */
+var CAT_MAP={'技术突破':'cat-tech','全球市场':'cat-market','期货行情':'cat-futures','产业链分析':'cat-chain','地缘政治':'cat-geo','出口国研究':'cat-export'};
+function renderReports(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.reports||!m.reports.length){v.innerHTML='<div class="loading">暂无研究报告</div>';return;}
+    var cats={},html='';
+    for(var i=0;i<m.reports.length;i++){
+      var r=m.reports[i];
+      if(!cats[r.category])cats[r.category]=0;
+      cats[r.category]++;
+    }
+    var catChips='<div class="date-bar"><div class="date-chip active" onclick="reportFilter(\'\')">全部 ('+m.reports.length+')</div>';
+    for(var c in cats){
+      catChips+='<div class="date-chip" onclick="reportFilter(\''+c+'\')">'+c+' ('+cats[c]+')</div>';
+    }
+    catChips+='</div>';
+    html='<div class="section-title">📊 沥青研究报告</div>'+catChips+'<div id="reportList">';
+    for(var i=0;i<m.reports.length;i++){
+      var r=m.reports[i];
+      var cls=CAT_MAP[r.category]||'cat-tech';
+      html+='<div class="report-card" data-cat="'+r.category+'" onclick="reportOpen(\''+r.file+'\')">'+
+        '<div class="report-card-head"><div class="report-card-title">'+esc(r.title)+'</div>'+
+        '<span class="report-card-cat '+cls+'">'+r.category+'</span></div>'+
+        '<div class="report-card-date">'+r.date+'</div>'+
+        '<div class="report-card-summary">'+esc(r.summary)+'</div></div>';
+    }
+    html+='</div>';
+    v.innerHTML=html;
+  });
+}
+function reportFilter(cat){
+  var chips=document.querySelectorAll('.date-bar .date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',chips[i].textContent.indexOf(cat)>=0);
+  var cards=document.querySelectorAll('#reportList .report-card');
+  for(var i=0;i<cards.length;i++)cards[i].style.display=(!cat||cards[i].getAttribute('data-cat')===cat)?'block':'none';
+}
+function reportOpen(file){
+  var v=document.getElementById('view');
+  v.innerHTML='<div class="loading">加载报告中…</div>';
+  get('data/'+file,function(err,txt){
+    if(err){v.innerHTML='<div class="loading">报告加载失败：'+esc(err)+'</div>';return;}
+    v.innerHTML='<div class="report-back" onclick="renderReports()">← 返回报告列表</div><div class="news-box md">'+mdToHtml(txt)+'</div>';
+    window.scrollTo(0,0);
+  });
+}
+
+/* ================= 资料库模块 ================= */
+var LIB_CAT_MAP={'国家概况':'cat-export','专业文献':'cat-tech','培训资料':'cat-chain'};
+function renderLibrary(){
+  loadManifest(function(err,m){
+    var v=document.getElementById('view');
+    if(err){v.innerHTML='<div class="loading">数据加载失败：'+esc(err)+'</div>';return;}
+    if(!m.docs||!m.docs.length){v.innerHTML='<div class="loading">暂无资料</div>';return;}
+    var cats={},html='';
+    for(var i=0;i<m.docs.length;i++){
+      var d=m.docs[i];
+      if(!cats[d.cat])cats[d.cat]=0;
+      cats[d.cat]++;
+    }
+    var catChips='<div class="date-bar"><div class="date-chip active" onclick="libraryFilter(\'\')">全部 ('+m.docs.length+')</div>';
+    for(var c in cats){
+      catChips+='<div class="date-chip" onclick="libraryFilter(\''+c+'\')">'+c+' ('+cats[c]+')</div>';
+    }
+    catChips+='</div>';
+    html='<div class="section-title">📚 IMA 资料库 <span class="count">每日自动同步</span></div>'+
+      '<div class="search-hint" style="margin-bottom:10px">来源：IMA「国家概况与体系标准」「沥青知识库」「培训知识库」，每天 08:30 自动同步更新</div>'+
+      catChips+'<div id="libList">';
+    for(var i=0;i<m.docs.length;i++){
+      var d=m.docs[i];
+      var cls=LIB_CAT_MAP[d.cat]||'cat-tech';
+      var sizeTxt=d.size?(d.size>=1024?(d.size/1024).toFixed(1)+' MB':d.size+' KB'):'';
+      html+='<div class="report-card" data-cat="'+d.cat+'" onclick="libraryOpen(\''+d.file+'\')">'+
+        '<div class="report-card-head"><div class="report-card-title">'+esc(d.title)+'</div>'+
+        '<span class="report-card-cat '+cls+'">'+d.cat+'</span></div>'+
+        '<div class="report-card-date">'+esc(d.source||'')+(sizeTxt?' · '+sizeTxt:'')+'</div>'+
+        (d.summary?'<div class="report-card-summary">'+esc(d.summary)+'</div>':'')+'</div>';
+    }
+    html+='</div>';
+    v.innerHTML=html;
+  });
+}
+function libraryFilter(cat){
+  var chips=document.querySelectorAll('.date-bar .date-chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.toggle('active',(!cat&&i===0)||chips[i].textContent.indexOf(cat)===0);
+  var cards=document.querySelectorAll('#libList .report-card');
+  for(var i=0;i<cards.length;i++)cards[i].style.display=(!cat||cards[i].getAttribute('data-cat')===cat)?'block':'none';
+}
+function libraryOpen(file){
+  var v=document.getElementById('view');
+  v.innerHTML='<div class="loading">加载资料中…（大文件如壳牌手册约需数秒）</div>';
+  get('data/'+file,function(err,txt){
+    if(err){v.innerHTML='<div class="loading">资料加载失败：'+esc(err)+'</div>';return;}
+    v.innerHTML='<div class="report-back" onclick="renderLibrary()">← 返回资料列表</div><div class="news-box md">'+mdToHtml(txt)+'</div>';
+    window.scrollTo(0,0);
+  });
+}
+
+/* ================= 工具页 ================= */
+var KBS=[
+  {n:'沥青新闻库',s:'5 篇 · 国内日报归档'},{n:'精选新闻库',s:'13 篇 · 我感兴趣合集'},
+  {n:'沥青知识库',s:'4 篇 · 出题来源'},{n:'沥青研究报告',s:'22 篇 · 研究报告'},
+  {n:'培训知识库',s:'5 篇 · 培训资料'},{n:'日报素材库',s:'19 篇 · 日报素材'},
+  {n:'京博海南沥青出口国家',s:'29 篇 · 出口国情报'},{n:'希望看到的新闻库',s:'11 篇 · 我关心反馈'}
+];
+function renderTools(){
+  var v=document.getElementById('view');
+  var kb='';
+  for(var i=0;i<KBS.length;i++){
+    kb+='<div class="kb-card" onclick="copyPrompt(\'请在'+KBS[i].n+'中搜索相关内容并汇总\')"><div class="kb-name">'+KBS[i].n+'</div><div class="kb-stats">'+KBS[i].s+'</div></div>';
+  }
+  v.innerHTML=
+  '<div class="section"><div class="section-title">🔍 快速搜索</div><div class="search-box">'+
+    '<div class="search-row"><input type="text" class="search-input" id="searchInput" placeholder="输入关键词，如：SBS改性沥青 老化" onkeydown="if(event.key===\'Enter\')searchPlatform()">'+
+    '<button class="btn-s p" onclick="searchPlatform()">🔍 搜索平台内容</button>'+
+    '<button class="btn-s g" onclick="copyImaPrompt()">📋 复制IMA检索词</button>'+
+    '<button class="btn-s" style="background:#7f8c8d" onclick="handleWebSearch()">🌐 网络搜索</button></div>'+
+    '<div class="search-hint">💡 <b>搜索平台内容</b>：在已收录的14篇研究报告 + 24份资料库文档（国家概况/壳牌手册/培训资料） + 6期新闻日报 + 5期测验题中全文检索，即时出结果<br>💡 <b>复制IMA检索词</b>：复制提示词到 WorkBuddy 对话框，AI 在 IMA 知识库中实时检索<br>💡 <b>网络搜索</b>：直接打开浏览器搜索行业标准、学术资料</div>'+
+    '<div class="search-results" id="searchResults"></div>'+
+  '</div></div>'+
+  '<div class="section"><div class="section-title">📚 IMA 知识库 <span class="count">8</span></div><div class="kb-grid">'+kb+'</div></div>'+
+  '<div class="section"><div class="section-title">⚡ 快速操作</div><div class="action-grid">'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日国内沥青新闻日报，从沥青新闻库获取最新新闻，生成HTML日报并部署推送，同时同步到工作平台\')"><div class="action-icon">📰</div><div class="action-text">生成国内日报</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日沥青出口国产业动态日报，从京博海南沥青出口国家知识库获取最新新闻，生成HTML日报并部署推送，同时同步到工作平台\')"><div class="action-icon">🌏</div><div class="action-text">生成出口国日报</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请立即生成今日沥青知识选择题，从沥青知识库出题并同步到工作平台答题模块\')"><div class="action-icon">📝</div><div class="action-text">生成测验</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请搜索最近一周的沥青行业新闻，重点关注价格走势、政策变化、技术进展\')"><div class="action-icon">🔬</div><div class="action-text">行业动态研究</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请在沥青研究报告知识库中搜索最新的沥青改性技术研究报告\')"><div class="action-icon">📊</div><div class="action-text">文献检索</div><div class="action-hint">点击复制提示词</div></div>'+
+    '<div class="action-btn" onclick="copyPrompt(\'请查看所有自动化任务的运行状态，检查是否有任务失败或异常\')"><div class="action-icon">✅</div><div class="action-text">任务状态检查</div><div class="action-hint">点击复制提示词</div></div>'+
+  '</div></div>';
+}
+/* === 平台全文搜索 === */
+var _searchCache={}; /* 缓存已加载文件内容 */
+function searchPlatform(){
+  var q=document.getElementById('searchInput').value.trim();
+  var rc=document.getElementById('searchResults');
+  if(!q){showToast('请输入搜索关键词');return;}
+  rc.innerHTML='<div class="search-loading">⏳ 正在加载平台内容并检索...</div>';
+  /* 1. 加载 manifest */
+  get('data/manifest.json',function(err,txt){
+    if(err){rc.innerHTML='<div class="search-empty">加载失败：'+err+'</div>';return;}
+    var m=JSON.parse(txt);
+    var files=[];
+    /* 收集所有可搜索文件 */
+    (m.reports||[]).forEach(function(r){files.push({file:'data/'+r.file,title:r.title,type:'report',typeLabel:'研究报告',date:r.date||'',category:r.category||''});});
+    (m.newsDom||[]).forEach(function(n){files.push({file:'data/'+n.file,title:'国内沥青日报 '+n.date,type:'news-d',typeLabel:'国内新闻',date:n.date});});
+    (m.newsFor||[]).forEach(function(n){files.push({file:'data/'+n.file,title:'出口国产业日报 '+n.date,type:'news-f',typeLabel:'出口国新闻',date:n.date});});
+    (m.quizzes||[]).forEach(function(qz){files.push({file:'data/'+qz.file,title:'沥青知识测验 '+qz.date,type:'quiz',typeLabel:'测验题',date:qz.date});});
+    (m.docs||[]).forEach(function(d){
+      var dt=d.cat==='国家概况'?'doc-gj':(d.cat==='专业文献'?'doc-ll':'doc-px');
+      files.push({file:'data/'+d.file,title:d.title,type:dt,typeLabel:d.cat,date:''});
+    });
+    /* 2. 逐文件加载并搜索 */
+    var results=[];
+    var done=0,total=files.length;
+    files.forEach(function(f){
+      var cacheKey=f.file;
+      if(_searchCache[cacheKey]){
+        searchInFile(f,_searchCache[cacheKey],q,results);
+        done++;checkDone();
+      }else{
+        get(f.file,function(e,t){
+          if(!e){
+            _searchCache[cacheKey]=t;
+            searchInFile(f,t,q,results);
+          }
+          done++;checkDone();
+        });
+      }
+    });
+    function checkDone(){
+      if(done<total)return;
+      renderSearchResults(results,q,rc);
+    }
+  });
+}
+function searchInFile(f,content,q,results){
+  var qlower=q.toLowerCase();
+  var clower=content.toLowerCase();
+  var idx=clower.indexOf(qlower);
+  if(idx<0)return;
+  /* 提取 snippet */
+  var start=Math.max(0,idx-60);
+  var end=Math.min(content.length,idx+q.length+120);
+  var snippet=content.substring(start,end).replace(/\n/g,' ').replace(/[#*|>]/g,'').trim();
+  if(start>0)snippet='...'+snippet;
+  if(end<content.length)snippet=snippet+'...';
+  results.push({file:f.file,title:f.title,type:f.type,typeLabel:f.typeLabel,date:f.date,snippet:snippet});
+}
+function renderSearchResults(results,q,rc){
+  if(!results.length){
+    rc.innerHTML='<div class="search-empty">未在平台内容中找到「'+q+'」相关结果<br>💡 可尝试点击「复制IMA检索词」在 WorkBuddy 中搜索 IMA 知识库全文</div>';
+    return;
+  }
+  /* 按类型排序：报告 > 新闻 > 测验 */
+  var order={'report':0,'doc-ll':1,'doc-gj':2,'doc-px':3,'news-d':4,'news-f':5,'quiz':6};
+  results.sort(function(a,b){return (order[a.type]||9)-(order[b.type]||9);});
+  var h='<div style="font-size:13px;color:#95a5a6;margin-bottom:10px">找到 <b>'+results.length+'</b> 条结果</div>';
+  results.forEach(function(r){
+    var snip=r.snippet;
+    /* 高亮关键词 */
+    var qlower=q.toLowerCase();
+    var idx=snip.toLowerCase().indexOf(qlower);
+    if(idx>=0){
+      snip=snip.substring(0,idx)+'<mark>'+snip.substring(idx,idx+q.length)+'</mark>'+snip.substring(idx+q.length);
+    }
+    h+='<div class="result-item" onclick="openSearchResult(\''+r.file+'\',\''+r.type+'\')">'+
+      '<div class="result-head">'+
+        '<span class="result-type '+r.type+'">'+r.typeLabel+'</span>'+
+        '<span class="result-title">'+r.title+'</span>'+
+        (r.date?'<span class="result-date">'+r.date+'</span>':'')+
+      '</div>'+
+      '<div class="result-snippet">'+snip+'</div>'+
+    '</div>';
+  });
+  rc.innerHTML=h;
+}
+function openSearchResult(file,type){
+  if(type==='report'){location.hash='#/reports';}
+  else if(type==='news-d'){location.hash='#/news/dom';}
+  else if(type==='news-f'){location.hash='#/news/for';}
+  else if(type==='quiz'){location.hash='#/quiz';}
+  else if(type==='doc-gj'||type==='doc-ll'||type==='doc-px'){location.hash='#/library';}
+}
+function copyImaPrompt(){
+  var q=document.getElementById('searchInput').value.trim();
+  if(!q){showToast('请输入搜索关键词');return;}
+  copyPrompt('请在 IMA 知识库中搜索：'+q+'。请同时搜索沥青新闻库、精选新闻库、沥青知识库、沥青研究报告、京博海南沥青出口国家等相关知识库，汇总检索结果。');
+}
+function handleWebSearch(){
+  var q=document.getElementById('searchInput').value.trim();
+  if(!q){showToast('请输入搜索关键词');return;}
+  window.open('https://www.bing.com/search?q='+encodeURIComponent(q+' 沥青'));
+}
+
+route();
 </script>
 </body>
 </html>
